@@ -1,0 +1,10 @@
+# Segredos e configuração local
+.env
+backend/.env
+
+# Base mutável do protótipo: pode conter dados pessoais
+backend/data/runtime-db.json
+backend/data/runtime-db.json.tmp
+
+# Dependências
+backend/node_modules/
