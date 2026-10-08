@@ -13,7 +13,7 @@ router.get('/summary', async (req, res, next) => {
       fishermenPending: db.fishermen.filter(item => item.status === 'pending_review').length,
       productsPending: db.products.filter(item => item.status === 'pending_review').length,
       fishermenPublished: db.fishermen.filter(item => item.status === 'published').length,
-      productsPublished: db.products.filter(item => item.status === 'published').length,
+      productsPublished: db.products.filter(item => item.status === 'published' && (!item.expiresAt || Date.parse(item.expiresAt) > Date.now())).length,
       ordersOpen: db.orders.filter(item => !['concluido', 'recusado', 'cancelado'].includes(item.status)).length
     });
   } catch (error) {
@@ -74,10 +74,19 @@ router.patch('/products/:id', async (req, res, next) => {
       if (action === 'approve' && fisherman?.status !== 'published') {
         throw Object.assign(new Error('Aprove primeiro o perfil do pescador.'), { status: 409 });
       }
+      const now = new Date().toISOString();
       item.status = action === 'approve' ? 'published' : 'rejected';
-      item.reviewedAt = new Date().toISOString();
+      item.reviewedAt = now;
       item.reviewNote = String(req.body?.note || '').trim();
-      item.updatedAt = new Date().toISOString();
+      item.updatedAt = now;
+      if (action === 'approve') {
+        const hours = [24, 36, 42].includes(Number(item.availabilityHours)) ? Number(item.availabilityHours) : 36;
+        item.availabilityHours = hours;
+        item.publishedAt = now;
+        item.expiresAt = new Date(Date.now() + hours * 60 * 60 * 1000).toISOString();
+      } else {
+        item.expiresAt = null;
+      }
       return item;
     });
     res.json({ message: action === 'approve' ? 'Pescado publicado.' : 'Pescado recusado.', product });
