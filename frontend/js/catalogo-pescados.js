@@ -2,8 +2,7 @@
   window.EntreMaresFishCatalog = [
     { name: 'Robalo', category: 'peixe', priceMin: 35, priceMax: 35, saleUnit: 'kg' },
     { name: 'Calafate', category: 'peixe', priceMin: 35, priceMax: 35, saleUnit: 'kg' },
-    { name: 'Pescadinha', category: 'peixe', priceMin: 20, priceMax: 20, saleUnit: 'kg', note: 'Há também um registro informado como “12/kg limpa, pescadinha branca”; mantido separado para confirmação.' },
-    { name: 'Pescadinha branca (limpa)', category: 'peixe', priceMin: 12, priceMax: 12, saleUnit: 'kg', note: 'Referência provisória a partir da anotação “12/kg limpa, pescadinha branca”. Confirmar nomenclatura e condição antes de usar.' },
+    { name: 'Pescadinha', category: 'peixe', priceMin: 12, priceMax: 20, saleUnit: 'kg', note: 'Faixa aproximada informada: R$ 12 a R$ 20 por kg.' },
     { name: 'Guiri', category: 'peixe', priceMin: 12, priceMax: 15, saleUnit: 'kg' },
     { name: 'Miraguaia', category: 'peixe', priceMin: 8, priceMax: 8, saleUnit: 'kg' },
     { name: 'Tainha', category: 'peixe', priceMin: 10, priceMax: 10, saleUnit: 'kg' },
