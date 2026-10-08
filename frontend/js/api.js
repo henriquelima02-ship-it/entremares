@@ -441,10 +441,13 @@
       });
     }
     if (product.shipping?.collaborativeFreight) {
+      const variableFee = (product.saleUnit || 'kg') === 'kg'
+        ? Math.max(0, Number(quantityKg) - 1) * 1.5
+        : 0;
       options.push({
         id: 'collaborative_freight',
         label: 'Frete colaborativo',
-        fee: Number(product.shipping.collaborativeFee || 0) + Math.max(0, Number(quantityKg) - 1) * 1.5,
+        fee: Number(product.shipping.collaborativeFee || 0) + variableFee,
         note: product.shipping.notes || ''
       });
     }
@@ -474,7 +477,8 @@
     let shippingFee = 0;
     if (payload.shippingType === 'community_delivery') shippingFee = Number(ship.deliveryFee || 0);
     if (payload.shippingType === 'collaborative_freight') {
-      shippingFee = Number(ship.collaborativeFee || 0) + Math.max(0, quantity - 1) * 1.5;
+      const variableFee = (product.saleUnit || 'kg') === 'kg' ? Math.max(0, quantity - 1) * 1.5 : 0;
+      shippingFee = Number(ship.collaborativeFee || 0) + variableFee;
     }
 
     const customer = session?.user?.role === 'cliente'
