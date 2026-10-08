@@ -76,6 +76,7 @@
     $('editQuantityLabel').textContent = quantityLabel;
     $('editPriceLabel').textContent = priceLabel;
     $('editQuantity').step = unit === 'kg' ? '0.1' : '1';
+    $('editQuantity').min = unit === 'kg' ? '0.1' : '1';
   }
 
   function presetPriceText(item) {
@@ -97,8 +98,13 @@
   }
 
   function applyPreset(index) {
-    const item = catalog[Number(index)];
     const box = $('presetReference');
+    if (index === '' || index === null || index === undefined) {
+      box.classList.add('hidden');
+      box.innerHTML = '';
+      return;
+    }
+    const item = catalog[Number(index)];
     if (!item) {
       box.classList.add('hidden');
       box.innerHTML = '';
