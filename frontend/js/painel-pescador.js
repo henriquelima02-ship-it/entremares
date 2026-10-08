@@ -46,6 +46,84 @@
     sem_cabeca: 'Sem cabeça'
   };
 
+  const catalog = Array.isArray(window.EntreMaresFishCatalog) ? window.EntreMaresFishCatalog : [];
+
+  function saleUnitLabel(unit) {
+    if (unit === 'duzia') return 'dúzia';
+    if (unit === 'lote_20kg') return 'lote de 20 kg';
+    return 'kg';
+  }
+
+  function saleUnitStockLabel(unit, quantity) {
+    if (unit === 'duzia') return Number(quantity) === 1 ? 'dúzia' : 'dúzias';
+    if (unit === 'lote_20kg') return Number(quantity) === 1 ? 'lote de 20 kg' : 'lotes de 20 kg';
+    return 'kg';
+  }
+
+  function updateSaleUnitFields() {
+    const unit = $('editSaleUnit').value || 'kg';
+    const quantityLabel = unit === 'duzia'
+      ? 'Quantidade de dúzias *'
+      : unit === 'lote_20kg'
+        ? 'Quantidade de lotes de 20 kg *'
+        : 'Quantidade (kg) *';
+    const priceLabel = unit === 'duzia'
+      ? 'Preço por dúzia (R$) *'
+      : unit === 'lote_20kg'
+        ? 'Preço por lote de 20 kg (R$) *'
+        : 'Preço por kg (R$) *';
+
+    $('editQuantityLabel').textContent = quantityLabel;
+    $('editPriceLabel').textContent = priceLabel;
+    $('editQuantity').step = unit === 'kg' ? '0.1' : '1';
+  }
+
+  function presetPriceText(item) {
+    if (item.priceMin == null) return 'Preço ainda não informado.';
+    const suffix = saleUnitLabel(item.saleUnit);
+    if (Number(item.priceMin) === Number(item.priceMax)) return `${brl(item.priceMin)} por ${suffix}`;
+    return `${brl(item.priceMin)} a ${brl(item.priceMax)} por ${suffix}`;
+  }
+
+  function populatePresetCatalog() {
+    const select = $('fishPreset');
+    if (!select) return;
+    catalog.forEach((item, index) => {
+      const option = document.createElement('option');
+      option.value = String(index);
+      option.textContent = `${item.name} — ${presetPriceText(item)}`;
+      select.appendChild(option);
+    });
+  }
+
+  function applyPreset(index) {
+    const item = catalog[Number(index)];
+    const box = $('presetReference');
+    if (!item) {
+      box.classList.add('hidden');
+      box.innerHTML = '';
+      return;
+    }
+
+    $('editSpecies').value = item.name;
+    $('editCategory').value = item.category || 'outro';
+    $('editSaleUnit').value = item.saleUnit || 'kg';
+    updateSaleUnitFields();
+
+    if (item.priceMin != null && Number(item.priceMin) === Number(item.priceMax)) {
+      $('editPrice').value = Number(item.priceMin);
+    } else {
+      $('editPrice').value = '';
+    }
+
+    const rangeHelp = item.priceMin != null && Number(item.priceMin) !== Number(item.priceMax)
+      ? '<strong>Faixa de referência:</strong> escolha o preço de hoje dentro ou fora dessa faixa conforme a venda real.'
+      : '<strong>Referência aproximada:</strong> confirme o preço de hoje antes de salvar.';
+
+    box.innerHTML = `${rangeHelp}<br>${esc(presetPriceText(item))}${item.note ? `<br><small>${esc(item.note)}</small>` : ''}`;
+    box.classList.remove('hidden');
+  }
+
   function effectiveStatus(product) {
     if (product.status === 'published' && product.expired) return 'expired';
     return product.status || 'pending_review';
@@ -103,14 +181,14 @@
           <div class="dashboard-item-main">
             <div class="dashboard-item-title">
               <div><span class="status ${esc(status)}">${esc(statusLabel(status))}</span><h3>${esc(product.species)}</h3></div>
-              <strong>${brl(product.pricePerKg)}<small>/kg</small></strong>
+              <strong>${brl(product.pricePerKg)}<small>/${esc(saleUnitLabel(product.saleUnit))}</small></strong>
             </div>
 
             ${remaining ? `<div class="dashboard-availability">⏱ ${esc(remaining)}</div>` : ''}
             <p>${esc(product.description || 'Sem descrição pública.')}</p>
 
             <div class="dashboard-item-meta">
-              <span><strong>${Number(product.quantityKg || 0).toLocaleString('pt-BR')} kg</strong> em estoque</span>
+              <span><strong>${Number(product.quantityKg || 0).toLocaleString('pt-BR')} ${esc(saleUnitStockLabel(product.saleUnit, product.quantityKg))}</strong> em estoque</span>
               <span>${esc(product.state || 'fresco')}</span>
               <span>Prazo: ${Number(product.availabilityHours || 36)}h</span>
               <span>Cortes: ${esc(cuts)}</span>
@@ -170,7 +248,7 @@
 
     box.innerHTML = orders.map(order => {
       const items = (order.items || [])
-        .map(item => `${item.quantityKg} kg de ${item.species}${item.cut?.label ? ` • ${item.cut.label}` : ''}`)
+        .map(item => `${item.quantityKg} ${saleUnitStockLabel(item.saleUnit, item.quantityKg)} de ${item.species}${item.cut?.label ? ` • ${item.cut.label}` : ''}`)
         .join('<br>');
 
       return `
@@ -253,6 +331,11 @@
     $('productForm').reset();
     $('editProductId').value = '';
     $('productEditorTitle').textContent = 'Novo pescado';
+    $('fishPreset').value = '';
+    $('presetReference').classList.add('hidden');
+    $('presetReference').innerHTML = '';
+    $('editSaleUnit').value = 'kg';
+    updateSaleUnitFields();
     $('editAvailabilityHours').value = '36';
     $('editShipPickup').checked = Boolean(state.dashboard?.fisherman?.shipping?.pickup ?? true);
     $('editShipDelivery').checked = Boolean(state.dashboard?.fisherman?.shipping?.communityDelivery);
@@ -292,6 +375,8 @@
       $('editCatchDate').value = product.catchDate || '';
       $('editQuantity').value = Number(product.quantityKg || 0);
       $('editPrice').value = Number(product.pricePerKg || 0);
+      $('editSaleUnit').value = product.saleUnit || 'kg';
+      updateSaleUnitFields();
       $('editAvailabilityHours').value = String(product.availabilityHours || 36);
       $('editOrigin').value = product.originNote || '';
       $('editDescription').value = product.description || '';
@@ -386,6 +471,7 @@
       catchDate: $('editCatchDate').value,
       quantityKg: Number($('editQuantity').value),
       pricePerKg: Number($('editPrice').value),
+      saleUnit: $('editSaleUnit').value,
       availabilityHours: Number($('editAvailabilityHours').value),
       originNote: $('editOrigin').value.trim(),
       description: $('editDescription').value.trim(),
@@ -407,6 +493,10 @@
       result.classList.remove('hidden');
     }
   });
+
+  $('fishPreset').addEventListener('change', event => applyPreset(event.target.value));
+  $('editSaleUnit').addEventListener('change', updateSaleUnitFields);
+  populatePresetCatalog();
 
   $('newProductButton').addEventListener('click', () => openProductEditor());
   document.querySelector('[data-open-product]').addEventListener('click', () => openProductEditor());
