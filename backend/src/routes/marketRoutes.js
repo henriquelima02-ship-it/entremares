@@ -1,7 +1,7 @@
 const express = require('express');
 const crypto = require('crypto');
 const { readDb, mutateDb } = require('../store');
-const { authRequired, requireFisher } = require('../auth');
+const { authRequired, authOptional, requireFisher, requireCustomer } = require('../auth');
 
 const router = express.Router();
 
@@ -26,8 +26,51 @@ const ORDER_STATUS = new Set([
   'cancelado'
 ]);
 
+const AVAILABILITY_HOURS = new Set([24, 36, 42]);
+
 function money(value) {
   return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
+}
+
+function normalizePhone(value) {
+  return String(value || '').replace(/\D/g, '');
+}
+
+function whatsappNumber(value) {
+  let digits = normalizePhone(value);
+  if (digits.length === 10 || digits.length === 11) digits = `55${digits}`;
+  return digits.length >= 12 ? digits : '';
+}
+
+function normalizeAvailabilityHours(value) {
+  const hours = Number(value);
+  return AVAILABILITY_HOURS.has(hours) ? hours : 36;
+}
+
+function expiresFromNow(hours) {
+  const normalized = normalizeAvailabilityHours(hours);
+  return new Date(Date.now() + normalized * 60 * 60 * 1000).toISOString();
+}
+
+function isExpired(product) {
+  if (!product?.expiresAt) return false;
+  const time = Date.parse(product.expiresAt);
+  return Number.isFinite(time) && time <= Date.now();
+}
+
+function isPublicProduct(product) {
+  return product?.status === 'published'
+    && Number(product.quantityKg) > 0
+    && !isExpired(product);
+}
+
+function availabilityView(product) {
+  return {
+    ...product,
+    availabilityHours: normalizeAvailabilityHours(product.availabilityHours),
+    expired: isExpired(product),
+    active: isPublicProduct(product)
+  };
 }
 
 function normalizeCuts(cuts) {
@@ -52,15 +95,24 @@ function normalizeShipping(body = {}, fallback = {}) {
   };
 }
 
-function productView(product, fisherman) {
+function publicFisherman(db, fisherman) {
+  if (!fisherman) return null;
+  const user = db.users.find(item => item.id === fisherman.userId);
   return {
-    ...product,
-    fisherman: fisherman ? {
-      id: fisherman.id,
-      displayName: fisherman.displayName,
-      community: fisherman.community,
-      pickupReference: fisherman.pickupReference
-    } : null
+    id: fisherman.id,
+    displayName: fisherman.displayName,
+    community: fisherman.community,
+    pickupReference: fisherman.pickupReference,
+    bio: fisherman.bio,
+    shipping: fisherman.shipping,
+    whatsapp: fisherman.whatsappPublic ? whatsappNumber(user?.phone) : ''
+  };
+}
+
+function productView(db, product) {
+  return {
+    ...availabilityView(product),
+    fisherman: publicFisherman(db, db.fishermen.find(item => item.id === product.fishermanId))
   };
 }
 
@@ -71,7 +123,9 @@ function fishermanForUser(db, userId) {
 function assertOwnedProduct(db, productId, fishermanId) {
   const product = db.products.find(item => item.id === productId);
   if (!product) throw Object.assign(new Error('Pescado não encontrado.'), { status: 404 });
-  if (product.fishermanId !== fishermanId) throw Object.assign(new Error('Você não pode alterar este pescado.'), { status: 403 });
+  if (product.fishermanId !== fishermanId) {
+    throw Object.assign(new Error('Você não pode alterar este pescado.'), { status: 403 });
+  }
   return product;
 }
 
@@ -80,14 +134,7 @@ router.get('/fishermen', async (req, res, next) => {
     const db = await readDb();
     const items = db.fishermen
       .filter(item => item.status === 'published')
-      .map(item => ({
-        id: item.id,
-        displayName: item.displayName,
-        community: item.community,
-        pickupReference: item.pickupReference,
-        bio: item.bio,
-        shipping: item.shipping
-      }));
+      .map(item => publicFisherman(db, item));
     res.json({ items });
   } catch (error) {
     next(error);
@@ -99,8 +146,12 @@ router.get('/fishermen/:id', async (req, res, next) => {
     const db = await readDb();
     const fisherman = db.fishermen.find(item => item.id === req.params.id && item.status === 'published');
     if (!fisherman) return res.status(404).json({ error: 'Pescador não encontrado.' });
-    const products = db.products.filter(item => item.fishermanId === fisherman.id && item.status === 'published');
-    res.json({ fisherman, products });
+
+    const products = db.products
+      .filter(item => item.fishermanId === fisherman.id && isPublicProduct(item))
+      .map(item => productView(db, item));
+
+    res.json({ fisherman: publicFisherman(db, fisherman), products });
   } catch (error) {
     next(error);
   }
@@ -111,11 +162,13 @@ router.get('/products', async (req, res, next) => {
     const db = await readDb();
     const species = String(req.query.species || '').trim().toLowerCase();
     const fishermanId = String(req.query.fishermanId || '').trim();
+
     const items = db.products
-      .filter(item => item.status === 'published' && Number(item.quantityKg) > 0)
+      .filter(isPublicProduct)
       .filter(item => !species || item.species.toLowerCase().includes(species))
       .filter(item => !fishermanId || item.fishermanId === fishermanId)
-      .map(item => productView(item, db.fishermen.find(f => f.id === item.fishermanId)));
+      .map(item => productView(db, item));
+
     res.json({ items });
   } catch (error) {
     next(error);
@@ -125,9 +178,9 @@ router.get('/products', async (req, res, next) => {
 router.get('/products/:id', async (req, res, next) => {
   try {
     const db = await readDb();
-    const product = db.products.find(item => item.id === req.params.id && item.status === 'published');
-    if (!product) return res.status(404).json({ error: 'Produto não encontrado.' });
-    res.json(productView(product, db.fishermen.find(f => f.id === product.fishermanId)));
+    const product = db.products.find(item => item.id === req.params.id && isPublicProduct(item));
+    if (!product) return res.status(404).json({ error: 'Produto não encontrado ou disponibilidade encerrada.' });
+    res.json(productView(db, product));
   } catch (error) {
     next(error);
   }
@@ -138,8 +191,8 @@ router.get('/shipping/options', async (req, res, next) => {
     const productId = String(req.query.productId || '');
     const quantityKg = Math.max(0.1, Number(req.query.quantityKg || 1));
     const db = await readDb();
-    const product = db.products.find(item => item.id === productId && item.status === 'published');
-    if (!product) return res.status(404).json({ error: 'Produto não encontrado.' });
+    const product = db.products.find(item => item.id === productId && isPublicProduct(item));
+    if (!product) return res.status(404).json({ error: 'Produto não encontrado ou disponibilidade encerrada.' });
 
     const options = [];
     if (product.shipping?.pickup) {
@@ -168,25 +221,41 @@ router.get('/shipping/options', async (req, res, next) => {
         note: product.shipping.notes || 'Valor estimado; a rota é confirmada com a comunidade.'
       });
     }
+
     res.json({ productId, quantityKg: money(quantityKg), options });
   } catch (error) {
     next(error);
   }
 });
 
-router.post('/orders', async (req, res, next) => {
+router.post('/orders', authOptional, async (req, res, next) => {
   try {
-    const { customer = {}, items = [], shippingType = 'pickup' } = req.body || {};
-    if (!customer.name || !customer.phone) return res.status(400).json({ error: 'Informe nome e telefone para o pedido.' });
-    if (!Array.isArray(items) || items.length === 0) return res.status(400).json({ error: 'Adicione pelo menos um item.' });
+    const loggedCustomer = req.auth?.user?.role === 'cliente' ? req.auth.user : null;
+    const suppliedCustomer = req.body?.customer || {};
+    const customer = loggedCustomer ? {
+      name: loggedCustomer.name,
+      phone: loggedCustomer.phone,
+      community: loggedCustomer.community || suppliedCustomer.community || '',
+      notes: suppliedCustomer.notes || ''
+    } : suppliedCustomer;
+
+    const { items = [], shippingType = 'pickup' } = req.body || {};
+    if (!customer.name || !customer.phone) {
+      return res.status(400).json({ error: 'Informe nome e telefone para o pedido.' });
+    }
+    if (!Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ error: 'Adicione pelo menos um item.' });
+    }
 
     const order = await mutateDb(db => {
       let subtotal = 0;
       let orderFishermanId = null;
 
       const normalizedItems = items.map(item => {
-        const product = db.products.find(p => p.id === item.productId && p.status === 'published');
-        if (!product) throw Object.assign(new Error('Um dos produtos não está mais disponível.'), { status: 409 });
+        const product = db.products.find(p => p.id === item.productId && isPublicProduct(p));
+        if (!product) {
+          throw Object.assign(new Error('Um dos produtos não está mais disponível.'), { status: 409 });
+        }
 
         if (orderFishermanId && orderFishermanId !== product.fishermanId) {
           throw Object.assign(new Error('Nesta etapa, cada pedido deve conter produtos de um único pescador.'), { status: 409 });
@@ -198,7 +267,8 @@ router.post('/orders', async (req, res, next) => {
           throw Object.assign(new Error(`Quantidade indisponível para ${product.species}.`), { status: 409 });
         }
 
-        const cut = product.cuts.find(c => c.id === item.cutId) || null;
+        const cuts = Array.isArray(product.cuts) ? product.cuts : [];
+        const cut = cuts.find(c => c.id === item.cutId) || null;
         const unitPrice = money(product.pricePerKg + Number(cut?.extraPerKg || 0));
         const lineTotal = money(unitPrice * quantityKg);
         subtotal = money(subtotal + lineTotal);
@@ -233,10 +303,12 @@ router.post('/orders', async (req, res, next) => {
         product.updatedAt = new Date().toISOString();
       });
 
+      const now = new Date().toISOString();
       const created = {
         id: crypto.randomUUID(),
         code: `EM-${Date.now().toString(36).toUpperCase()}`,
         fishermanId: orderFishermanId,
+        customerUserId: loggedCustomer?.id || null,
         customer: {
           name: String(customer.name).trim(),
           phone: String(customer.phone).trim(),
@@ -250,8 +322,8 @@ router.post('/orders', async (req, res, next) => {
         total: money(subtotal + shippingFee),
         status: 'recebido',
         stockRestored: false,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        createdAt: now,
+        updatedAt: now
       };
       db.orders.push(created);
       return created;
@@ -271,6 +343,7 @@ router.get('/orders/:id', async (req, res, next) => {
     const db = await readDb();
     const order = db.orders.find(item => item.id === req.params.id || item.code === req.params.id);
     if (!order) return res.status(404).json({ error: 'Pedido não encontrado.' });
+
     res.json({
       code: order.code,
       status: order.status,
@@ -280,6 +353,29 @@ router.get('/orders/:id', async (req, res, next) => {
       createdAt: order.createdAt,
       updatedAt: order.updatedAt
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/customer/orders', authRequired, requireCustomer, async (req, res, next) => {
+  try {
+    const db = await readDb();
+    const items = db.orders
+      .filter(item => item.customerUserId === req.auth.user.id)
+      .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
+      .map(order => {
+        const fisherman = db.fishermen.find(item => item.id === order.fishermanId);
+        return {
+          ...order,
+          fisherman: fisherman ? {
+            displayName: fisherman.displayName,
+            community: fisherman.community
+          } : null
+        };
+      });
+
+    res.json({ items });
   } catch (error) {
     next(error);
   }
@@ -296,6 +392,7 @@ router.get('/dashboard', async (req, res, next) => {
 
     const products = db.products
       .filter(item => item.fishermanId === fisherman.id)
+      .map(availabilityView)
       .sort((a, b) => String(b.updatedAt || b.createdAt).localeCompare(String(a.updatedAt || a.createdAt)));
 
     const orders = db.orders
@@ -307,8 +404,9 @@ router.get('/dashboard', async (req, res, next) => {
       products,
       orders,
       summary: {
-        productsPublished: products.filter(item => item.status === 'published').length,
+        productsPublished: products.filter(item => item.active).length,
         productsPending: products.filter(item => item.status === 'pending_review').length,
+        productsExpired: products.filter(item => item.expired && item.status === 'published').length,
         openOrders: orders.filter(item => !['concluido', 'recusado', 'cancelado'].includes(item.status)).length,
         totalOrders: orders.length
       }
@@ -328,6 +426,7 @@ router.patch('/dashboard/profile', async (req, res, next) => {
       if (req.body?.community !== undefined) item.community = String(req.body.community).trim();
       if (req.body?.pickupReference !== undefined) item.pickupReference = String(req.body.pickupReference).trim();
       if (req.body?.bio !== undefined) item.bio = String(req.body.bio).trim();
+      if (req.body?.whatsappPublic !== undefined) item.whatsappPublic = Boolean(req.body.whatsappPublic);
       if (req.body?.shipping) item.shipping = normalizeShipping(req.body.shipping, item.shipping || {});
       item.updatedAt = new Date().toISOString();
 
@@ -349,8 +448,12 @@ router.post('/dashboard/products', async (req, res, next) => {
     const pricePerKg = Number(body.pricePerKg);
 
     if (!species) return res.status(400).json({ error: 'Informe o pescado.' });
-    if (!Number.isFinite(quantityKg) || quantityKg <= 0) return res.status(400).json({ error: 'Informe a quantidade disponível em kg.' });
-    if (!Number.isFinite(pricePerKg) || pricePerKg <= 0) return res.status(400).json({ error: 'Informe o preço por kg.' });
+    if (!Number.isFinite(quantityKg) || quantityKg <= 0) {
+      return res.status(400).json({ error: 'Informe a quantidade disponível em kg.' });
+    }
+    if (!Number.isFinite(pricePerKg) || pricePerKg <= 0) {
+      return res.status(400).json({ error: 'Informe o preço por kg.' });
+    }
 
     const db = await readDb();
     const fisherman = fishermanForUser(db, req.auth.user.id);
@@ -371,13 +474,18 @@ router.post('/dashboard/products', async (req, res, next) => {
       description: String(body.description || '').trim(),
       cuts: normalizeCuts(body.cuts),
       shipping: normalizeShipping(body.shipping || {}, fisherman.shipping || {}),
-      status: fisherman.status === 'published' ? 'pending_review' : 'pending_review',
+      availabilityHours: normalizeAvailabilityHours(body.availabilityHours),
+      expiresAt: null,
+      status: 'pending_review',
       createdAt: now,
       updatedAt: now
     };
 
     await mutateDb(store => store.products.push(product));
-    res.status(201).json({ message: 'Pescado cadastrado e enviado para curadoria.', product });
+    res.status(201).json({
+      message: 'Pescado cadastrado e enviado para curadoria. A contagem de disponibilidade começa quando ele for publicado.',
+      product
+    });
   } catch (error) {
     next(error);
   }
@@ -386,11 +494,12 @@ router.post('/dashboard/products', async (req, res, next) => {
 router.patch('/dashboard/products/:id', async (req, res, next) => {
   try {
     const body = req.body || {};
+
     const product = await mutateDb(db => {
       const fisherman = fishermanForUser(db, req.auth.user.id);
       if (!fisherman) throw Object.assign(new Error('Perfil de pescador não encontrado.'), { status: 404 });
-      const item = assertOwnedProduct(db, req.params.id, fisherman.id);
 
+      const item = assertOwnedProduct(db, req.params.id, fisherman.id);
       const reviewFields = ['species', 'pricePerKg', 'cuts', 'shipping', 'originNote', 'description', 'category'];
       const requiresReview = reviewFields.some(field => Object.prototype.hasOwnProperty.call(body, field));
 
@@ -398,24 +507,43 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
       if (body.scientificName !== undefined) item.scientificName = String(body.scientificName).trim();
       if (body.category !== undefined) item.category = String(body.category).trim();
       if (body.state !== undefined) item.state = String(body.state).trim();
+
       if (body.quantityKg !== undefined) {
         const value = Number(body.quantityKg);
-        if (!Number.isFinite(value) || value < 0) throw Object.assign(new Error('Quantidade inválida.'), { status: 400 });
+        if (!Number.isFinite(value) || value < 0) {
+          throw Object.assign(new Error('Quantidade inválida.'), { status: 400 });
+        }
         item.quantityKg = money(value);
       }
+
       if (body.pricePerKg !== undefined) {
         const value = Number(body.pricePerKg);
-        if (!Number.isFinite(value) || value <= 0) throw Object.assign(new Error('Preço inválido.'), { status: 400 });
+        if (!Number.isFinite(value) || value <= 0) {
+          throw Object.assign(new Error('Preço inválido.'), { status: 400 });
+        }
         item.pricePerKg = money(value);
       }
+
       if (body.catchDate !== undefined) item.catchDate = String(body.catchDate).trim();
       if (body.originNote !== undefined) item.originNote = String(body.originNote).trim();
       if (body.description !== undefined) item.description = String(body.description).trim();
       if (body.cuts !== undefined) item.cuts = normalizeCuts(body.cuts);
       if (body.shipping !== undefined) item.shipping = normalizeShipping(body.shipping, item.shipping || {});
 
-      if (requiresReview && item.status === 'published') item.status = 'pending_review';
-      if (item.status === 'rejected') item.status = 'pending_review';
+      if (body.availabilityHours !== undefined) {
+        item.availabilityHours = normalizeAvailabilityHours(body.availabilityHours);
+        if (item.status === 'published') item.expiresAt = expiresFromNow(item.availabilityHours);
+      }
+
+      if (requiresReview && item.status === 'published') {
+        item.status = 'pending_review';
+        item.expiresAt = null;
+      }
+      if (item.status === 'rejected') {
+        item.status = 'pending_review';
+        item.expiresAt = null;
+      }
+
       item.updatedAt = new Date().toISOString();
       return item;
     });
@@ -424,7 +552,7 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
       message: product.status === 'pending_review'
         ? 'Alterações salvas e enviadas para revisão.'
         : 'Pescado atualizado.',
-      product
+      product: availabilityView(product)
     });
   } catch (error) {
     next(error);
@@ -434,18 +562,44 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
 router.patch('/dashboard/products/:id/status', async (req, res, next) => {
   try {
     const action = String(req.body?.action || '');
-    if (!['pause', 'submit'].includes(action)) return res.status(400).json({ error: 'Ação inválida.' });
+    if (!['pause', 'submit', 'renew'].includes(action)) {
+      return res.status(400).json({ error: 'Ação inválida.' });
+    }
 
     const product = await mutateDb(db => {
       const fisherman = fishermanForUser(db, req.auth.user.id);
       if (!fisherman) throw Object.assign(new Error('Perfil de pescador não encontrado.'), { status: 404 });
+
       const item = assertOwnedProduct(db, req.params.id, fisherman.id);
-      item.status = action === 'pause' ? 'paused' : 'pending_review';
+
+      if (action === 'pause') {
+        item.status = 'paused';
+      } else if (action === 'submit') {
+        item.status = 'pending_review';
+        item.expiresAt = null;
+      } else {
+        const previouslyPublished = item.status === 'published' || item.status === 'paused' || Boolean(item.publishedAt);
+        if (!previouslyPublished) {
+          throw Object.assign(new Error('Este pescado precisa ser aprovado antes da primeira renovação.'), { status: 409 });
+        }
+        if (Number(item.quantityKg) <= 0) {
+          throw Object.assign(new Error('Atualize o estoque antes de renovar o anúncio.'), { status: 409 });
+        }
+        item.status = 'published';
+        item.expiresAt = expiresFromNow(item.availabilityHours);
+      }
+
       item.updatedAt = new Date().toISOString();
       return item;
     });
 
-    res.json({ message: action === 'pause' ? 'Anúncio pausado.' : 'Anúncio enviado para revisão.', product });
+    const message = action === 'pause'
+      ? 'Anúncio pausado.'
+      : action === 'renew'
+        ? `Disponibilidade renovada por ${normalizeAvailabilityHours(product.availabilityHours)} horas.`
+        : 'Anúncio enviado para revisão.';
+
+    res.json({ message, product: availabilityView(product) });
   } catch (error) {
     next(error);
   }
@@ -460,6 +614,7 @@ router.get('/dashboard/orders', async (req, res, next) => {
     const items = db.orders
       .filter(item => item.fishermanId === fisherman.id)
       .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+
     res.json({ items });
   } catch (error) {
     next(error);
@@ -469,7 +624,9 @@ router.get('/dashboard/orders', async (req, res, next) => {
 router.patch('/dashboard/orders/:id/status', async (req, res, next) => {
   try {
     const nextStatus = String(req.body?.status || '');
-    if (!ORDER_STATUS.has(nextStatus)) return res.status(400).json({ error: 'Status de pedido inválido.' });
+    if (!ORDER_STATUS.has(nextStatus)) {
+      return res.status(400).json({ error: 'Status de pedido inválido.' });
+    }
 
     const order = await mutateDb(db => {
       const fisherman = fishermanForUser(db, req.auth.user.id);
