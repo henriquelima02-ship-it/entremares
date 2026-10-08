@@ -31,6 +31,7 @@
             <p>${esc(item.bio || 'Perfil cadastrado na frente Camarão na Tarrafa.')}</p>
             <div class="product-info"><span><strong>Ponto de retirada</strong></span><span>${esc(item.pickupReference || 'A combinar')}</span></div>
             <div class="mini-tags">${tags(item.shipping)}</div>
+            ${item.whatsapp ? `<a class="btn whatsapp-btn btn-wide" href="https://wa.me/${esc(item.whatsapp)}?text=${encodeURIComponent('Olá! Vi seu perfil no EntreMarés / Camarão na Tarrafa. Quais pescados estão disponíveis hoje?')}" target="_blank" rel="noopener noreferrer">Perguntar no WhatsApp</a>` : ''}
             <a class="btn btn-secondary btn-wide" href="./pescados.html">Ver pescados disponíveis</a>
           </div>
         </article>`).join('');
