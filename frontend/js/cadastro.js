@@ -131,10 +131,13 @@
 
       const modeText = registration.demo ? 'Tudo ficou salvo somente neste navegador.' : 'Os dados foram recebidos pelo backend.';
       const productText = productResponse ? ` <strong>${species}</strong> também foi cadastrado.` : '';
-      result.innerHTML = `<strong>Cadastro concluído.</strong>${productText} ${modeText} <a href="./pescados.html">Abrir a vitrine de pescados →</a>`;
+      const nextLink = role === 'pescador'
+        ? '<a href="./painel-pescador.html">Abrir meu painel →</a>'
+        : '<a href="./pescados.html">Abrir a vitrine de pescados →</a>';
+      result.innerHTML = `<strong>Cadastro concluído.</strong>${productText} ${modeText} ${nextLink}`;
       result.classList.remove('hidden');
       form.reset();
-      setRole('cliente');
+      if (role !== 'pescador') setRole('cliente');
     } catch (error) {
       result.innerHTML = `<strong>Não foi possível concluir.</strong> ${error.message}`;
       result.classList.remove('hidden');
