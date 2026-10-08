@@ -52,9 +52,22 @@ function expiresFromNow(hours) {
   return new Date(Date.now() + normalized * 60 * 60 * 1000).toISOString();
 }
 
+function effectiveExpiresAt(product) {
+  if (!product) return null;
+  if (product.expiresAt) return product.expiresAt;
+  if (product.status !== 'published') return null;
+
+  const base = product.publishedAt || product.reviewedAt || product.updatedAt || product.createdAt;
+  const baseTime = Date.parse(base);
+  if (!Number.isFinite(baseTime)) return null;
+
+  return new Date(baseTime + normalizeAvailabilityHours(product.availabilityHours) * 60 * 60 * 1000).toISOString();
+}
+
 function isExpired(product) {
-  if (!product?.expiresAt) return false;
-  const time = Date.parse(product.expiresAt);
+  const expiresAt = effectiveExpiresAt(product);
+  if (!expiresAt) return false;
+  const time = Date.parse(expiresAt);
   return Number.isFinite(time) && time <= Date.now();
 }
 
@@ -68,6 +81,7 @@ function availabilityView(product) {
   return {
     ...product,
     availabilityHours: normalizeAvailabilityHours(product.availabilityHours),
+    expiresAt: effectiveExpiresAt(product),
     expired: isExpired(product),
     active: isPublicProduct(product)
   };
