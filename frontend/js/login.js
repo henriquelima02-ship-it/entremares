@@ -30,6 +30,11 @@
     mode.textContent = 'MODO DEMONSTRAÇÃO';
     form.classList.add('hidden');
     demoBox.classList.remove('hidden');
+    const demoButton = document.getElementById('demoFisherLogin');
+    if (next === 'curadoria-comercial.html') {
+      demoButton.textContent = 'Abrir curadoria demonstrativa';
+      demoBox.querySelector('p').textContent = 'O GitHub Pages não executa o backend Node. Você pode testar a curadoria localmente, sem usar dados reais.';
+    }
   }
 
   function destination(session) {
@@ -65,7 +70,9 @@
   });
 
   document.getElementById('demoFisherLogin').addEventListener('click', () => {
-    const session = api.startDemoFisherSession();
+    const session = next === 'curadoria-comercial.html'
+      ? api.startDemoCuratorSession()
+      : api.startDemoFisherSession();
     window.location.href = destination(session);
   });
 })();
