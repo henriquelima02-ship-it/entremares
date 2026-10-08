@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1D4B43">
+  <meta name="description" content="Curadoria comercial de pescadores e pescados da frente Camarão na Tarrafa.">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Curadoria comercial | EntreMarés</title>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+  <nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./curadoria.html">Curadoria de conteúdo</a><a href="./curadoria-comercial.html">Curadoria comercial</a></nav>
+</header>
+<main>
+  <section class="page-hero">
+    <span class="eyebrow">Área restrita</span>
+    <h1>Curadoria comercial</h1>
+    <p>Revisão de perfis de pescadores e anúncios antes da publicação na vitrine do Camarão na Tarrafa.</p>
+  </section>
+
+  <section class="section">
+    <div id="curatorAccess" class="api-status demo"></div>
+    <div id="curatorActions" class="toolbar hidden">
+      <button id="demoCuratorButton" class="btn btn-secondary" type="button">Ativar curadoria demonstrativa</button>
+      <a class="btn btn-primary" href="./login.html?next=curadoria-comercial.html">Entrar como curador</a>
+    </div>
+
+    <div id="curationWorkspace" class="hidden">
+      <section class="dashboard-summary">
+        <article><span>Pescadores aguardando</span><strong id="curFisherPending">0</strong></article>
+        <article><span>Pescados aguardando</span><strong id="curProductPending">0</strong></article>
+        <article><span>Pescadores publicados</span><strong id="curFisherPublished">0</strong></article>
+        <article><span>Pedidos abertos</span><strong id="curOrdersOpen">0</strong></article>
+      </section>
+
+      <div class="curation-columns">
+        <section class="panel-section">
+          <div class="panel-section-head"><div><span class="step-kicker">Perfis</span><h2>Pescadores pendentes</h2></div></div>
+          <div id="pendingFishermen" class="dashboard-list"></div>
+          <div id="pendingFishermenEmpty" class="empty-state hidden">Nenhum perfil aguardando revisão.</div>
+        </section>
+
+        <section class="panel-section">
+          <div class="panel-section-head"><div><span class="step-kicker">Anúncios</span><h2>Pescados pendentes</h2></div></div>
+          <div id="pendingProducts" class="dashboard-list"></div>
+          <div id="pendingProductsEmpty" class="empty-state hidden">Nenhum pescado aguardando revisão.</div>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer"><div><strong>EntreMarés</strong><span>Curadoria comercial • Camarão na Tarrafa</span></div><a href="./curadoria.html">Curadoria de conteúdo</a></footer>
+<script src="./js/site.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/curadoria-comercial.js"></script>
+</body>
+</html>
