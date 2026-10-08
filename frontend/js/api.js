@@ -95,6 +95,12 @@
     return { message: 'Pescado salvo apenas neste navegador em modo demonstrativo.', product, demo: true };
   }
 
+  async function listFishermen() {
+    if (base) return request('/market/fishermen');
+    const data = demoData();
+    return { items: data.fishermen.slice(), demo: true };
+  }
+
   async function listProducts(filters = {}) {
     if (base) {
       const query = new URLSearchParams();
@@ -137,6 +143,7 @@
     base,
     registerUser,
     createProduct,
+    listFishermen,
     listProducts,
     shippingOptions,
     createOrder
