@@ -62,9 +62,12 @@
       } else if (currentSession?.user?.curator) {
         account.href = `${prefixForNav()}curadoria-comercial.html`;
         account.textContent = 'Curadoria';
+      } else if (currentSession?.user?.role === 'cliente') {
+        account.href = `${prefixForNav()}minha-conta.html`;
+        account.textContent = 'Meus pedidos';
       } else {
         account.href = `${prefixForNav()}login.html`;
-        account.textContent = 'Entrar';
+        account.textContent = 'Comprar / Vender';
       }
       nav.appendChild(account);
     }
@@ -74,8 +77,16 @@
   if (publicPage && !document.querySelector('.mobile-quick-nav')) {
     const prefix = prefixForNav();
     const currentSession = session();
-    const accountFile = currentSession?.user?.role === 'pescador' ? 'painel-pescador.html' : 'login.html';
-    const accountLabel = currentSession?.user?.role === 'pescador' ? 'Painel' : 'Entrar';
+    const accountFile = currentSession?.user?.role === 'pescador'
+      ? 'painel-pescador.html'
+      : currentSession?.user?.role === 'cliente'
+        ? 'minha-conta.html'
+        : 'login.html';
+    const accountLabel = currentSession?.user?.role === 'pescador'
+      ? 'Painel'
+      : currentSession?.user?.role === 'cliente'
+        ? 'Pedidos'
+        : 'Acesso';
     const quickNav = document.createElement('nav');
     quickNav.className = 'mobile-quick-nav';
     quickNav.setAttribute('aria-label', 'Acesso rápido');
