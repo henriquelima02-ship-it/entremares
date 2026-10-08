@@ -27,6 +27,19 @@ const ORDER_STATUS = new Set([
 ]);
 
 const AVAILABILITY_HOURS = new Set([24, 36, 42]);
+const SALE_UNITS = new Set(['kg', 'duzia', 'lote_20kg']);
+
+function normalizeSaleUnit(value) {
+  const unit = String(value || 'kg');
+  return SALE_UNITS.has(unit) ? unit : 'kg';
+}
+
+function saleUnitLabel(value) {
+  const unit = normalizeSaleUnit(value);
+  if (unit === 'duzia') return 'dúzia';
+  if (unit === 'lote_20kg') return 'lote de 20 kg';
+  return 'kg';
+}
 
 function money(value) {
   return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
@@ -292,6 +305,8 @@ router.post('/orders', authOptional, async (req, res, next) => {
           fishermanId: product.fishermanId,
           species: product.species,
           quantityKg,
+          saleUnit: normalizeSaleUnit(product.saleUnit),
+          saleUnitLabel: saleUnitLabel(product.saleUnit),
           cut: cut ? { id: cut.id, label: cut.label } : null,
           unitPrice,
           lineTotal
@@ -466,7 +481,7 @@ router.post('/dashboard/products', async (req, res, next) => {
       return res.status(400).json({ error: 'Informe a quantidade disponível em kg.' });
     }
     if (!Number.isFinite(pricePerKg) || pricePerKg <= 0) {
-      return res.status(400).json({ error: 'Informe o preço por kg.' });
+      return res.status(400).json({ error: 'Informe o preço da unidade de venda.' });
     }
 
     const db = await readDb();
@@ -483,6 +498,8 @@ router.post('/dashboard/products', async (req, res, next) => {
       state: String(body.state || 'fresco').trim(),
       quantityKg: money(quantityKg),
       pricePerKg: money(pricePerKg),
+      saleUnit: normalizeSaleUnit(body.saleUnit),
+      saleUnitLabel: saleUnitLabel(body.saleUnit),
       catchDate: String(body.catchDate || '').trim(),
       originNote: String(body.originNote || '').trim(),
       description: String(body.description || '').trim(),
@@ -524,6 +541,7 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
         (body.species !== undefined && String(body.species).trim() !== String(item.species || '')) ||
         (body.pricePerKg !== undefined && money(Number(body.pricePerKg)) !== money(Number(item.pricePerKg))) ||
         (body.category !== undefined && String(body.category).trim() !== String(item.category || '')) ||
+        (body.saleUnit !== undefined && normalizeSaleUnit(body.saleUnit) !== normalizeSaleUnit(item.saleUnit)) ||
         (body.originNote !== undefined && String(body.originNote).trim() !== String(item.originNote || '')) ||
         (body.description !== undefined && String(body.description).trim() !== String(item.description || '')) ||
         (body.cuts !== undefined && JSON.stringify(nextCuts) !== JSON.stringify(item.cuts || [])) ||
@@ -532,6 +550,13 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
       if (body.species !== undefined) item.species = String(body.species).trim();
       if (body.scientificName !== undefined) item.scientificName = String(body.scientificName).trim();
       if (body.category !== undefined) item.category = String(body.category).trim();
+      if (body.saleUnit !== undefined) {
+        item.saleUnit = normalizeSaleUnit(body.saleUnit);
+        item.saleUnitLabel = saleUnitLabel(body.saleUnit);
+      } else if (!item.saleUnit) {
+        item.saleUnit = 'kg';
+        item.saleUnitLabel = 'kg';
+      }
       if (body.state !== undefined) item.state = String(body.state).trim();
 
       if (body.quantityKg !== undefined) {
