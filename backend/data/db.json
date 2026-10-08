@@ -1,0 +1,113 @@
+{
+  "users": [],
+  "fishermen": [
+    {
+      "id": "demo-pescador-01",
+      "userId": null,
+      "displayName": "Pescador demonstrativo",
+      "community": "Baía de Paranaguá",
+      "pickupReference": "Ponto de retirada a combinar",
+      "bio": "Perfil fictício usado apenas para demonstrar o fluxo do módulo Camarão na Tarrafa.",
+      "shipping": {
+        "pickup": true,
+        "communityDelivery": true,
+        "collaborativeFreight": true,
+        "deliveryFee": 8,
+        "collaborativeFee": 12,
+        "notes": "Valores e rotas são demonstrativos e devem ser confirmados antes da operação real."
+      },
+      "status": "published",
+      "createdAt": "2026-10-08T00:00:00.000Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "demo-camarao-branco",
+      "fishermanId": "demo-pescador-01",
+      "species": "Camarão-branco",
+      "scientificName": "",
+      "category": "crustaceo",
+      "state": "resfriado",
+      "quantityKg": 12,
+      "pricePerKg": 42,
+      "catchDate": "",
+      "originNote": "Exemplo demonstrativo — não representa estoque real.",
+      "description": "Produto fictício para testar cortes, retirada, entrega comunitária e frete colaborativo.",
+      "cuts": [
+        { "id": "inteiro", "label": "Inteiro", "extraPerKg": 0 },
+        { "id": "descascado", "label": "Descascado", "extraPerKg": 8 },
+        { "id": "sem_cabeca", "label": "Sem cabeça", "extraPerKg": 5 }
+      ],
+      "shipping": {
+        "pickup": true,
+        "communityDelivery": true,
+        "collaborativeFreight": true,
+        "deliveryFee": 8,
+        "collaborativeFee": 12,
+        "notes": "Demonstração de logística comunitária."
+      },
+      "status": "published",
+      "createdAt": "2026-10-08T00:00:00.000Z",
+      "updatedAt": "2026-10-08T00:00:00.000Z"
+    },
+    {
+      "id": "demo-tainha",
+      "fishermanId": "demo-pescador-01",
+      "species": "Tainha",
+      "scientificName": "",
+      "category": "peixe",
+      "state": "fresco",
+      "quantityKg": 18,
+      "pricePerKg": 29,
+      "catchDate": "",
+      "originNote": "Exemplo demonstrativo — não representa estoque real.",
+      "description": "Exemplo de pescado com opções de preparo para demonstrar a experiência do site.",
+      "cuts": [
+        { "id": "inteiro", "label": "Inteiro", "extraPerKg": 0 },
+        { "id": "limpo", "label": "Limpo", "extraPerKg": 3 },
+        { "id": "posta", "label": "Posta", "extraPerKg": 6 }
+      ],
+      "shipping": {
+        "pickup": true,
+        "communityDelivery": true,
+        "collaborativeFreight": false,
+        "deliveryFee": 8,
+        "collaborativeFee": 0,
+        "notes": "Demonstração de logística comunitária."
+      },
+      "status": "published",
+      "createdAt": "2026-10-08T00:00:00.000Z",
+      "updatedAt": "2026-10-08T00:00:00.000Z"
+    },
+    {
+      "id": "demo-robalo",
+      "fishermanId": "demo-pescador-01",
+      "species": "Robalo",
+      "scientificName": "",
+      "category": "peixe",
+      "state": "fresco",
+      "quantityKg": 8,
+      "pricePerKg": 48,
+      "catchDate": "",
+      "originNote": "Exemplo demonstrativo — não representa estoque real.",
+      "description": "Produto fictício para validar o cadastro de filé, posta e retirada.",
+      "cuts": [
+        { "id": "inteiro", "label": "Inteiro", "extraPerKg": 0 },
+        { "id": "file", "label": "Filé", "extraPerKg": 12 },
+        { "id": "posta", "label": "Posta", "extraPerKg": 7 }
+      ],
+      "shipping": {
+        "pickup": true,
+        "communityDelivery": false,
+        "collaborativeFreight": true,
+        "deliveryFee": 0,
+        "collaborativeFee": 12,
+        "notes": "Demonstração de logística comunitária."
+      },
+      "status": "published",
+      "createdAt": "2026-10-08T00:00:00.000Z",
+      "updatedAt": "2026-10-08T00:00:00.000Z"
+    }
+  ],
+  "orders": []
+}
