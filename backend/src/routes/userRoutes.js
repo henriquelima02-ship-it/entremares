@@ -32,8 +32,6 @@ router.post('/register', async (req, res, next) => {
 
     const normalizedEmail = String(email || '').trim().toLowerCase();
     if (normalizedEmail && !normalizedEmail.includes('@')) return res.status(400).json({ error: 'Revise o e-mail informado.' });
-    if (role === 'cliente' && !normalizedEmail) return res.status(400).json({ error: 'Informe um e-mail válido.' });
-
     if (!password || String(password).length < 8) return res.status(400).json({ error: 'A senha precisa ter pelo menos 8 caracteres.' });
 
     const existing = await readDb();
@@ -65,6 +63,7 @@ router.post('/register', async (req, res, next) => {
       community: String(profile.community || '').trim(),
       pickupReference: String(profile.pickupReference || '').trim(),
       bio: String(profile.bio || '').trim(),
+      whatsappPublic: profile.whatsappPublic !== false,
       shipping: {
         pickup: profile.shipping?.pickup !== false,
         communityDelivery: Boolean(profile.shipping?.communityDelivery),
@@ -84,7 +83,7 @@ router.post('/register', async (req, res, next) => {
     });
 
     res.status(201).json({
-      message: fisherman ? 'Cadastro de pescador recebido para revisão.' : 'Cadastro realizado.',
+      message: fisherman ? 'Cadastro de pescador recebido para revisão.' : 'Cadastro de cliente realizado.',
       token: signToken(user),
       user: publicUser(user),
       fisherman
@@ -113,7 +112,10 @@ router.post('/login', async (req, res, next) => {
       return res.status(401).json({ error: 'Telefone/e-mail ou senha inválidos.' });
     }
 
-    const fisherman = user.role === 'pescador' ? db.fishermen.find(item => item.userId === user.id) || null : null;
+    const fisherman = user.role === 'pescador'
+      ? db.fishermen.find(item => item.userId === user.id) || null
+      : null;
+
     res.json({
       token: signToken(user),
       user: publicUser(user),
