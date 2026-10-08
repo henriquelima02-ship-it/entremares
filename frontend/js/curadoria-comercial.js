@@ -48,6 +48,7 @@
         <p>${esc(item.bio || 'Sem apresentação informada.')}</p>
         <dl class="review-facts">
           <div><dt>Ponto de retirada</dt><dd>${esc(item.pickupReference || 'A combinar')}</dd></div>
+          <div><dt>WhatsApp público</dt><dd>${item.whatsappPublic ? 'Sim — receber pedidos pelo WhatsApp' : 'Não'}</dd></div>
           ${item.privateContact ? `<div><dt>Contato para conferência</dt><dd>${esc(item.privateContact.name)} • ${esc(item.privateContact.email)} • ${esc(item.privateContact.phone)}</dd></div>` : ''}
         </dl>
         <div class="curation-actions">
@@ -82,6 +83,7 @@
         <dl class="review-facts">
           <div><dt>Pescador</dt><dd>${esc(item.fisherman?.displayName || item.fishermanId)}</dd></div>
           <div><dt>Estoque</dt><dd>${Number(item.quantityKg || 0).toLocaleString('pt-BR')} kg • ${esc(item.state || '')}</dd></div>
+          <div><dt>Prazo do anúncio</dt><dd>${Number(item.availabilityHours || 36)} horas após a publicação</dd></div>
           <div><dt>Cortes</dt><dd>${esc((item.cuts || []).map(cut => cut.label).join(' • ') || 'A combinar')}</dd></div>
           <div><dt>Origem / observação</dt><dd>${esc(item.originNote || 'Não informada')}</dd></div>
         </dl>
