@@ -604,15 +604,23 @@
     const product = data.products.find(item => item.id === productId);
     if (!product) throw new Error('Pescado não encontrado.');
 
-    const reviewFields = ['species', 'pricePerKg', 'cuts', 'shipping', 'originNote', 'description', 'category'];
-    const requiresReview = reviewFields.some(field => Object.prototype.hasOwnProperty.call(payload, field));
+    const nextShipping = payload.shipping ? { ...(product.shipping || {}), ...payload.shipping } : product.shipping;
+    const nextCuts = payload.cuts || product.cuts;
+    const requiresReview =
+      (payload.species !== undefined && String(payload.species).trim() !== String(product.species || '')) ||
+      (payload.pricePerKg !== undefined && Number(payload.pricePerKg) !== Number(product.pricePerKg)) ||
+      (payload.category !== undefined && String(payload.category) !== String(product.category || '')) ||
+      (payload.originNote !== undefined && String(payload.originNote).trim() !== String(product.originNote || '')) ||
+      (payload.description !== undefined && String(payload.description).trim() !== String(product.description || '')) ||
+      (payload.cuts !== undefined && JSON.stringify(nextCuts) !== JSON.stringify(product.cuts || [])) ||
+      (payload.shipping !== undefined && JSON.stringify(nextShipping) !== JSON.stringify(product.shipping || {}));
 
     Object.assign(product, payload, {
       availabilityHours: normalizeHours(payload.availabilityHours ?? product.availabilityHours),
       updatedAt: nowIso()
     });
-    if (payload.cuts) product.cuts = payload.cuts;
-    if (payload.shipping) product.shipping = { ...(product.shipping || {}), ...payload.shipping };
+    if (payload.cuts) product.cuts = nextCuts;
+    if (payload.shipping) product.shipping = nextShipping;
 
     if (product.status === 'published' && payload.availabilityHours !== undefined) {
       product.expiresAt = expiryIso(product.availabilityHours);
