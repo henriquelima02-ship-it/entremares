@@ -7,6 +7,8 @@
   const mode = document.getElementById('loginMode');
   const result = document.getElementById('loginResult');
   const demoBox = document.getElementById('demoLoginBox');
+  const passwordInput = document.getElementById('loginPassword');
+  const togglePassword = document.getElementById('toggleLoginPassword');
   const params = new URLSearchParams(window.location.search);
   const next = params.get('next');
 
@@ -22,18 +24,18 @@
 
   if (api.mode === 'api') {
     status.className = 'api-status online';
-    status.innerHTML = '<strong>Backend conectado.</strong> Use o e-mail e a senha do cadastro.';
-    mode.textContent = 'BACKEND CONECTADO';
+    status.innerHTML = '<strong>Sistema online.</strong> Entre com seu telefone ou e-mail e sua senha.';
+    mode.textContent = 'SISTEMA ONLINE';
   } else {
     status.className = 'api-status demo';
-    status.innerHTML = '<strong>Modo demonstrativo.</strong> O acesso real depende da publicação da API.';
-    mode.textContent = 'MODO DEMONSTRAÇÃO';
+    status.innerHTML = '<strong>Modo de teste.</strong> O acesso real depende da conexão com o servidor.';
+    mode.textContent = 'MODO DE TESTE';
     form.classList.add('hidden');
     demoBox.classList.remove('hidden');
     const demoButton = document.getElementById('demoFisherLogin');
     if (next === 'curadoria-comercial.html') {
       demoButton.textContent = 'Abrir curadoria demonstrativa';
-      demoBox.querySelector('p').textContent = 'O GitHub Pages não executa o backend Node. Você pode testar a curadoria localmente, sem usar dados reais.';
+      demoBox.querySelector('p').textContent = 'Você pode testar a curadoria localmente, sem usar dados reais.';
     }
   }
 
@@ -42,6 +44,12 @@
     if (session?.user?.role === 'pescador') return './painel-pescador.html';
     return './pescados.html';
   }
+
+  togglePassword.addEventListener('click', () => {
+    const show = passwordInput.type === 'password';
+    passwordInput.type = show ? 'text' : 'password';
+    togglePassword.textContent = show ? 'Ocultar senha' : 'Mostrar senha';
+  });
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -56,8 +64,8 @@
     button.textContent = 'Entrando...';
     try {
       const response = await api.login(
-        document.getElementById('loginEmail').value.trim(),
-        document.getElementById('loginPassword').value
+        document.getElementById('loginIdentifier').value.trim(),
+        passwordInput.value
       );
       window.location.href = destination({ user: response.user, fisherman: response.fisherman });
     } catch (error) {
