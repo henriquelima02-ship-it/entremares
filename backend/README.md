@@ -20,7 +20,7 @@ Copie `.env.example` para o ambiente de execução e configure os valores reais:
 - `ALLOWED_ORIGINS`: origens permitidas no CORS, separadas por vírgula.
 - `AUTH_SECRET`: segredo forte usado para assinar as sessões JWT. Obrigatório em produção.
 - `CURATOR_EMAILS`: e-mails autorizados a usar a curadoria comercial, separados por vírgula.
-- `DATA_FILE`: caminho do arquivo JSON de persistência nesta fase.
+- `DATA_FILE`: caminho da base mutável desta fase.
 
 ## Endpoints principais
 
@@ -57,11 +57,13 @@ A curadoria exige sessão autenticada e o e-mail do usuário precisa estar lista
 
 ## Persistência atual
 
-Nesta etapa, os dados ficam em `backend/data/db.json`. A gravação é serializada para evitar duas escritas simultâneas sobre o mesmo arquivo.
+Os dados demonstrativos versionados ficam em `backend/data/seed.json`.
 
-Esse mecanismo é adequado para desenvolvimento, demonstração e piloto de pequena escala, mas **não é o banco final de produção**. Para operação real com vários pescadores e pedidos simultâneos, a próxima migração recomendada é PostgreSQL.
+Ao iniciar pela primeira vez, a API cria uma base mutável em `backend/data/runtime-db.json`, ou no caminho definido por `DATA_FILE`. Esse arquivo é ignorado pelo Git para reduzir o risco de enviar ao repositório e-mails, telefones, hashes de senha ou pedidos usados durante testes.
 
-Se a API for publicada em container com disco persistente, configure `DATA_FILE` para um caminho dentro desse volume.
+O antigo `backend/data/db.json` permanece no histórico do protótipo, mas não é mais usado pela API como base padrão.
+
+A persistência em JSON é adequada para desenvolvimento, demonstração e piloto de pequena escala. Para operação real com vários pescadores e pedidos simultâneos, a próxima migração recomendada é PostgreSQL.
 
 ## Frontend no GitHub Pages
 
@@ -85,10 +87,10 @@ Sem URL configurada, o site entra em **modo demonstrativo local**. Nesse modo, n
 
 - Senhas são transformadas em hash com bcrypt.
 - Sessões da API usam JWT com validade de 7 dias.
-- O token do frontend fica em `sessionStorage`, reduzindo persistência após o fechamento da sessão do navegador.
+- O token do frontend fica em `sessionStorage`.
 - Perfis públicos não expõem e-mail, telefone ou documentos particulares.
 - Coordenadas sensíveis, pontos de espécies ameaçadas e informações pessoais da comunidade não devem ser publicados.
-- Perfis de pescadores e pescados entram em fila de curadoria antes da publicação.
+- Perfis de pescadores e pescados entram em filas de curadoria separadas antes da publicação.
 
 ## Container
 
