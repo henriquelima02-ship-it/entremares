@@ -241,10 +241,13 @@ router.get('/shipping/options', async (req, res, next) => {
     }
     if (product.shipping?.collaborativeFreight) {
       const base = Number(product.shipping.collaborativeFee || 0);
+      const variableFee = normalizeSaleUnit(product.saleUnit) === 'kg'
+        ? Math.max(0, quantityKg - 1) * 1.5
+        : 0;
       options.push({
         id: 'collaborative_freight',
         label: 'Frete colaborativo',
-        fee: money(base + Math.max(0, quantityKg - 1) * 1.5),
+        fee: money(base + variableFee),
         note: product.shipping.notes || 'Valor estimado; a rota é confirmada com a comunidade.'
       });
     }
@@ -320,8 +323,10 @@ router.post('/orders', authOptional, async (req, res, next) => {
       if (shippingType === 'community_delivery' && shipping.communityDelivery) {
         shippingFee = money(shipping.deliveryFee || 0);
       } else if (shippingType === 'collaborative_freight' && shipping.collaborativeFreight) {
-        const totalKg = normalizedItems.reduce((sum, item) => sum + item.quantityKg, 0);
-        shippingFee = money(Number(shipping.collaborativeFee || 0) + Math.max(0, totalKg - 1) * 1.5);
+        const totalQuantity = normalizedItems.reduce((sum, item) => sum + item.quantityKg, 0);
+        const saleUnit = normalizeSaleUnit(firstProduct.saleUnit);
+        const variableFee = saleUnit === 'kg' ? Math.max(0, totalQuantity - 1) * 1.5 : 0;
+        shippingFee = money(Number(shipping.collaborativeFee || 0) + variableFee);
       } else if (shippingType !== 'pickup' || !shipping.pickup) {
         throw Object.assign(new Error('Modalidade de entrega indisponível para este pedido.'), { status: 409 });
       }
