@@ -1,2 +1,110 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#1D4B43"><link rel="stylesheet" href="./css/style.css"><title>Cadastro | EntreMarés</title></head><body><header class="topbar"><a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a><button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button><nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./guia.html">Guia Turístico</a><a href="./saberes.html">Saberes</a><a href="./pesquisas.html">Pesquisas</a><a href="./cadastro.html">Cadastro</a><a class="nav-cta" href="./contribuir.html">Enviar conteúdo</a></nav></header><main><section class="page-hero"><span class="eyebrow">Cadastro</span><h1>Clientes e pescadores</h1><p>Fluxo simplificado para preparar a integração com autenticação, banco de dados e perfis reais.</p></section><section class="section narrow-section"><div class="role-picker"><button class="role-card active" type="button" data-role="cliente" aria-pressed="true"><span>🛒</span><div><strong>Sou cliente</strong><small>Quero acompanhar produtos e pedidos.</small></div></button><button class="role-card" type="button" data-role="pescador" aria-pressed="false"><span>🎣</span><div><strong>Sou pescador</strong><small>Quero preparar meu perfil para anunciar produtos.</small></div></button></div><form id="registerForm" class="form-card" novalidate><input type="hidden" id="role" name="role" value="cliente"><div class="form-title"><div><span class="pill" id="roleLabel">Cadastro de cliente</span><h2>Crie sua conta</h2></div><span class="prototype-badge">MODO PROTÓTIPO</span></div><div class="form-grid"><label class="field"><span>Nome completo *</span><input id="name" name="name" required minlength="3"></label><label class="field"><span>Telefone / WhatsApp *</span><input id="phone" name="phone" required></label><label class="field"><span>E-mail *</span><input id="email" name="email" type="email" required></label><label class="field"><span>Comunidade / localidade</span><input id="community" name="community"></label><label class="field"><span>Senha *</span><input id="password" name="password" type="password" minlength="8" required></label><label class="field"><span>Confirmar senha *</span><input id="confirmPassword" name="confirmPassword" type="password" required></label></div><div id="fisherFields" class="role-fields hidden"><h3>Informações do pescador</h3><div class="form-grid"><label class="field"><span>Nome de exibição</span><input id="displayName" name="displayName"></label><label class="field"><span>Ponto de retirada de referência</span><input id="pickupReference" name="pickupReference"></label></div></div><label class="check-row"><input id="privacy" name="privacy" type="checkbox" required><span>Concordo com o uso dos dados apenas para simulação deste protótipo.</span></label><button class="btn btn-primary" type="submit"><span id="registerSubmitLabel">Criar cadastro de cliente</span></button><p class="security-note">No protótipo, a senha não é armazenada. Na versão real, o backend deverá receber a senha por conexão segura e armazenar apenas o hash.</p></form><div id="registerResult" class="result-card hidden"></div></section></main><footer class="site-footer"><div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras • frente Camarão na Tarrafa</span></div><a href="./curadoria.html">Área de curadoria</a></footer><script src="./js/site.js"></script><script src="./js/cadastro.js"></script></body></html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1D4B43">
+  <meta name="description" content="Cadastro de clientes e pescadores da frente Camarão na Tarrafa, dentro do ecossistema EntreMarés.">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Cadastro de pescadores e clientes | EntreMarés</title>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+  <nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./guia.html">Guia Turístico</a><a href="./saberes.html">Saberes</a><a href="./pesquisas.html">Pesquisas</a><a href="./pescados.html">Pescados</a><a href="./cadastro.html">Cadastro</a><a class="nav-cta" href="./contribuir.html">Enviar conteúdo</a></nav>
+</header>
+<main>
+  <section class="page-hero market-hero">
+    <span class="eyebrow">Camarão na Tarrafa • módulo do EntreMarés</span>
+    <h1>Cadastro de pescadores e pescados</h1>
+    <p>Um fluxo para criar o perfil do pescador, registrar o primeiro pescado, informar cortes disponíveis e definir retirada, entrega comunitária ou frete colaborativo.</p>
+    <div class="service-strip"><span>1. Perfil</span><span>2. Produto</span><span>3. Cortes</span><span>4. Logística</span></div>
+  </section>
+
+  <section class="section narrow-section">
+    <div class="api-status" id="apiStatus" aria-live="polite"></div>
+
+    <div class="role-picker">
+      <button class="role-card active" type="button" data-role="cliente" aria-pressed="true"><span>🛒</span><div><strong>Sou cliente</strong><small>Quero acompanhar produtos e fazer pedidos.</small></div></button>
+      <button class="role-card" type="button" data-role="pescador" aria-pressed="false"><span>🎣</span><div><strong>Sou pescador</strong><small>Quero criar meu perfil e anunciar pescados.</small></div></button>
+    </div>
+
+    <form id="registerForm" class="form-card marketplace-form" novalidate>
+      <input type="hidden" id="role" name="role" value="cliente">
+      <div class="form-title">
+        <div><span class="pill" id="roleLabel">Cadastro de cliente</span><h2>Dados de acesso</h2></div>
+        <span class="prototype-badge" id="modeBadge">MODO DEMONSTRAÇÃO</span>
+      </div>
+
+      <div class="form-grid">
+        <label class="field"><span>Nome completo *</span><input id="name" name="name" autocomplete="name" required minlength="3"></label>
+        <label class="field"><span>Telefone / WhatsApp *</span><input id="phone" name="phone" autocomplete="tel" required></label>
+        <label class="field"><span>E-mail *</span><input id="email" name="email" type="email" autocomplete="email" required></label>
+        <label class="field"><span>Comunidade / localidade</span><input id="community" name="community"></label>
+        <label class="field"><span>Senha *</span><input id="password" name="password" type="password" minlength="8" autocomplete="new-password" required></label>
+        <label class="field"><span>Confirmar senha *</span><input id="confirmPassword" name="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></label>
+      </div>
+
+      <div id="fisherFields" class="role-fields hidden">
+        <div class="form-section-head"><span class="step-kicker">Perfil público</span><h3>Como o pescador aparecerá no site</h3><p>Não publicamos telefone, e-mail ou documentos pessoais no perfil público.</p></div>
+        <div class="form-grid">
+          <label class="field"><span>Nome de exibição *</span><input id="displayName" name="displayName"></label>
+          <label class="field"><span>Ponto de retirada de referência *</span><input id="pickupReference" name="pickupReference" placeholder="Ex.: trapiche, associação ou ponto combinado"></label>
+          <label class="field span-2"><span>Apresentação curta</span><textarea id="bio" name="bio" rows="3" placeholder="Conte um pouco sobre a pesca, sem expor dados sensíveis."></textarea></label>
+        </div>
+
+        <div class="form-section-head"><span class="step-kicker">Primeiro anúncio</span><h3>Pescado disponível</h3><p>O primeiro anúncio é opcional nesta etapa. Se preencher o nome do pescado, quantidade e preço tornam-se obrigatórios.</p></div>
+        <div class="form-grid">
+          <label class="field"><span>Nome do pescado</span><input id="species" name="species" placeholder="Ex.: camarão-branco, tainha, robalo"></label>
+          <label class="field"><span>Categoria</span><select id="category" name="category"><option value="crustaceo">Crustáceo</option><option value="peixe">Peixe</option><option value="molusco">Molusco</option><option value="outro">Outro</option></select></label>
+          <label class="field"><span>Estado</span><select id="state" name="state"><option value="fresco">Fresco</option><option value="resfriado">Resfriado</option><option value="congelado">Congelado</option></select></label>
+          <label class="field"><span>Data da captura</span><input id="catchDate" name="catchDate" type="date"></label>
+          <label class="field"><span>Quantidade disponível (kg)</span><input id="quantityKg" name="quantityKg" type="number" min="0.1" step="0.1"></label>
+          <label class="field"><span>Preço por kg (R$)</span><input id="pricePerKg" name="pricePerKg" type="number" min="0.01" step="0.01"></label>
+          <label class="field span-2"><span>Observação sobre origem / captura</span><input id="originNote" name="originNote" placeholder="Use apenas informações que possam ser publicadas."></label>
+          <label class="field span-2"><span>Descrição do produto</span><textarea id="productDescription" name="productDescription" rows="3"></textarea></label>
+        </div>
+
+        <fieldset class="option-panel">
+          <legend>Cortes e preparos disponíveis</legend>
+          <p class="field-help">Marque somente opções que o pescador realmente consegue oferecer. O acréscimo por kg é opcional.</p>
+          <div class="cut-grid">
+            <label class="option-card"><input type="checkbox" name="cut" value="inteiro" checked><span><strong>Inteiro</strong><small>Sem acréscimo</small></span></label>
+            <label class="option-card"><input type="checkbox" name="cut" value="limpo"><span><strong>Limpo</strong><small>+ R$ <input class="inline-money" data-cut-extra="limpo" type="number" min="0" step="0.5" value="0"></small></span></label>
+            <label class="option-card"><input type="checkbox" name="cut" value="eviscerado"><span><strong>Eviscerado</strong><small>+ R$ <input class="inline-money" data-cut-extra="eviscerado" type="number" min="0" step="0.5" value="0"></small></span></label>
+            <label class="option-card"><input type="checkbox" name="cut" value="file"><span><strong>Filé</strong><small>+ R$ <input class="inline-money" data-cut-extra="file" type="number" min="0" step="0.5" value="0"></small></span></label>
+            <label class="option-card"><input type="checkbox" name="cut" value="posta"><span><strong>Posta</strong><small>+ R$ <input class="inline-money" data-cut-extra="posta" type="number" min="0" step="0.5" value="0"></small></span></label>
+            <label class="option-card"><input type="checkbox" name="cut" value="descascado"><span><strong>Descascado</strong><small>+ R$ <input class="inline-money" data-cut-extra="descascado" type="number" min="0" step="0.5" value="0"></small></span></label>
+            <label class="option-card"><input type="checkbox" name="cut" value="sem_cabeca"><span><strong>Sem cabeça</strong><small>+ R$ <input class="inline-money" data-cut-extra="sem_cabeca" type="number" min="0" step="0.5" value="0"></small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="option-panel">
+          <legend>Retirada, entrega e frete</legend>
+          <div class="shipping-grid">
+            <label class="option-card"><input id="shipPickup" type="checkbox" checked><span><strong>Retirada</strong><small>No ponto informado pelo pescador.</small></span></label>
+            <label class="option-card"><input id="shipDelivery" type="checkbox"><span><strong>Entrega comunitária</strong><small>Rota local com taxa definida.</small></span></label>
+            <label class="option-card"><input id="shipCollaborative" type="checkbox"><span><strong>Frete colaborativo</strong><small>Pedidos agrupados por rota.</small></span></label>
+          </div>
+          <div class="form-grid compact-fields">
+            <label class="field"><span>Taxa da entrega comunitária (R$)</span><input id="deliveryFee" type="number" min="0" step="0.5" value="0"></label>
+            <label class="field"><span>Taxa-base do frete colaborativo (R$)</span><input id="collaborativeFee" type="number" min="0" step="0.5" value="0"></label>
+            <label class="field span-2"><span>Observações de logística</span><input id="shippingNotes" placeholder="Dias, horários, limites da rota, ponto de encontro..."></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <label class="check-row"><input id="privacy" name="privacy" type="checkbox" required><span>Confirmo que os dados são enviados para o objetivo do cadastro e que informações públicas do pescador devem passar por revisão antes da publicação.</span></label>
+      <button class="btn btn-primary btn-wide" type="submit"><span id="registerSubmitLabel">Criar cadastro de cliente</span></button>
+      <p class="security-note" id="securityNote">No modo demonstrativo do GitHub Pages, a senha não é salva. Quando conectado ao backend, ela é enviada à API e armazenada apenas como hash.</p>
+    </form>
+    <div id="registerResult" class="result-card hidden" aria-live="polite"></div>
+  </section>
+</main>
+<footer class="site-footer"><div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras • frente Camarão na Tarrafa</span></div><a href="./pescados.html">Ver pescados</a></footer>
+<script src="./js/site.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/cadastro.js"></script>
+</body>
+</html>
