@@ -55,14 +55,6 @@ router.patch('/fishermen/:id', async (req, res, next) => {
       item.status = action === 'approve' ? 'published' : 'rejected';
       item.reviewedAt = new Date().toISOString();
       item.reviewNote = String(req.body?.note || '').trim();
-      if (action === 'approve') {
-        db.products
-          .filter(product => product.fishermanId === item.id && product.status === 'pending_review')
-          .forEach(product => {
-            product.status = 'published';
-            product.updatedAt = new Date().toISOString();
-          });
-      }
       return item;
     });
     res.json({ message: action === 'approve' ? 'Pescador aprovado.' : 'Cadastro recusado.', fisherman });
