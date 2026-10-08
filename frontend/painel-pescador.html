@@ -12,42 +12,67 @@
 <header class="topbar">
   <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
   <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
-  <nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./pescadores.html">Pescadores</a><a href="./pescados.html">Pescados</a><a href="./painel-pescador.html">Meu painel</a></nav>
+  <nav class="main-nav" data-main-nav>
+    <a href="./index.html">Início</a>
+    <a href="./pescadores.html">Pescadores</a>
+    <a href="./pescados.html">Ver vitrine</a>
+    <a href="./painel-pescador.html">Meu painel</a>
+  </nav>
 </header>
 
 <main>
   <section class="dashboard-hero">
-    <div><span class="eyebrow">Camarão na Tarrafa</span><h1>Meu painel</h1><p id="dashboardWelcome">Carregando perfil...</p></div>
-    <div class="dashboard-actions"><button id="newProductButton" class="btn btn-primary" type="button">+ Novo pescado</button><button id="logoutButton" class="btn btn-secondary" type="button">Sair</button></div>
+    <div>
+      <span class="eyebrow">Camarão na Tarrafa</span>
+      <h1>Meu painel</h1>
+      <p id="dashboardWelcome">Carregando perfil...</p>
+    </div>
+    <div class="dashboard-actions">
+      <button id="newProductButton" class="btn btn-primary" type="button">+ Cadastrar pescado</button>
+      <button id="logoutButton" class="btn btn-secondary" type="button">Sair</button>
+    </div>
   </section>
 
   <section class="dashboard-shell">
     <div id="dashboardStatus" class="api-status demo">Carregando...</div>
 
-    <section id="summaryGrid" class="dashboard-summary">
-      <article><span>Publicados</span><strong id="summaryPublished">0</strong></article>
+    <section class="dashboard-summary">
+      <article><span>Disponíveis agora</span><strong id="summaryPublished">0</strong></article>
       <article><span>Em revisão</span><strong id="summaryPending">0</strong></article>
+      <article><span>Prazo vencido</span><strong id="summaryExpired">0</strong></article>
       <article><span>Pedidos abertos</span><strong id="summaryOpenOrders">0</strong></article>
-      <article><span>Total de pedidos</span><strong id="summaryOrders">0</strong></article>
     </section>
 
     <div class="dashboard-layout">
       <aside class="dashboard-side">
         <form id="profileForm" class="panel-card">
-          <div class="panel-head"><div><span class="step-kicker">Perfil público</span><h2>Meu perfil</h2></div><span id="profileStatus" class="status pending">revisão</span></div>
+          <div class="panel-head">
+            <div><span class="step-kicker">Perfil público</span><h2>Meu perfil</h2></div>
+            <span id="profileStatus" class="status pending">revisão</span>
+          </div>
+
           <label class="field"><span>Nome de exibição</span><input id="profileName" required></label>
           <label class="field"><span>Comunidade</span><input id="profileCommunity"></label>
           <label class="field"><span>Ponto de retirada</span><input id="profilePickup"></label>
           <label class="field"><span>Apresentação</span><textarea id="profileBio" rows="4"></textarea></label>
-          <div class="panel-subsection"><strong>Logística padrão</strong>
+
+          <label class="big-check panel-whatsapp">
+            <input id="profileWhatsappPublic" type="checkbox">
+            <span><strong>Receber pedidos pelo WhatsApp</strong><small>Quando ligado, o cliente vê um botão para chamar você diretamente.</small></span>
+          </label>
+
+          <div class="panel-subsection">
+            <strong>Logística padrão</strong>
             <label class="check-row compact-check"><input id="profilePickupEnabled" type="checkbox"><span>Retirada</span></label>
             <label class="check-row compact-check"><input id="profileDeliveryEnabled" type="checkbox"><span>Entrega comunitária</span></label>
             <label class="check-row compact-check"><input id="profileFreightEnabled" type="checkbox"><span>Frete colaborativo</span></label>
           </div>
+
           <div class="form-grid">
-            <label class="field"><span>Taxa entrega</span><input id="profileDeliveryFee" type="number" min="0" step="0.5"></label>
-            <label class="field"><span>Taxa frete</span><input id="profileFreightFee" type="number" min="0" step="0.5"></label>
+            <label class="field"><span>Taxa entrega</span><input id="profileDeliveryFee" type="number" min="0" step="0.5" inputmode="decimal"></label>
+            <label class="field"><span>Taxa frete</span><input id="profileFreightFee" type="number" min="0" step="0.5" inputmode="decimal"></label>
           </div>
+
           <label class="field"><span>Observação de rota</span><input id="profileShippingNotes"></label>
           <button class="btn btn-secondary btn-wide" type="submit">Salvar perfil</button>
           <div id="profileResult" class="result-card hidden"></div>
@@ -56,7 +81,10 @@
 
       <div class="dashboard-main">
         <section class="panel-section">
-          <div class="panel-section-head"><div><span class="step-kicker">Estoque</span><h2>Meus pescados</h2></div><button class="btn btn-secondary" type="button" data-open-product>+ Cadastrar</button></div>
+          <div class="panel-section-head">
+            <div><span class="step-kicker">Estoque</span><h2>Meus pescados</h2><p class="panel-help">Cada anúncio fica visível por 24, 36 ou 42 horas. Depois você pode renovar com um toque.</p></div>
+            <button class="btn btn-secondary" type="button" data-open-product>+ Cadastrar</button>
+          </div>
           <div id="myProducts" class="dashboard-list"></div>
           <div id="productsEmpty" class="empty-state hidden">Você ainda não cadastrou pescados.</div>
         </section>
@@ -76,16 +104,27 @@
     <button class="dialog-close" type="button" data-close-product aria-label="Fechar">×</button>
     <span class="eyebrow">Pescado</span>
     <h2 id="productEditorTitle">Novo pescado</h2>
+    <p class="muted">Cadastre somente o que está disponível para venda agora.</p>
     <input id="editProductId" type="hidden">
+
     <div class="form-grid">
-      <label class="field"><span>Pescado *</span><input id="editSpecies" required></label>
+      <label class="field"><span>Pescado *</span><input id="editSpecies" required placeholder="Ex.: tainha"></label>
       <label class="field"><span>Categoria</span><select id="editCategory"><option value="crustaceo">Crustáceo</option><option value="peixe">Peixe</option><option value="molusco">Molusco</option><option value="outro">Outro</option></select></label>
       <label class="field"><span>Estado</span><select id="editState"><option value="fresco">Fresco</option><option value="resfriado">Resfriado</option><option value="congelado">Congelado</option></select></label>
       <label class="field"><span>Data da captura</span><input id="editCatchDate" type="date"></label>
-      <label class="field"><span>Quantidade (kg) *</span><input id="editQuantity" type="number" min="0" step="0.1" required></label>
-      <label class="field"><span>Preço por kg (R$) *</span><input id="editPrice" type="number" min="0.01" step="0.01" required></label>
-      <label class="field span-2"><span>Origem / observação</span><input id="editOrigin"></label>
-      <label class="field span-2"><span>Descrição</span><textarea id="editDescription" rows="3"></textarea></label>
+      <label class="field"><span>Quantidade (kg) *</span><input id="editQuantity" type="number" min="0" step="0.1" inputmode="decimal" required></label>
+      <label class="field"><span>Preço por kg (R$) *</span><input id="editPrice" type="number" min="0.01" step="0.01" inputmode="decimal" required></label>
+      <label class="field span-2 availability-choice">
+        <span>Por quanto tempo este pescado fica disponível? *</span>
+        <select id="editAvailabilityHours" required>
+          <option value="24">24 horas</option>
+          <option value="36" selected>36 horas — recomendado</option>
+          <option value="42">42 horas</option>
+        </select>
+        <small>O prazo começa quando o anúncio for aprovado/publicado. Quando vencer, ele some da vitrine até você renovar.</small>
+      </label>
+      <label class="field span-2"><span>Origem / observação <em>(opcional)</em></span><input id="editOrigin"></label>
+      <label class="field span-2"><span>Descrição <em>(opcional)</em></span><textarea id="editDescription" rows="3"></textarea></label>
     </div>
 
     <fieldset class="option-panel">
@@ -102,24 +141,28 @@
     </fieldset>
 
     <fieldset class="option-panel">
-      <legend>Logística deste pescado</legend>
+      <legend>Retirada e entrega</legend>
       <div class="shipping-grid">
         <label class="option-card"><input id="editShipPickup" type="checkbox"><span><strong>Retirada</strong></span></label>
         <label class="option-card"><input id="editShipDelivery" type="checkbox"><span><strong>Entrega comunitária</strong></span></label>
         <label class="option-card"><input id="editShipFreight" type="checkbox"><span><strong>Frete colaborativo</strong></span></label>
       </div>
       <div class="form-grid compact-fields">
-        <label class="field"><span>Taxa entrega</span><input id="editDeliveryFee" type="number" min="0" step="0.5"></label>
-        <label class="field"><span>Taxa frete</span><input id="editFreightFee" type="number" min="0" step="0.5"></label>
+        <label class="field"><span>Taxa entrega</span><input id="editDeliveryFee" type="number" min="0" step="0.5" inputmode="decimal"></label>
+        <label class="field"><span>Taxa frete</span><input id="editFreightFee" type="number" min="0" step="0.5" inputmode="decimal"></label>
         <label class="field span-2"><span>Observações</span><input id="editShippingNotes"></label>
       </div>
     </fieldset>
+
     <button class="btn btn-primary btn-wide" type="submit">Salvar pescado</button>
     <div id="productResult" class="result-card hidden"></div>
   </form>
 </dialog>
 
-<footer class="site-footer"><div><strong>EntreMarés</strong><span>Camarão na Tarrafa • painel do pescador</span></div><a href="./pescados.html">Ver vitrine pública</a></footer>
+<footer class="site-footer">
+  <div><strong>EntreMarés</strong><span>Camarão na Tarrafa • painel do pescador</span></div>
+  <a href="./pescados.html">Ver vitrine pública</a>
+</footer>
 <script src="./js/site.js"></script>
 <script src="./js/api.js"></script>
 <script src="./js/painel-pescador.js"></script>
