@@ -143,11 +143,11 @@
     return { message: 'Cadastro salvo apenas neste navegador em modo demonstrativo.', user: safeUser, fisherman, demo: true };
   }
 
-  async function login(email, password) {
+  async function login(identifier, password) {
     if (base) {
       const response = await request('/users/login', {
         method: 'POST',
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ identifier, password })
       });
       setSession({ token: response.token, user: response.user, fisherman: response.fisherman || null });
       return response;
