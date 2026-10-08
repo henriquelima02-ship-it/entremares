@@ -1,7 +1,9 @@
 (function () {
   const configured = (window.ENTREMARES_API_URL || localStorage.getItem('entremares_api_url') || '').replace(/\/$/, '');
   const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-  const base = configured || (isLocal ? 'http://localhost:3000/api' : '');
+  const isGitHubPages = window.location.hostname === 'henriquelima02-ship-it.github.io';
+  const productionApi = isGitHubPages ? 'https://entremares-api.onrender.com/api' : '';
+  const base = configured || (isLocal ? 'http://localhost:3000/api' : productionApi);
   const DEMO_KEY = 'entremares_market_demo_v3';
   const SESSION_KEY = 'entremares_session_v1';
 
