@@ -6,16 +6,12 @@ EntreMarés é um ecossistema digital voltado à valorização do território ca
 
 O projeto nasceu como **Camarão na Tarrafa**, inicialmente concentrado na pesca artesanal, na valorização dos pescadores, na comercialização de pescados e na logística comunitária. Com a ampliação das pesquisas históricas, territoriais, culturais, ambientais e pedagógicas, o projeto passou a exigir uma marca capaz de representar esse conjunto mais amplo.
 
-A nova relação entre as marcas é:
+A relação entre as marcas é:
 
 - **EntreMarés** → marca e ecossistema principal.
 - **Camarão na Tarrafa** → frente interna dedicada à pesca artesanal, pescadores, pescados, produtos locais, preço justo, cadastro, anúncios, pedidos, retirada, entrega e logística comunitária.
 
-## Propósito
-
-Construir uma plataforma a partir do território caiçara, conectando conhecimento comunitário, pesquisa escolar e tecnologia para registrar, organizar, valorizar e divulgar lugares, memórias, saberes, natureza e produtos locais com responsabilidade.
-
-## Áreas da plataforma
+## Núcleos da plataforma
 
 ### Lugares / Rotas
 Trilhas, comunidades, pontos de interesse, gastronomia, paisagens, história, fauna, flora e experiências locais.
@@ -30,56 +26,102 @@ Pesca artesanal, marés, navegação, culinária, técnicas tradicionais, biodiv
 Produções estudantis, pesquisa de campo, documentos e conteúdos submetidos à revisão e à curadoria antes da publicação.
 
 ### Camarão na Tarrafa
-Frente de pesca artesanal e comercialização, dedicada a pescadores, pescados, produtos locais, preço justo, cadastro, anúncios, pedidos, retirada, entrega e logística comunitária.
+Frente de pesca artesanal e comercialização com perfis de pescadores, pescados, cortes, estoque, preço, retirada, entrega comunitária, frete colaborativo e pedidos.
 
-## Curadoria e responsabilidade
+## Estado atual do protótipo
 
-O EntreMarés adota uma lógica de **pesquisa → curadoria → publicação**. Conteúdos enviados por estudantes, professores ou colaboradores não devem ser publicados automaticamente.
+O frontend já funciona como portal no GitHub Pages e reúne:
 
-A curadoria deve preservar:
+- página inicial do EntreMarés;
+- Guia Turístico;
+- páginas de Piaçaguera e Amparo;
+- História de Piaçaguera;
+- Igreja e Sambaqui;
+- Fauna e Flora;
+- Gastronomia;
+- Saberes;
+- Pesquisas;
+- contribuição e curadoria de conteúdo;
+- vitrine pública de pescados;
+- página pública de pescadores;
+- cadastro de clientes e pescadores;
+- login;
+- painel do pescador;
+- curadoria comercial.
 
-- rigor histórico e científico;
-- referências e fontes já documentadas;
-- distinção entre memória oral, registro comunitário e informação documental;
-- autorização para uso de imagens, entrevistas e relatos;
-- privacidade de estudantes e moradores;
-- respeito aos saberes tradicionais e à autoria comunitária;
-- revisão antes da divulgação pública.
+A frente Camarão na Tarrafa já possui fluxo inicial para:
 
-## Estrutura do repositório
+1. criar perfil do pescador;
+2. cadastrar pescado e estoque;
+3. definir cortes e acréscimos;
+4. definir retirada, entrega ou frete;
+5. receber pedidos;
+6. atualizar o andamento do pedido;
+7. pausar e editar anúncios;
+8. enviar perfis e produtos à curadoria antes da publicação.
+
+## Backend
+
+O diretório `backend/` contém uma API Node.js/Express com:
+
+- autenticação com bcrypt + JWT;
+- autorização de pescador;
+- autorização de curadoria por e-mail configurado no ambiente;
+- persistência JSON separada dos dados versionados;
+- rotas de pescadores, produtos, frete, pedidos, painel e curadoria;
+- configuração para execução em container.
+
+A persistência JSON ainda é de protótipo. A evolução prevista para produção é a migração para um banco transacional, preferencialmente PostgreSQL.
+
+## Estrutura principal
 
 ```text
-camar-onatarrafa/
+entremares/
 ├── README.md
 ├── backend/
+│   ├── Dockerfile
+│   ├── .env.example
+│   ├── README.md
+│   ├── data/
+│   │   ├── db.json
+│   │   └── seed.json
+│   └── src/
 ├── frontend/
 │   ├── index.html
 │   ├── guia.html
 │   ├── saberes.html
 │   ├── pesquisas.html
 │   ├── cadastro.html
+│   ├── login.html
+│   ├── painel-pescador.html
+│   ├── pescadores.html
+│   ├── pescados.html
 │   ├── contribuir.html
 │   ├── curadoria.html
+│   ├── curadoria-comercial.html
 │   ├── conteudos/
-│   │   ├── historia-piacaguera.html
-│   │   ├── fauna-flora-piacaguera.html
-│   │   ├── gastronomia-piacaguera-amparo.html
-│   │   └── igreja-sambaqui-piacaguera.html
 │   ├── locais/
-│   │   ├── piacaguera.html
-│   │   └── amparo.html
 │   ├── css/
 │   └── js/
 └── .github/workflows/
 ```
 
-O `frontend/` concentra o protótipo publicado no GitHub Pages. O `backend/` permanece preservado para os fluxos de cadastro e futuras integrações de dados e serviços.
+## Curadoria e responsabilidade
 
-## Identidade em transição
+O EntreMarés adota a lógica de **pesquisa → curadoria → publicação**. Isso vale tanto para conteúdos históricos/científicos quanto para perfis e anúncios comerciais.
 
-O rebrand será realizado de forma gradual para não quebrar o protótipo existente. Nesta etapa, a marca principal passa a ser **EntreMarés**, com o subtítulo **Saberes, Lugares e Produtos Caiçaras**, enquanto a estrutura técnica, os caminhos e a paleta atual são preservados.
+A curadoria deve preservar:
 
-Paleta provisoriamente mantida:
+- rigor histórico e científico;
+- distinção entre memória oral, registro comunitário e informação documental;
+- autorização para uso de imagens, entrevistas e relatos;
+- privacidade de estudantes, moradores e pescadores;
+- revisão de informações públicas antes da publicação;
+- respeito aos saberes tradicionais e à autoria comunitária.
+
+## Identidade visual
+
+A identidade própria do EntreMarés continua em desenvolvimento. A paleta atual permanece:
 
 - Verde Mangue — `#1D4B43`
 - Azul Estuário — `#3D617B`
@@ -88,10 +130,4 @@ Paleta provisoriamente mantida:
 - Coral — `#D9704A`
 - Branco — `#FAF9F4`
 
-O símbolo `◉` também permanece provisoriamente até a definição da identidade visual própria do EntreMarés.
-
-> **Continuidade técnica:** o nome do repositório `camar-onatarrafa` será mantido temporariamente. Ele **não será renomeado nesta fase**, para evitar quebra de links, referências existentes e do deploy do GitHub Pages.
-
-## Estado atual
-
-O rebrand inicial prioriza a identificação institucional da plataforma sem reestruturar rotas, arquivos, backend, formulários ou conteúdos históricos já publicados. A arquitetura em núcleos será aprofundada gradualmente nas próximas etapas.
+O símbolo `◉` permanece provisoriamente até a consolidação da identidade visual definitiva.
