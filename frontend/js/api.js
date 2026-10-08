@@ -397,7 +397,6 @@
     const fisherman = fishermanFor(data, id);
     if (!fisherman) throw new Error('Pescador não encontrado.');
     fisherman.status = action === 'approve' ? 'published' : 'rejected';
-    if (action === 'approve') data.products.filter(item => item.fishermanId === id && item.status === 'pending_review').forEach(item => item.status = 'published');
     saveDemo(data);
     return { fisherman, demo: true };
   }
