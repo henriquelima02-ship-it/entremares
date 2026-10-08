@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1D4B43">
+  <meta name="description" content="Vitrine demonstrativa da frente Camarão na Tarrafa: pescados, cortes, retirada, entrega comunitária e frete colaborativo.">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Pescados | Camarão na Tarrafa • EntreMarés</title>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+  <nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./guia.html">Guia Turístico</a><a href="./saberes.html">Saberes</a><a href="./pesquisas.html">Pesquisas</a><a href="./pescados.html">Pescados</a><a href="./cadastro.html">Cadastro</a><a class="nav-cta" href="./contribuir.html">Enviar conteúdo</a></nav>
+</header>
+<main>
+  <section class="market-banner">
+    <div class="market-banner-copy">
+      <span class="eyebrow">Camarão na Tarrafa</span>
+      <h1>Pescado local, cortes escolhidos e logística comunitária.</h1>
+      <p>A frente comercial do EntreMarés aproxima pescadores e consumidores com transparência sobre produto, preparo, retirada e entrega.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="./cadastro.html">Sou pescador</a><a class="btn btn-secondary" href="#vitrine">Ver disponibilidade</a></div>
+    </div>
+    <div class="market-seal"><span>🎣</span><strong>Preço justo</strong><small>Origem • preparo • logística</small></div>
+  </section>
+
+  <section class="section" id="vitrine">
+    <div class="section-head"><span class="eyebrow">Vitrine</span><h2>Pescados disponíveis</h2><p id="marketMode">Carregando disponibilidade...</p></div>
+    <div class="market-toolbar">
+      <label class="search-box"><span>Buscar pescado</span><input id="productSearch" type="search" placeholder="Camarão, tainha, robalo..."></label>
+      <label class="select-box"><span>Categoria</span><select id="categoryFilter"><option value="all">Todas</option><option value="peixe">Peixes</option><option value="crustaceo">Crustáceos</option><option value="molusco">Moluscos</option><option value="outro">Outros</option></select></label>
+    </div>
+    <div id="productGrid" class="market-grid"></div>
+    <div id="marketEmpty" class="empty-state hidden">Nenhum pescado encontrado com esses filtros.</div>
+  </section>
+
+  <section class="section trust-grid">
+    <article><span>🐟</span><h3>Produto identificado</h3><p>Espécie, apresentação, quantidade e preço ficam visíveis antes do pedido.</p></article>
+    <article><span>🔪</span><h3>Cortes selecionáveis</h3><p>Inteiro, limpo, filé, posta e outras opções aparecem somente quando oferecidas pelo pescador.</p></article>
+    <article><span>🛶</span><h3>Logística do território</h3><p>Retirada, entrega comunitária e frete colaborativo podem coexistir conforme a rota.</p></article>
+    <article><span>🤝</span><h3>Confirmação humana</h3><p>O pedido digital organiza a intenção de compra; disponibilidade e horário ainda são confirmados com a comunidade.</p></article>
+  </section>
+</main>
+
+<dialog id="orderDialog" class="order-dialog">
+  <form id="orderForm" method="dialog">
+    <button class="dialog-close" type="button" data-close-dialog aria-label="Fechar">×</button>
+    <span class="eyebrow">Montar pedido</span>
+    <h2 id="orderProductName">Pescado</h2>
+    <p id="orderProductMeta" class="muted"></p>
+    <input id="orderProductId" type="hidden">
+    <div class="form-grid">
+      <label class="field"><span>Quantidade (kg)</span><input id="orderQuantity" type="number" min="0.1" step="0.1" value="1" required></label>
+      <label class="field"><span>Corte / preparo</span><select id="orderCut"></select></label>
+      <label class="field span-2"><span>Retirada ou entrega</span><select id="orderShipping"></select><small id="shippingNote"></small></label>
+      <label class="field"><span>Seu nome *</span><input id="orderName" required></label>
+      <label class="field"><span>Telefone / WhatsApp *</span><input id="orderPhone" required></label>
+      <label class="field"><span>Comunidade / bairro</span><input id="orderCommunity"></label>
+      <label class="field"><span>Observação</span><input id="orderNotes" placeholder="Horário, referência, necessidade especial..."></label>
+    </div>
+    <div class="order-total"><span>Estimativa</span><strong id="orderTotal">R$ 0,00</strong><small id="orderTotalDetail"></small></div>
+    <button class="btn btn-primary btn-wide" type="submit">Enviar pedido</button>
+    <div id="orderResult" class="result-card hidden" aria-live="polite"></div>
+  </form>
+</dialog>
+
+<footer class="site-footer"><div><strong>EntreMarés</strong><span>Camarão na Tarrafa • pesca artesanal, produtos locais e logística comunitária</span></div><a href="./cadastro.html">Cadastrar pescador</a></footer>
+<script src="./js/site.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/pescados.js"></script>
+</body>
+</html>
