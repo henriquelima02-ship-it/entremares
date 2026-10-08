@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1D4B43">
+  <meta name="description" content="Acesso ao painel de pescadores e à curadoria comercial do EntreMarés.">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Entrar | EntreMarés</title>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+  <nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./guia.html">Guia Turístico</a><a href="./pescadores.html">Pescadores</a><a href="./pescados.html">Pescados</a><a href="./cadastro.html">Cadastro</a></nav>
+</header>
+
+<main>
+  <section class="auth-shell">
+    <div class="auth-copy">
+      <span class="eyebrow">Camarão na Tarrafa</span>
+      <h1>Área de trabalho do pescador</h1>
+      <p>Entre para acompanhar seus pescados, atualizar estoque, revisar preços, pausar anúncios e organizar pedidos.</p>
+      <div class="auth-points">
+        <span>✓ estoque e preço</span>
+        <span>✓ cortes e preparo</span>
+        <span>✓ retirada e frete</span>
+        <span>✓ pedidos e andamento</span>
+      </div>
+    </div>
+
+    <div class="form-card auth-card">
+      <div class="form-title"><div><span class="pill">Acesso</span><h2>Entrar</h2></div><span id="loginMode" class="prototype-badge">VERIFICANDO</span></div>
+      <div id="loginStatus" class="api-status demo"></div>
+      <form id="loginForm" novalidate>
+        <div class="form-grid one-column">
+          <label class="field"><span>E-mail</span><input id="loginEmail" type="email" autocomplete="email" required></label>
+          <label class="field"><span>Senha</span><input id="loginPassword" type="password" autocomplete="current-password" required minlength="8"></label>
+        </div>
+        <button class="btn btn-primary btn-wide" type="submit">Entrar no painel</button>
+      </form>
+      <div id="demoLoginBox" class="demo-access hidden">
+        <p>O GitHub Pages não executa o backend Node. Você pode abrir uma sessão demonstrativa para testar o painel sem usar dados reais.</p>
+        <button id="demoFisherLogin" class="btn btn-secondary btn-wide" type="button">Abrir painel demonstrativo</button>
+      </div>
+      <div id="loginResult" class="result-card hidden" aria-live="polite"></div>
+      <p class="security-note">Ainda não tem cadastro? <a href="./cadastro.html">Criar cadastro de pescador</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer"><div><strong>EntreMarés</strong><span>Camarão na Tarrafa • acesso do pescador</span></div><a href="./pescados.html">Voltar à vitrine</a></footer>
+<script src="./js/site.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/login.js"></script>
+</body>
+</html>
