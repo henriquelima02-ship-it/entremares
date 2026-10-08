@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1D4B43">
+  <meta name="description" content="Área do cliente para acompanhar pedidos de pescados no Camarão na Tarrafa.">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Meus pedidos | EntreMarés</title>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+  <nav class="main-nav" data-main-nav>
+    <a href="./index.html">Início</a>
+    <a href="./pescados.html">Comprar pescado</a>
+    <a href="./minha-conta.html">Meus pedidos</a>
+  </nav>
+</header>
+
+<main>
+  <section class="dashboard-hero customer-dashboard-hero">
+    <div>
+      <span class="eyebrow">Cliente</span>
+      <h1>Meus pedidos</h1>
+      <p id="customerWelcome">Carregando sua conta...</p>
+    </div>
+    <div class="dashboard-actions">
+      <a class="btn btn-primary" href="./pescados.html">Comprar pescado</a>
+      <button id="customerLogout" class="btn btn-secondary" type="button">Sair</button>
+    </div>
+  </section>
+
+  <section class="dashboard-shell customer-dashboard-shell">
+    <div id="customerStatus" class="api-status demo">Carregando pedidos...</div>
+    <div id="customerOrders" class="dashboard-list customer-orders-list"></div>
+    <div id="customerOrdersEmpty" class="empty-state hidden">
+      <h2>Você ainda não tem pedidos salvos nesta conta.</h2>
+      <p>Veja os pescados disponíveis. Você também pode falar direto com o pescador pelo WhatsApp.</p>
+      <a class="btn btn-primary" href="./pescados.html">Ver pescados</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div><strong>EntreMarés</strong><span>Camarão na Tarrafa • seus pedidos</span></div>
+  <a href="./pescados.html">Comprar pescado</a>
+</footer>
+<script src="./js/site.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/minha-conta.js"></script>
+</body>
+</html>
