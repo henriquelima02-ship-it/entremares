@@ -42,6 +42,18 @@
     outro: '🌊'
   })[value] || '🌊';
 
+  function saleUnitLabel(unit) {
+    if (unit === 'duzia') return 'dúzia';
+    if (unit === 'lote_20kg') return 'lote de 20 kg';
+    return 'kg';
+  }
+
+  function stockUnitLabel(unit, quantity) {
+    if (unit === 'duzia') return Number(quantity) === 1 ? 'dúzia' : 'dúzias';
+    if (unit === 'lote_20kg') return Number(quantity) === 1 ? 'lote de 20 kg' : 'lotes de 20 kg';
+    return 'kg';
+  }
+
   function shippingTags(product) {
     const tags = [];
     if (product.shipping?.pickup) tags.push('Retirada');
@@ -71,8 +83,8 @@
     const message = [
       'Olá! Vi este pescado no EntreMarés / Camarão na Tarrafa:',
       `• ${product.species}`,
-      `• ${brl(product.pricePerKg)}/kg`,
-      `• ${Number(product.quantityKg || 0).toLocaleString('pt-BR')} kg anunciados`,
+      `• ${brl(product.pricePerKg)} por ${saleUnitLabel(product.saleUnit)}`,
+      `• ${Number(product.quantityKg || 0).toLocaleString('pt-BR')} ${stockUnitLabel(product.saleUnit, product.quantityKg)} anunciados`,
       '',
       'Ainda está disponível? Gostaria de combinar a compra.'
     ].join('\n');
@@ -100,14 +112,14 @@
           <div class="product-body">
             <div class="product-title-row">
               <div><span class="tag">${esc(product.category)}</span><h3>${esc(product.species)}</h3></div>
-              <strong class="price">${brl(product.pricePerKg)}<small>/kg</small></strong>
+              <strong class="price">${brl(product.pricePerKg)}<small>/${esc(saleUnitLabel(product.saleUnit))}</small></strong>
             </div>
 
             <div class="availability-badge">⏱ ${esc(remainingText(product))}</div>
             <p>${esc(product.description || 'Pescado artesanal cadastrado na plataforma.')}</p>
 
             <div class="product-info">
-              <span><strong>${Number(product.quantityKg || 0).toLocaleString('pt-BR')} kg</strong> anunciados</span>
+              <span><strong>${Number(product.quantityKg || 0).toLocaleString('pt-BR')} ${esc(stockUnitLabel(product.saleUnit, product.quantityKg))}</strong> anunciados</span>
               <span><strong>Pescador:</strong> ${esc(product.fisherman?.displayName || 'Pescador cadastrado')}</span>
               <span>${esc(product.fisherman?.community || '')}</span>
             </div>
@@ -174,16 +186,18 @@
     document.getElementById('orderProductId').value = id;
     document.getElementById('orderProductName').textContent = activeProduct.species;
     document.getElementById('orderProductMeta').textContent =
-      `${activeProduct.fisherman?.displayName || 'Pescador cadastrado'} • ${activeProduct.fisherman?.community || 'comunidade caiçara'} • ${brl(activeProduct.pricePerKg)}/kg`;
+      `${activeProduct.fisherman?.displayName || 'Pescador cadastrado'} • ${activeProduct.fisherman?.community || 'comunidade caiçara'} • ${brl(activeProduct.pricePerKg)} por ${saleUnitLabel(activeProduct.saleUnit)}`;
     document.getElementById('orderAvailability').textContent = remainingText(activeProduct);
 
     quantity.max = activeProduct.quantityKg;
+    quantity.step = activeProduct.saleUnit === 'kg' ? '0.1' : '1';
+    quantity.min = activeProduct.saleUnit === 'kg' ? '0.1' : '1';
     quantity.value = Math.min(1, Number(activeProduct.quantityKg || 1));
 
     cut.innerHTML = (activeProduct.cuts?.length
       ? activeProduct.cuts
       : [{ id: '', label: 'A combinar', extraPerKg: 0 }])
-      .map(item => `<option value="${esc(item.id)}" data-extra="${Number(item.extraPerKg || 0)}">${esc(item.label)}${item.extraPerKg ? ` (+ ${brl(item.extraPerKg)}/kg)` : ''}</option>`)
+      .map(item => `<option value="${esc(item.id)}" data-extra="${Number(item.extraPerKg || 0)}">${esc(item.label)}${item.extraPerKg ? ` (+ ${brl(item.extraPerKg)}/${saleUnitLabel(activeProduct.saleUnit)})` : ''}</option>`)
       .join('');
 
     fillCustomer();
@@ -221,7 +235,7 @@
     const subtotal = (Number(activeProduct.pricePerKg) + cutExtra) * kg;
     total.textContent = brl(subtotal + fee);
     totalDetail.textContent =
-      `${kg.toLocaleString('pt-BR')} kg • pescado ${brl(subtotal)}${fee ? ` • logística ${brl(fee)}` : ' • sem taxa de retirada'}`;
+      `${kg.toLocaleString('pt-BR')} ${stockUnitLabel(activeProduct.saleUnit, kg)} • pescado ${brl(subtotal)}${fee ? ` • logística ${brl(fee)}` : ' • sem taxa de retirada'}`;
   }
 
   search.addEventListener('input', draw);
