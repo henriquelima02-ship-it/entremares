@@ -112,6 +112,7 @@
           displayName: displayNameInput.value.trim() || nameInput.value.trim(),
           pickupReference: document.getElementById('pickupReference').value.trim(),
           bio: document.getElementById('bio').value.trim(),
+          whatsappPublic: document.getElementById('whatsappPublic').checked,
           shipping: shippingPayload()
         }
       });
