@@ -22,6 +22,12 @@
     currency: 'BRL'
   });
 
+  function stockUnitLabel(unit, quantity) {
+    if (unit === 'duzia') return Number(quantity) === 1 ? 'dúzia' : 'dúzias';
+    if (unit === 'lote_20kg') return Number(quantity) === 1 ? 'lote de 20 kg' : 'lotes de 20 kg';
+    return 'kg';
+  }
+
   const labels = {
     recebido: 'Pedido recebido',
     confirmado: 'Confirmado pelo pescador',
@@ -37,7 +43,7 @@
     empty.classList.toggle('hidden', items.length > 0);
     box.innerHTML = items.map(order => {
       const products = (order.items || []).map(item =>
-        `<li><strong>${esc(item.species)}</strong> — ${Number(item.quantityKg || 0).toLocaleString('pt-BR')} kg${item.cut?.label ? ` • ${esc(item.cut.label)}` : ''}</li>`
+        `<li><strong>${esc(item.species)}</strong> — ${Number(item.quantityKg || 0).toLocaleString('pt-BR')} ${esc(stockUnitLabel(item.saleUnit, item.quantityKg))}${item.cut?.label ? ` • ${esc(item.cut.label)}` : ''}</li>`
       ).join('');
 
       return `
