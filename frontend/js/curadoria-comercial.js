@@ -6,6 +6,18 @@
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' })[char]);
   const brl = value => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
+  function saleUnitLabel(unit, quantity) {
+    if (unit === 'duzia') return Number(quantity) === 1 ? 'dúzia' : 'dúzias';
+    if (unit === 'lote_20kg') return Number(quantity) === 1 ? 'lote de 20 kg' : 'lotes de 20 kg';
+    return 'kg';
+  }
+
+  function priceUnitLabel(unit) {
+    if (unit === 'duzia') return 'dúzia';
+    if (unit === 'lote_20kg') return 'lote de 20 kg';
+    return 'kg';
+  }
+
   function sessionIsCurator() {
     return Boolean(api.getSession()?.user?.curator);
   }
@@ -82,7 +94,7 @@
         <p>${esc(item.description || 'Sem descrição informada.')}</p>
         <dl class="review-facts">
           <div><dt>Pescador</dt><dd>${esc(item.fisherman?.displayName || item.fishermanId)}</dd></div>
-          <div><dt>Estoque</dt><dd>${Number(item.quantityKg || 0).toLocaleString('pt-BR')} kg • ${esc(item.state || '')}</dd></div>
+          <div><dt>Estoque</dt><dd>${Number(item.quantityKg || 0).toLocaleString('pt-BR')} ${esc(saleUnitLabel(item.saleUnit, item.quantityKg))} • ${esc(item.state || '')}</dd></div>
           <div><dt>Prazo do anúncio</dt><dd>${Number(item.availabilityHours || 36)} horas após a publicação</dd></div>
           <div><dt>Cortes</dt><dd>${esc((item.cuts || []).map(cut => cut.label).join(' • ') || 'A combinar')}</dd></div>
           <div><dt>Origem / observação</dt><dd>${esc(item.originNote || 'Não informada')}</dd></div>
