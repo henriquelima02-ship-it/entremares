@@ -193,6 +193,11 @@
     quantity.step = activeProduct.saleUnit === 'kg' ? '0.1' : '1';
     quantity.min = activeProduct.saleUnit === 'kg' ? '0.1' : '1';
     quantity.value = Math.min(1, Number(activeProduct.quantityKg || 1));
+    document.getElementById('orderQuantityLabel').textContent = activeProduct.saleUnit === 'duzia'
+      ? 'Quantidade de dúzias'
+      : activeProduct.saleUnit === 'lote_20kg'
+        ? 'Quantidade de lotes de 20 kg'
+        : 'Quantidade (kg)';
 
     cut.innerHTML = (activeProduct.cuts?.length
       ? activeProduct.cuts
