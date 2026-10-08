@@ -104,16 +104,35 @@
     <button class="dialog-close" type="button" data-close-product aria-label="Fechar">×</button>
     <span class="eyebrow">Pescado</span>
     <h2 id="productEditorTitle">Novo pescado</h2>
-    <p class="muted">Cadastre somente o que está disponível para venda agora.</p>
+    <p class="muted">Cadastre somente o que está disponível para venda agora. A lista abaixo traz referências aproximadas informadas pela comunidade; o pescador sempre confirma o preço do dia.</p>
     <input id="editProductId" type="hidden">
+
+    <div class="preset-picker">
+      <label class="field">
+        <span>Escolher pescado da lista</span>
+        <select id="fishPreset">
+          <option value="">Selecionar pescado...</option>
+        </select>
+        <small>Ao escolher, o sistema preenche nome, categoria, unidade de venda e, quando houver um único valor de referência, o preço aproximado.</small>
+      </label>
+      <div id="presetReference" class="preset-reference hidden"></div>
+    </div>
 
     <div class="form-grid">
       <label class="field"><span>Pescado *</span><input id="editSpecies" required placeholder="Ex.: tainha"></label>
       <label class="field"><span>Categoria</span><select id="editCategory"><option value="crustaceo">Crustáceo</option><option value="peixe">Peixe</option><option value="molusco">Molusco</option><option value="outro">Outro</option></select></label>
       <label class="field"><span>Estado</span><select id="editState"><option value="fresco">Fresco</option><option value="resfriado">Resfriado</option><option value="congelado">Congelado</option></select></label>
       <label class="field"><span>Data da captura</span><input id="editCatchDate" type="date"></label>
-      <label class="field"><span>Quantidade (kg) *</span><input id="editQuantity" type="number" min="0" step="0.1" inputmode="decimal" required></label>
-      <label class="field"><span>Preço por kg (R$) *</span><input id="editPrice" type="number" min="0.01" step="0.01" inputmode="decimal" required></label>
+      <label class="field">
+        <span>Unidade de venda *</span>
+        <select id="editSaleUnit" required>
+          <option value="kg">Quilo (kg)</option>
+          <option value="duzia">Dúzia</option>
+          <option value="lote_20kg">Lote de 20 kg</option>
+        </select>
+      </label>
+      <label class="field"><span id="editQuantityLabel">Quantidade (kg) *</span><input id="editQuantity" type="number" min="0" step="0.1" inputmode="decimal" required></label>
+      <label class="field"><span id="editPriceLabel">Preço por kg (R$) *</span><input id="editPrice" type="number" min="0.01" step="0.01" inputmode="decimal" required></label>
       <label class="field span-2 availability-choice">
         <span>Por quanto tempo este pescado fica disponível? *</span>
         <select id="editAvailabilityHours" required>
@@ -165,6 +184,7 @@
 </footer>
 <script src="./js/site.js"></script>
 <script src="./js/api.js"></script>
+<script src="./js/catalogo-pescados.js"></script>
 <script src="./js/painel-pescador.js"></script>
 </body>
 </html>
