@@ -514,8 +514,20 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
       if (!fisherman) throw Object.assign(new Error('Perfil de pescador não encontrado.'), { status: 404 });
 
       const item = assertOwnedProduct(db, req.params.id, fisherman.id);
-      const reviewFields = ['species', 'pricePerKg', 'cuts', 'shipping', 'originNote', 'description', 'category'];
-      const requiresReview = reviewFields.some(field => Object.prototype.hasOwnProperty.call(body, field));
+
+      const nextCuts = body.cuts !== undefined ? normalizeCuts(body.cuts) : item.cuts;
+      const nextShipping = body.shipping !== undefined
+        ? normalizeShipping(body.shipping, item.shipping || {})
+        : item.shipping;
+
+      const requiresReview =
+        (body.species !== undefined && String(body.species).trim() !== String(item.species || '')) ||
+        (body.pricePerKg !== undefined && money(Number(body.pricePerKg)) !== money(Number(item.pricePerKg))) ||
+        (body.category !== undefined && String(body.category).trim() !== String(item.category || '')) ||
+        (body.originNote !== undefined && String(body.originNote).trim() !== String(item.originNote || '')) ||
+        (body.description !== undefined && String(body.description).trim() !== String(item.description || '')) ||
+        (body.cuts !== undefined && JSON.stringify(nextCuts) !== JSON.stringify(item.cuts || [])) ||
+        (body.shipping !== undefined && JSON.stringify(nextShipping) !== JSON.stringify(item.shipping || {}));
 
       if (body.species !== undefined) item.species = String(body.species).trim();
       if (body.scientificName !== undefined) item.scientificName = String(body.scientificName).trim();
@@ -541,8 +553,8 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
       if (body.catchDate !== undefined) item.catchDate = String(body.catchDate).trim();
       if (body.originNote !== undefined) item.originNote = String(body.originNote).trim();
       if (body.description !== undefined) item.description = String(body.description).trim();
-      if (body.cuts !== undefined) item.cuts = normalizeCuts(body.cuts);
-      if (body.shipping !== undefined) item.shipping = normalizeShipping(body.shipping, item.shipping || {});
+      if (body.cuts !== undefined) item.cuts = nextCuts;
+      if (body.shipping !== undefined) item.shipping = nextShipping;
 
       if (body.availabilityHours !== undefined) {
         item.availabilityHours = normalizeAvailabilityHours(body.availabilityHours);
