@@ -4,6 +4,17 @@ const { readDb, mutateDb } = require('../store');
 
 const router = express.Router();
 
+function productIsActive(item) {
+  if (item.status !== 'published') return false;
+  const hours = [24, 36, 42].includes(Number(item.availabilityHours)) ? Number(item.availabilityHours) : 36;
+  const expiry = item.expiresAt || (() => {
+    const base = item.publishedAt || item.reviewedAt || item.updatedAt || item.createdAt;
+    const baseTime = Date.parse(base);
+    return Number.isFinite(baseTime) ? new Date(baseTime + hours * 60 * 60 * 1000).toISOString() : null;
+  })();
+  return !expiry || Date.parse(expiry) > Date.now();
+}
+
 router.use(authRequired, requireCurator);
 
 router.get('/summary', async (req, res, next) => {
@@ -13,7 +24,7 @@ router.get('/summary', async (req, res, next) => {
       fishermenPending: db.fishermen.filter(item => item.status === 'pending_review').length,
       productsPending: db.products.filter(item => item.status === 'pending_review').length,
       fishermenPublished: db.fishermen.filter(item => item.status === 'published').length,
-      productsPublished: db.products.filter(item => item.status === 'published' && (!item.expiresAt || Date.parse(item.expiresAt) > Date.now())).length,
+      productsPublished: db.products.filter(productIsActive).length,
       ordersOpen: db.orders.filter(item => !['concluido', 'recusado', 'cancelado'].includes(item.status)).length
     });
   } catch (error) {
