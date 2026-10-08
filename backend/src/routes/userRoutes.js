@@ -7,9 +7,13 @@ const { authRequired, signToken, isCuratorEmail } = require('../auth');
 const router = express.Router();
 const ROLES = new Set(['cliente', 'pescador']);
 
+function normalizePhone(value) {
+  return String(value || '').replace(/\D/g, '');
+}
+
 function publicUser(user) {
   if (!user) return null;
-  const { passwordHash, ...safe } = user;
+  const { passwordHash, phoneNormalized, ...safe } = user;
   return { ...safe, curator: isCuratorEmail(user.email) };
 }
 
@@ -22,14 +26,22 @@ router.post('/register', async (req, res, next) => {
     const { role = 'cliente', name, phone, email, password, profile = {} } = req.body || {};
     if (!ROLES.has(role)) return res.status(400).json({ error: 'Tipo de cadastro inválido.' });
     if (!name || String(name).trim().length < 3) return res.status(400).json({ error: 'Informe o nome completo.' });
-    if (!phone || String(phone).trim().length < 8) return res.status(400).json({ error: 'Informe um telefone válido.' });
-    if (!email || !String(email).includes('@')) return res.status(400).json({ error: 'Informe um e-mail válido.' });
+
+    const normalizedPhone = normalizePhone(phone);
+    if (normalizedPhone.length < 10) return res.status(400).json({ error: 'Informe um telefone ou WhatsApp válido.' });
+
+    const normalizedEmail = String(email || '').trim().toLowerCase();
+    if (normalizedEmail && !normalizedEmail.includes('@')) return res.status(400).json({ error: 'Revise o e-mail informado.' });
+    if (role === 'cliente' && !normalizedEmail) return res.status(400).json({ error: 'Informe um e-mail válido.' });
+
     if (!password || String(password).length < 8) return res.status(400).json({ error: 'A senha precisa ter pelo menos 8 caracteres.' });
 
-    const normalizedEmail = String(email).trim().toLowerCase();
     const existing = await readDb();
-    if (existing.users.some(user => user.email === normalizedEmail)) {
+    if (normalizedEmail && existing.users.some(user => String(user.email || '').toLowerCase() === normalizedEmail)) {
       return res.status(409).json({ error: 'Já existe um cadastro com este e-mail.' });
+    }
+    if (existing.users.some(user => normalizePhone(user.phoneNormalized || user.phone) === normalizedPhone)) {
+      return res.status(409).json({ error: 'Já existe um cadastro com este telefone.' });
     }
 
     const passwordHash = await bcrypt.hash(String(password), 12);
@@ -39,6 +51,7 @@ router.post('/register', async (req, res, next) => {
       role,
       name: String(name).trim(),
       phone: String(phone).trim(),
+      phoneNormalized: normalizedPhone,
       email: normalizedEmail,
       passwordHash,
       community: String(profile.community || '').trim(),
@@ -83,14 +96,21 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
   try {
-    const email = String(req.body?.email || '').trim().toLowerCase();
+    const identifier = String(req.body?.identifier || req.body?.email || '').trim();
     const password = String(req.body?.password || '');
-    if (!email || !password) return res.status(400).json({ error: 'Informe e-mail e senha.' });
+    if (!identifier || !password) return res.status(400).json({ error: 'Informe seu telefone ou e-mail e a senha.' });
+
+    const normalizedIdentifierPhone = normalizePhone(identifier);
+    const normalizedIdentifierEmail = identifier.toLowerCase();
 
     const db = await readDb();
-    const user = db.users.find(item => item.email === email);
+    const user = db.users.find(item => {
+      if (identifier.includes('@')) return String(item.email || '').toLowerCase() === normalizedIdentifierEmail;
+      return normalizePhone(item.phoneNormalized || item.phone) === normalizedIdentifierPhone;
+    });
+
     if (!user || !user.passwordHash || !(await bcrypt.compare(password, user.passwordHash))) {
-      return res.status(401).json({ error: 'E-mail ou senha inválidos.' });
+      return res.status(401).json({ error: 'Telefone/e-mail ou senha inválidos.' });
     }
 
     const fisherman = user.role === 'pescador' ? db.fishermen.find(item => item.userId === user.id) || null : null;
