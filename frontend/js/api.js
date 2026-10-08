@@ -2,94 +2,206 @@
   const configured = (window.ENTREMARES_API_URL || localStorage.getItem('entremares_api_url') || '').replace(/\/$/, '');
   const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
   const base = configured || (isLocal ? 'http://localhost:3000/api' : '');
-  const DEMO_KEY = 'entremares_market_demo_v2';
+  const DEMO_KEY = 'entremares_market_demo_v3';
+  const SESSION_KEY = 'entremares_session_v1';
 
   const seed = {
     fishermen: [{
       id: 'demo-pescador-01',
+      userId: 'demo-user-01',
       displayName: 'Pescador demonstrativo',
       community: 'Baía de Paranaguá',
       pickupReference: 'Ponto de retirada a combinar',
-      shipping: { pickup: true, communityDelivery: true, collaborativeFreight: true, deliveryFee: 8, collaborativeFee: 12 }
+      bio: 'Perfil fictício utilizado para testar o painel e a logística do Camarão na Tarrafa.',
+      shipping: { pickup: true, communityDelivery: true, collaborativeFreight: true, deliveryFee: 8, collaborativeFee: 12, notes: 'Rotas demonstrativas.' },
+      status: 'published'
     }],
     products: [
       {
         id: 'demo-camarao-branco', fishermanId: 'demo-pescador-01', species: 'Camarão-branco', category: 'crustaceo', state: 'resfriado', quantityKg: 12, pricePerKg: 42,
         description: 'Exemplo demonstrativo para testar cortes e logística. Não representa estoque real.', originNote: 'Produto demonstrativo.',
         cuts: [{ id: 'inteiro', label: 'Inteiro', extraPerKg: 0 }, { id: 'descascado', label: 'Descascado', extraPerKg: 8 }, { id: 'sem_cabeca', label: 'Sem cabeça', extraPerKg: 5 }],
-        shipping: { pickup: true, communityDelivery: true, collaborativeFreight: true, deliveryFee: 8, collaborativeFee: 12, notes: 'Rota demonstrativa.' }
+        shipping: { pickup: true, communityDelivery: true, collaborativeFreight: true, deliveryFee: 8, collaborativeFee: 12, notes: 'Rota demonstrativa.' },
+        status: 'published', updatedAt: new Date().toISOString()
       },
       {
         id: 'demo-tainha', fishermanId: 'demo-pescador-01', species: 'Tainha', category: 'peixe', state: 'fresco', quantityKg: 18, pricePerKg: 29,
         description: 'Exemplo de pescado com opções de preparo. Não representa estoque real.', originNote: 'Produto demonstrativo.',
         cuts: [{ id: 'inteiro', label: 'Inteiro', extraPerKg: 0 }, { id: 'limpo', label: 'Limpo', extraPerKg: 3 }, { id: 'posta', label: 'Posta', extraPerKg: 6 }],
-        shipping: { pickup: true, communityDelivery: true, collaborativeFreight: false, deliveryFee: 8, collaborativeFee: 0, notes: 'Rota demonstrativa.' }
+        shipping: { pickup: true, communityDelivery: true, collaborativeFreight: false, deliveryFee: 8, collaborativeFee: 0, notes: 'Rota demonstrativa.' },
+        status: 'published', updatedAt: new Date().toISOString()
       },
       {
         id: 'demo-robalo', fishermanId: 'demo-pescador-01', species: 'Robalo', category: 'peixe', state: 'fresco', quantityKg: 8, pricePerKg: 48,
         description: 'Exemplo para demonstrar filé, posta e retirada. Não representa estoque real.', originNote: 'Produto demonstrativo.',
         cuts: [{ id: 'inteiro', label: 'Inteiro', extraPerKg: 0 }, { id: 'file', label: 'Filé', extraPerKg: 12 }, { id: 'posta', label: 'Posta', extraPerKg: 7 }],
-        shipping: { pickup: true, communityDelivery: false, collaborativeFreight: true, deliveryFee: 0, collaborativeFee: 12, notes: 'Rota demonstrativa.' }
+        shipping: { pickup: true, communityDelivery: false, collaborativeFreight: true, deliveryFee: 0, collaborativeFee: 12, notes: 'Rota demonstrativa.' },
+        status: 'published', updatedAt: new Date().toISOString()
       }
     ],
     orders: []
   };
 
+  function clone(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
   function demoData() {
     try {
       const saved = JSON.parse(localStorage.getItem(DEMO_KEY) || 'null');
-      if (saved && Array.isArray(saved.products)) return saved;
+      if (saved && Array.isArray(saved.products) && Array.isArray(saved.fishermen)) return saved;
     } catch (_) {}
     localStorage.setItem(DEMO_KEY, JSON.stringify(seed));
-    return JSON.parse(JSON.stringify(seed));
+    return clone(seed);
   }
 
   function saveDemo(data) {
     localStorage.setItem(DEMO_KEY, JSON.stringify(data));
   }
 
-  async function request(path, options = {}) {
+  function getSession() {
+    try {
+      return JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function setSession(session) {
+    if (!session) sessionStorage.removeItem(SESSION_KEY);
+    else sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    window.dispatchEvent(new CustomEvent('entremares:session', { detail: session }));
+    return session;
+  }
+
+  function authHeaders() {
+    const token = getSession()?.token;
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
+  async function request(path, options = {}, authenticated = false) {
     if (!base) throw new Error('DEMO_MODE');
     const response = await fetch(`${base}${path}`, {
       ...options,
-      headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }
+      headers: {
+        'Content-Type': 'application/json',
+        ...(authenticated ? authHeaders() : {}),
+        ...(options.headers || {})
+      }
     });
     const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error || 'Não foi possível concluir a operação.');
+    if (!response.ok) {
+      if (response.status === 401 && authenticated) setSession(null);
+      throw new Error(data.error || 'Não foi possível concluir a operação.');
+    }
     return data;
   }
 
-  function fisherFor(data, id) {
+  function fishermanFor(data, id) {
     return data.fishermen.find(item => item.id === id) || null;
   }
 
   async function registerUser(payload) {
-    if (base) return request('/users/register', { method: 'POST', body: JSON.stringify(payload) });
+    if (base) {
+      const response = await request('/users/register', { method: 'POST', body: JSON.stringify(payload) });
+      setSession({ token: response.token, user: response.user, fisherman: response.fisherman || null });
+      return response;
+    }
+
     const data = demoData();
-    const id = `local-user-${Date.now()}`;
-    const safeUser = { id, role: payload.role, name: payload.name, phone: payload.phone, email: payload.email, community: payload.profile?.community || '' };
+    const userId = `local-user-${Date.now()}`;
+    const safeUser = {
+      id: userId,
+      role: payload.role,
+      name: payload.name,
+      phone: payload.phone,
+      email: payload.email,
+      community: payload.profile?.community || '',
+      curator: false
+    };
     let fisherman = null;
+
     if (payload.role === 'pescador') {
       fisherman = {
         id: `local-fisher-${Date.now()}`,
-        userId: id,
+        userId,
         displayName: payload.profile?.displayName || payload.name,
         community: payload.profile?.community || '',
         pickupReference: payload.profile?.pickupReference || '',
         bio: payload.profile?.bio || '',
         shipping: payload.profile?.shipping || { pickup: true },
-        status: 'demo_local'
+        status: 'pending_review',
+        updatedAt: new Date().toISOString()
       };
       data.fishermen.push(fisherman);
     }
+
     saveDemo(data);
+    setSession({ demo: true, user: safeUser, fisherman });
     return { message: 'Cadastro salvo apenas neste navegador em modo demonstrativo.', user: safeUser, fisherman, demo: true };
   }
 
-  async function createProduct(fishermanId, payload) {
-    if (base) return request(`/market/fishermen/${encodeURIComponent(fishermanId)}/products`, { method: 'POST', body: JSON.stringify(payload) });
+  async function login(email, password) {
+    if (base) {
+      const response = await request('/users/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password })
+      });
+      setSession({ token: response.token, user: response.user, fisherman: response.fisherman || null });
+      return response;
+    }
+    throw new Error('No GitHub Pages, use o acesso demonstrativo ao painel.');
+  }
+
+  function startDemoFisherSession() {
     const data = demoData();
-    const product = { id: `local-product-${Date.now()}`, fishermanId, ...payload, status: 'demo_local' };
+    const fisherman = data.fishermen[0];
+    const session = {
+      demo: true,
+      user: { id: fisherman.userId || 'demo-user-01', role: 'pescador', name: fisherman.displayName, email: 'demo@entremares.local', curator: false },
+      fisherman
+    };
+    setSession(session);
+    return session;
+  }
+
+  function startDemoCuratorSession() {
+    const session = {
+      demo: true,
+      user: { id: 'demo-curator', role: 'cliente', name: 'Curadoria demonstrativa', email: 'curadoria@entremares.local', curator: true },
+      fisherman: null
+    };
+    setSession(session);
+    return session;
+  }
+
+  async function refreshMe() {
+    if (!base) return getSession();
+    const response = await request('/users/me', {}, true);
+    const current = getSession() || {};
+    const session = { ...current, user: response.user, fisherman: response.fisherman || null };
+    setSession(session);
+    return session;
+  }
+
+  function logout() {
+    setSession(null);
+  }
+
+  async function createProduct(fishermanId, payload) {
+    if (base) return request('/market/dashboard/products', { method: 'POST', body: JSON.stringify(payload) }, true);
+    const data = demoData();
+    const session = getSession();
+    const ownerId = session?.fisherman?.id || fishermanId;
+    if (!ownerId) throw new Error('Abra uma sessão de pescador antes de cadastrar o produto.');
+    const product = {
+      id: `local-product-${Date.now()}`,
+      fishermanId: ownerId,
+      ...payload,
+      status: 'pending_review',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
     data.products.unshift(product);
     saveDemo(data);
     return { message: 'Pescado salvo apenas neste navegador em modo demonstrativo.', product, demo: true };
@@ -98,7 +210,7 @@
   async function listFishermen() {
     if (base) return request('/market/fishermen');
     const data = demoData();
-    return { items: data.fishermen.slice(), demo: true };
+    return { items: data.fishermen.filter(item => item.status === 'published'), demo: true };
   }
 
   async function listProducts(filters = {}) {
@@ -108,21 +220,24 @@
       if (filters.fishermanId) query.set('fishermanId', filters.fishermanId);
       return request(`/market/products${query.toString() ? `?${query}` : ''}`);
     }
+
     const data = demoData();
-    let items = data.products.slice();
+    let items = data.products.filter(item => item.status === 'published' && Number(item.quantityKg) > 0);
     if (filters.species) items = items.filter(item => item.species.toLowerCase().includes(filters.species.toLowerCase()));
     if (filters.fishermanId) items = items.filter(item => item.fishermanId === filters.fishermanId);
-    items = items.map(item => ({ ...item, fisherman: fisherFor(data, item.fishermanId) }));
+    items = items.map(item => ({ ...item, fisherman: fishermanFor(data, item.fishermanId) }));
     return { items, demo: true };
   }
 
   async function shippingOptions(productId, quantityKg = 1) {
     if (base) return request(`/market/shipping/options?productId=${encodeURIComponent(productId)}&quantityKg=${encodeURIComponent(quantityKg)}`);
+
     const data = demoData();
     const product = data.products.find(item => item.id === productId);
     if (!product) throw new Error('Produto não encontrado.');
+
     const options = [];
-    const fisherman = fisherFor(data, product.fishermanId);
+    const fisherman = fishermanFor(data, product.fishermanId);
     if (product.shipping?.pickup) options.push({ id: 'pickup', label: 'Retirada com o pescador', fee: 0, note: fisherman?.pickupReference || 'Combinar ponto de retirada.' });
     if (product.shipping?.communityDelivery) options.push({ id: 'community_delivery', label: 'Entrega comunitária', fee: Number(product.shipping.deliveryFee || 0), note: product.shipping.notes || '' });
     if (product.shipping?.collaborativeFreight) options.push({ id: 'collaborative_freight', label: 'Frete colaborativo', fee: Number(product.shipping.collaborativeFee || 0) + Math.max(0, Number(quantityKg) - 1) * 1.5, note: product.shipping.notes || '' });
@@ -131,21 +246,197 @@
 
   async function createOrder(payload) {
     if (base) return request('/market/orders', { method: 'POST', body: JSON.stringify(payload) });
+
     const data = demoData();
-    const order = { id: `local-order-${Date.now()}`, code: `EM-DEMO-${Date.now().toString(36).toUpperCase()}`, ...payload, status: 'simulacao', createdAt: new Date().toISOString() };
+    const product = data.products.find(item => item.id === payload.items?.[0]?.productId);
+    if (!product) throw new Error('Produto não encontrado.');
+    const quantity = Number(payload.items[0].quantityKg || 0);
+    if (quantity <= 0 || quantity > Number(product.quantityKg)) throw new Error('Quantidade indisponível.');
+    product.quantityKg = Math.round((Number(product.quantityKg) - quantity) * 100) / 100;
+
+    const cut = product.cuts?.find(item => item.id === payload.items[0].cutId) || null;
+    const subtotal = (Number(product.pricePerKg) + Number(cut?.extraPerKg || 0)) * quantity;
+    const ship = product.shipping || {};
+    let shippingFee = 0;
+    if (payload.shippingType === 'community_delivery') shippingFee = Number(ship.deliveryFee || 0);
+    if (payload.shippingType === 'collaborative_freight') shippingFee = Number(ship.collaborativeFee || 0) + Math.max(0, quantity - 1) * 1.5;
+
+    const order = {
+      id: `local-order-${Date.now()}`,
+      code: `EM-DEMO-${Date.now().toString(36).toUpperCase()}`,
+      fishermanId: product.fishermanId,
+      customer: payload.customer,
+      items: [{
+        productId: product.id,
+        fishermanId: product.fishermanId,
+        species: product.species,
+        quantityKg: quantity,
+        cut: cut ? { id: cut.id, label: cut.label } : null,
+        unitPrice: Number(product.pricePerKg) + Number(cut?.extraPerKg || 0),
+        lineTotal: subtotal
+      }],
+      shippingType: payload.shippingType,
+      subtotal,
+      shippingFee,
+      total: subtotal + shippingFee,
+      status: 'recebido',
+      stockRestored: false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
     data.orders.push(order);
     saveDemo(data);
     return { message: 'Pedido simulado salvo apenas neste navegador.', order, demo: true };
   }
 
+  async function dashboard() {
+    if (base) return request('/market/dashboard', {}, true);
+    const data = demoData();
+    const session = getSession();
+    const fishermanId = session?.fisherman?.id;
+    if (!fishermanId) throw new Error('Abra uma sessão de pescador.');
+    const fisherman = fishermanFor(data, fishermanId);
+    const products = data.products.filter(item => item.fishermanId === fishermanId);
+    const orders = data.orders.filter(item => item.fishermanId === fishermanId);
+    return {
+      fisherman,
+      products,
+      orders,
+      summary: {
+        productsPublished: products.filter(item => item.status === 'published').length,
+        productsPending: products.filter(item => item.status === 'pending_review').length,
+        openOrders: orders.filter(item => !['concluido', 'recusado', 'cancelado'].includes(item.status)).length,
+        totalOrders: orders.length
+      },
+      demo: true
+    };
+  }
+
+  async function updateFisherProfile(payload) {
+    if (base) return request('/market/dashboard/profile', { method: 'PATCH', body: JSON.stringify(payload) }, true);
+    const data = demoData();
+    const session = getSession();
+    const fisherman = fishermanFor(data, session?.fisherman?.id);
+    if (!fisherman) throw new Error('Perfil não encontrado.');
+    Object.assign(fisherman, payload, { updatedAt: new Date().toISOString() });
+    if (payload.shipping) fisherman.shipping = { ...(fisherman.shipping || {}), ...payload.shipping };
+    if (fisherman.status === 'rejected') fisherman.status = 'pending_review';
+    saveDemo(data);
+    setSession({ ...session, fisherman });
+    return { message: 'Perfil atualizado no modo demonstrativo.', fisherman, demo: true };
+  }
+
+  async function updateProduct(productId, payload) {
+    if (base) return request(`/market/dashboard/products/${encodeURIComponent(productId)}`, { method: 'PATCH', body: JSON.stringify(payload) }, true);
+    const data = demoData();
+    const product = data.products.find(item => item.id === productId);
+    if (!product) throw new Error('Pescado não encontrado.');
+    Object.assign(product, payload, { updatedAt: new Date().toISOString() });
+    if (payload.cuts) product.cuts = payload.cuts;
+    if (payload.shipping) product.shipping = { ...(product.shipping || {}), ...payload.shipping };
+    if (['rejected'].includes(product.status)) product.status = 'pending_review';
+    saveDemo(data);
+    return { message: 'Pescado atualizado no modo demonstrativo.', product, demo: true };
+  }
+
+  async function setProductStatus(productId, action) {
+    if (base) return request(`/market/dashboard/products/${encodeURIComponent(productId)}/status`, { method: 'PATCH', body: JSON.stringify({ action }) }, true);
+    const data = demoData();
+    const product = data.products.find(item => item.id === productId);
+    if (!product) throw new Error('Pescado não encontrado.');
+    product.status = action === 'pause' ? 'paused' : 'pending_review';
+    product.updatedAt = new Date().toISOString();
+    saveDemo(data);
+    return { product, demo: true };
+  }
+
+  async function setOrderStatus(orderId, status) {
+    if (base) return request(`/market/dashboard/orders/${encodeURIComponent(orderId)}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }, true);
+    const data = demoData();
+    const order = data.orders.find(item => item.id === orderId);
+    if (!order) throw new Error('Pedido não encontrado.');
+    if (['recusado', 'cancelado'].includes(status) && !order.stockRestored) {
+      order.items.forEach(item => {
+        const product = data.products.find(product => product.id === item.productId);
+        if (product) product.quantityKg = Number(product.quantityKg || 0) + Number(item.quantityKg || 0);
+      });
+      order.stockRestored = true;
+    }
+    order.status = status;
+    order.updatedAt = new Date().toISOString();
+    saveDemo(data);
+    return { order, demo: true };
+  }
+
+  async function curationSummary() {
+    if (base) return request('/curation/summary', {}, true);
+    const data = demoData();
+    return {
+      fishermenPending: data.fishermen.filter(item => item.status === 'pending_review').length,
+      productsPending: data.products.filter(item => item.status === 'pending_review').length,
+      fishermenPublished: data.fishermen.filter(item => item.status === 'published').length,
+      productsPublished: data.products.filter(item => item.status === 'published').length,
+      ordersOpen: data.orders.filter(item => !['concluido', 'recusado', 'cancelado'].includes(item.status)).length,
+      demo: true
+    };
+  }
+
+  async function curationPending() {
+    if (base) return request('/curation/pending', {}, true);
+    const data = demoData();
+    return {
+      fishermen: data.fishermen.filter(item => item.status === 'pending_review'),
+      products: data.products.filter(item => item.status === 'pending_review').map(item => ({ ...item, fisherman: fishermanFor(data, item.fishermanId) })),
+      demo: true
+    };
+  }
+
+  async function curateFisherman(id, action, note = '') {
+    if (base) return request(`/curation/fishermen/${encodeURIComponent(id)}`, { method: 'PATCH', body: JSON.stringify({ action, note }) }, true);
+    const data = demoData();
+    const fisherman = fishermanFor(data, id);
+    if (!fisherman) throw new Error('Pescador não encontrado.');
+    fisherman.status = action === 'approve' ? 'published' : 'rejected';
+    if (action === 'approve') data.products.filter(item => item.fishermanId === id && item.status === 'pending_review').forEach(item => item.status = 'published');
+    saveDemo(data);
+    return { fisherman, demo: true };
+  }
+
+  async function curateProduct(id, action, note = '') {
+    if (base) return request(`/curation/products/${encodeURIComponent(id)}`, { method: 'PATCH', body: JSON.stringify({ action, note }) }, true);
+    const data = demoData();
+    const product = data.products.find(item => item.id === id);
+    if (!product) throw new Error('Pescado não encontrado.');
+    product.status = action === 'approve' ? 'published' : 'rejected';
+    product.reviewNote = note;
+    saveDemo(data);
+    return { product, demo: true };
+  }
+
   window.EntreMaresAPI = {
     mode: base ? 'api' : 'demo',
     base,
+    getSession,
+    setSession,
     registerUser,
+    login,
+    logout,
+    refreshMe,
+    startDemoFisherSession,
+    startDemoCuratorSession,
     createProduct,
     listFishermen,
     listProducts,
     shippingOptions,
-    createOrder
+    createOrder,
+    dashboard,
+    updateFisherProfile,
+    updateProduct,
+    setProductStatus,
+    setOrderStatus,
+    curationSummary,
+    curationPending,
+    curateFisherman,
+    curateProduct
   };
 })();
