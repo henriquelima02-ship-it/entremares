@@ -202,6 +202,7 @@
   function productWithAvailability(product) {
     return {
       ...product,
+      saleUnit: product.saleUnit || 'kg',
       availabilityHours: normalizeHours(product.availabilityHours),
       expired: isExpired(product),
       active: isActive(product)
@@ -496,6 +497,8 @@
         fishermanId: product.fishermanId,
         species: product.species,
         quantityKg: quantity,
+        saleUnit: product.saleUnit || 'kg',
+        saleUnitLabel: product.saleUnit === 'duzia' ? 'dúzia' : product.saleUnit === 'lote_20kg' ? 'lote de 20 kg' : 'kg',
         cut: cut ? { id: cut.id, label: cut.label } : null,
         unitPrice: Number(product.pricePerKg) + Number(cut?.extraPerKg || 0),
         lineTotal: subtotal
@@ -610,6 +613,7 @@
       (payload.species !== undefined && String(payload.species).trim() !== String(product.species || '')) ||
       (payload.pricePerKg !== undefined && Number(payload.pricePerKg) !== Number(product.pricePerKg)) ||
       (payload.category !== undefined && String(payload.category) !== String(product.category || '')) ||
+      (payload.saleUnit !== undefined && String(payload.saleUnit || 'kg') !== String(product.saleUnit || 'kg')) ||
       (payload.originNote !== undefined && String(payload.originNote).trim() !== String(product.originNote || '')) ||
       (payload.description !== undefined && String(payload.description).trim() !== String(product.description || '')) ||
       (payload.cuts !== undefined && JSON.stringify(nextCuts) !== JSON.stringify(product.cuts || [])) ||
