@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1D4B43">
+  <meta name="description" content="Cadastro simples de cliente para acompanhar pedidos no Camarão na Tarrafa.">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Cadastro de cliente | EntreMarés</title>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+  <nav class="main-nav" data-main-nav>
+    <a href="./index.html">Início</a>
+    <a href="./pescados.html">Pescados</a>
+    <a href="./login.html?tipo=comprar">Entrar como cliente</a>
+  </nav>
+</header>
+
+<main>
+  <section class="page-hero customer-signup-hero">
+    <span class="eyebrow">Comprar pescado</span>
+    <h1>Cadastro de cliente</h1>
+    <p>O cadastro é opcional. Ele serve para acompanhar seus pedidos em uma única tela. Para comprar direto pelo WhatsApp, você pode ir aos pescados sem criar conta.</p>
+    <div class="hero-actions">
+      <a class="btn btn-secondary" href="./pescados.html">Comprar sem cadastro</a>
+    </div>
+  </section>
+
+  <section class="section narrow-section">
+    <div id="clientApiStatus" class="api-status"></div>
+
+    <form id="clientRegisterForm" class="form-card simple-signup-form" novalidate>
+      <div class="form-title">
+        <div><span class="pill">Cliente</span><h2>Crie seu acesso</h2></div>
+        <span id="clientModeBadge" class="prototype-badge">VERIFICANDO</span>
+      </div>
+
+      <div class="form-grid">
+        <label class="field span-2"><span>Seu nome *</span><input id="clientName" autocomplete="name" required minlength="3" placeholder="Ex.: Maria da Silva"></label>
+        <label class="field"><span>WhatsApp / telefone *</span><input id="clientPhone" inputmode="tel" autocomplete="tel" required placeholder="(41) 99999-9999"></label>
+        <label class="field"><span>Comunidade / bairro <em>(opcional)</em></span><input id="clientCommunity" placeholder="Onde você está"></label>
+        <label class="field span-2"><span>E-mail <em>(opcional)</em></span><input id="clientEmail" type="email" inputmode="email" autocomplete="email"><small>Você também poderá entrar usando só o telefone.</small></label>
+        <label class="field"><span>Crie uma senha *</span><input id="clientPassword" type="password" minlength="8" autocomplete="new-password" required><small>Pelo menos 8 caracteres.</small></label>
+        <label class="field"><span>Digite a senha de novo *</span><input id="clientConfirmPassword" type="password" minlength="8" autocomplete="new-password" required></label>
+      </div>
+
+      <button id="clientTogglePassword" class="text-button" type="button">Mostrar senhas</button>
+
+      <label class="check-row privacy-check">
+        <input id="clientPrivacy" type="checkbox" required>
+        <span>Confirmo que os dados estão corretos e autorizo o uso das informações necessárias para acompanhar meus pedidos.</span>
+      </label>
+
+      <button class="btn btn-primary btn-wide signup-submit" type="submit">Criar minha conta</button>
+      <p class="security-note">Seu telefone e seus dados de acesso não aparecem publicamente no site.</p>
+    </form>
+
+    <div id="clientRegisterResult" class="result-card hidden" aria-live="polite"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div><strong>EntreMarés</strong><span>Camarão na Tarrafa • acesso de clientes</span></div>
+  <a href="./pescados.html">Ver pescados</a>
+</footer>
+<script src="./js/site.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/cadastro-cliente.js"></script>
+</body>
+</html>
