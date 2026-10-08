@@ -1,2 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#1D4B43"><link rel="stylesheet" href="./css/style.css"><title>Enviar conteúdo | EntreMarés</title></head><body><header class="topbar"><a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a><button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button><nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./guia.html">Guia Turístico</a><a href="./saberes.html">Saberes</a><a href="./pesquisas.html">Pesquisas</a><a href="./cadastro.html">Cadastro</a><a class="nav-cta" href="./contribuir.html">Enviar conteúdo</a></nav></header><main><section class="page-hero"><span class="eyebrow">Entrada de conteúdo</span><h1>Enviar pesquisa ou documento para o site</h1><p>O material entra como pendente e só aparece nas páginas públicas depois da revisão na curadoria.</p></section><section class="section narrow-section"><form id="contentForm" class="form-card"><div class="form-title"><div><span class="pill">Fila de curadoria</span><h2>Novo conteúdo</h2></div><span class="prototype-badge">DEMONSTRAÇÃO</span></div><div class="form-grid"><label class="field span-2"><span>Título *</span><input id="contentTitle" required></label><label class="field"><span>Destino *</span><select id="destination"><option value="guia">Guia Turístico</option><option value="saberes">Saberes e Ciência</option><option value="pesquisas">Pesquisas</option></select></label><label class="field"><span>Categoria *</span><select id="category"><option value="trilha">Trilha</option><option value="local">Local</option><option value="gastronomia">Gastronomia</option><option value="historia">História e memória</option><option value="fauna">Fauna</option><option value="flora">Flora</option><option value="cultura">Cultura</option><option value="ciencia">Ciência e Natureza</option><option value="pesca">Pesca artesanal</option><option value="turismo">Turismo</option></select></label><label class="field"><span>Responsável pelo registro</span><input id="authorGroup" placeholder="Grupo responsável / Turma"></label><label class="field"><span>Fonte / origem</span><input id="sourceNote" placeholder="Pesquisa de campo, entrevista autorizada..."></label><label class="field span-2"><span>Resumo para o site *</span><textarea id="summary" rows="5" required></textarea></label><label class="field span-2"><span>Texto completo / notas</span><textarea id="bodyText" rows="10"></textarea></label><label class="field span-2"><span>Anexar documento</span><input id="documentFile" type="file" accept=".pdf,.doc,.docx,.txt,.md,.odt,.rtf,.jpg,.jpeg,.png"><small>O arquivo fica salvo apenas neste navegador enquanto o backend real não estiver conectado.</small></label><label class="field span-2"><span>Palavras-chave</span><input id="keywords" placeholder="memória, pesca artesanal, maré..."></label></div><label class="check-row"><input id="contentPrivacy" type="checkbox" required><span>Confirmo que o material foi revisado e não expõe dados pessoais de estudantes ou informações sensíveis.</span></label><button class="btn btn-primary" type="submit">Enviar para curadoria</button></form><div id="contentResult" class="result-card hidden"></div></section></main><footer class="site-footer"><div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras • pesquisa • curadoria • publicação</span></div><a href="./curadoria.html">Área de curadoria</a></footer><script src="./js/site.js"></script><script src="./js/db.js"></script><script src="./js/contribuir.js"></script></body></html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1D4B43">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="O envio público de conteúdo para o EntreMarés está desativado.">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>Conteúdos do EntreMarés</title>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+  <nav class="main-nav" data-main-nav>
+    <a href="./index.html">Início</a>
+    <a href="./guia.html">Lugares</a>
+    <a href="./saberes.html">Saberes</a>
+    <a href="./pesquisas.html">Pesquisas</a>
+    <a href="./pescados.html">Pescados</a>
+  </nav>
+</header>
+
+<main>
+  <section class="page-hero">
+    <span class="eyebrow">Conteúdo público</span>
+    <h1>Os envios pelo site estão desativados.</h1>
+    <p>O EntreMarés agora mantém no site apenas conteúdos já organizados e revisados pela equipe do projeto. Esta página foi preservada para não quebrar links antigos.</p>
+  </section>
+
+  <section class="section">
+    <div class="portal-grid content-only-options">
+      <a class="portal-card" href="./guia.html"><span aria-hidden="true">🗺️</span><div><small>Lugares</small><h3>Conheça as comunidades e rotas</h3><p>Território, gastronomia, natureza, história e experiências locais.</p></div></a>
+      <a class="portal-card" href="./saberes.html"><span aria-hidden="true">🌊</span><div><small>Saberes</small><h3>Pesca, marés, ciência e cultura</h3><p>Conteúdos sobre conhecimentos tradicionais e Ciências da Natureza.</p></div></a>
+      <a class="portal-card" href="./pesquisas.html"><span aria-hidden="true">📚</span><div><small>Pesquisas</small><h3>Produções já publicadas</h3><p>Materiais selecionados e revisados pela equipe.</p></div></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras</span></div>
+  <a href="./index.html">Voltar ao início</a>
+</footer>
+<script src="./js/site.js"></script>
+</body>
+</html>
