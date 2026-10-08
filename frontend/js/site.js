@@ -1,7 +1,6 @@
 (function () {
   const toggle = document.querySelector('[data-menu-toggle]');
   const nav = document.querySelector('[data-main-nav]');
-  if (toggle && nav) toggle.addEventListener('click', () => nav.classList.toggle('open'));
 
   function prefixForNav() {
     const home = nav?.querySelector('a[href$="index.html"]');
@@ -26,7 +25,30 @@
     else nav.appendChild(link);
   }
 
+  function removePublicSubmissionLinks() {
+    document.querySelectorAll('a[href$="contribuir.html"]').forEach(link => link.remove());
+    document.querySelectorAll('.site-footer a[href$="curadoria.html"]').forEach(link => link.remove());
+  }
+
+  removePublicSubmissionLinks();
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    });
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
   if (nav) {
+    nav.querySelectorAll('a[href$="guia.html"]').forEach(link => {
+      if (/guia turístico/i.test(link.textContent)) link.textContent = 'Lugares';
+    });
+    nav.querySelectorAll('a[href$="cadastro.html"]').forEach(link => {
+      if (/cadastro/i.test(link.textContent)) link.textContent = 'Para pescadores';
+    });
+
     ensureNavLink('pescadores.html', 'Pescadores', 'pescados.html');
     ensureNavLink('pescados.html', 'Pescados', 'cadastro.html');
 
@@ -46,6 +68,24 @@
       }
       nav.appendChild(account);
     }
+  }
+
+  const publicPage = !/curadoria|painel-pescador/.test(window.location.pathname);
+  if (publicPage && !document.querySelector('.mobile-quick-nav')) {
+    const prefix = prefixForNav();
+    const currentSession = session();
+    const accountFile = currentSession?.user?.role === 'pescador' ? 'painel-pescador.html' : 'login.html';
+    const accountLabel = currentSession?.user?.role === 'pescador' ? 'Painel' : 'Entrar';
+    const quickNav = document.createElement('nav');
+    quickNav.className = 'mobile-quick-nav';
+    quickNav.setAttribute('aria-label', 'Acesso rápido');
+    quickNav.innerHTML = `
+      <a href="${prefix}index.html"><span aria-hidden="true">⌂</span><small>Início</small></a>
+      <a href="${prefix}guia.html"><span aria-hidden="true">⌖</span><small>Lugares</small></a>
+      <a href="${prefix}pescados.html"><span aria-hidden="true">◒</span><small>Pescados</small></a>
+      <a href="${prefix}${accountFile}"><span aria-hidden="true">◎</span><small>${accountLabel}</small></a>
+    `;
+    document.body.appendChild(quickNav);
   }
 
   const needsVisualMedia = /\/conteudos\/(fauna-flora-piacaguera|historia-piacaguera)\.html$/.test(window.location.pathname);
