@@ -1,6 +1,35 @@
 (function () {
   const toggle = document.querySelector('[data-menu-toggle]');
   const nav = document.querySelector('[data-main-nav]');
+  const SHRIMP_LOGO_URL = 'https://media.baamboozle.com/uploads/images/838881/1671078098_84833_gif-url.gif';
+
+  function enhanceBrandLogo() {
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('.brand-symbol').forEach(symbol => {
+      symbol.classList.add('brand-logo');
+      symbol.setAttribute('aria-hidden', 'true');
+      symbol.textContent = '';
+
+      if (reduceMotion) {
+        symbol.textContent = '🦐';
+        symbol.classList.add('brand-logo-static');
+        return;
+      }
+
+      const img = document.createElement('img');
+      img.src = SHRIMP_LOGO_URL;
+      img.alt = '';
+      img.loading = 'eager';
+      img.decoding = 'async';
+      img.referrerPolicy = 'no-referrer';
+      img.addEventListener('error', () => {
+        symbol.textContent = '🦐';
+        symbol.classList.add('brand-logo-static');
+      }, { once: true });
+      symbol.appendChild(img);
+    });
+  }
+
 
   function prefixForNav() {
     const home = nav?.querySelector('a[href$="index.html"]');
@@ -25,20 +54,61 @@
     else nav.appendChild(link);
   }
 
+  function currentSectionFile() {
+    const path = window.location.pathname.toLowerCase();
+    if (/\/(conteudos|locais)\//.test(path)) return 'guia.html';
+    return path.split('/').filter(Boolean).pop() || 'index.html';
+  }
+
+  function markCurrentNavigation(scope) {
+    if (!scope) return;
+    const currentFile = currentSectionFile();
+    scope.querySelectorAll('a[href]').forEach(link => {
+      const href = (link.getAttribute('href') || '').split('#')[0].split('?')[0];
+      const file = href.split('/').filter(Boolean).pop();
+      const active = file === currentFile;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
   function removePublicSubmissionLinks() {
     document.querySelectorAll('a[href$="contribuir.html"]').forEach(link => link.remove());
     document.querySelectorAll('.site-footer a[href$="curadoria.html"]').forEach(link => link.remove());
   }
 
+  enhanceBrandLogo();
   removePublicSubmissionLinks();
 
   if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('open');
+    nav.id ||= 'main-navigation';
+    toggle.setAttribute('aria-controls', nav.id);
+
+    const setMenuState = isOpen => {
+      nav.classList.toggle('open', isOpen);
+      document.body.classList.toggle('menu-open', isOpen);
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+      toggle.textContent = isOpen ? '×' : '☰';
+    };
+
+    toggle.addEventListener('click', () => setMenuState(!nav.classList.contains('open')));
+    nav.addEventListener('click', event => {
+      if (event.target.closest('a')) setMenuState(false);
     });
-    toggle.setAttribute('aria-expanded', 'false');
+    document.addEventListener('click', event => {
+      if (nav.classList.contains('open') && !nav.contains(event.target) && !toggle.contains(event.target)) {
+        setMenuState(false);
+      }
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') setMenuState(false);
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) setMenuState(false);
+    });
+    setMenuState(false);
   }
 
   if (nav) {
@@ -71,6 +141,7 @@
       }
       nav.appendChild(account);
     }
+    markCurrentNavigation(nav);
   }
 
   const publicPage = !/curadoria|painel-pescador/.test(window.location.pathname);
@@ -97,6 +168,7 @@
       <a href="${prefix}${accountFile}"><span aria-hidden="true">◎</span><small>${accountLabel}</small></a>
     `;
     document.body.appendChild(quickNav);
+    markCurrentNavigation(quickNav);
   }
 
   const needsVisualMedia = /\/conteudos\/(fauna-flora-piacaguera|historia-piacaguera)\.html$/.test(window.location.pathname);
