@@ -1346,3 +1346,437 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .brand strong{max-width:145px}
   .market-flow{grid-template-columns:1fr}
 }
+
+/* EntreMarés — segunda passada de identidade e UX */
+:root{
+  --surface-soft:rgba(255,255,255,.82);
+  --surface-strong:#fff;
+  --line-soft:rgba(29,75,67,.1);
+  --shadow-soft:0 12px 34px rgba(29,75,67,.08);
+  --shadow-lift:0 18px 48px rgba(29,75,67,.13)
+}
+
+.page-home .site-home-hero{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:auto;
+  margin-top:30px;
+  padding:58px clamp(28px,5vw,58px);
+  border:1px solid var(--line-soft);
+  border-radius:36px;
+  background:
+    radial-gradient(circle at 88% 10%,rgba(213,168,60,.22),transparent 16rem),
+    linear-gradient(145deg,rgba(255,255,255,.96),rgba(233,216,182,.34) 48%,rgba(61,97,123,.10));
+  box-shadow:var(--shadow-soft)
+}
+.page-home .site-home-hero::before,
+.page-home .site-home-hero::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  border-radius:50%
+}
+.page-home .site-home-hero::before{
+  width:260px;
+  height:260px;
+  right:-95px;
+  bottom:-115px;
+  border:52px solid rgba(29,75,67,.045)
+}
+.page-home .site-home-hero::after{
+  width:160px;
+  height:160px;
+  left:-80px;
+  top:-75px;
+  background:rgba(217,112,74,.055)
+}
+.page-home .hero-copy{position:relative;z-index:2}
+.page-home .hero-copy h1{
+  display:flex;
+  align-items:center;
+  gap:16px
+}
+.page-home .hero-copy h1::after{
+  content:"";
+  width:72px;
+  height:72px;
+  flex:0 0 auto;
+  border-radius:22px;
+  background:#fff url("https://media.baamboozle.com/uploads/images/838881/1671078098_84833_gif-url.gif") center/contain no-repeat;
+  box-shadow:0 12px 26px rgba(29,75,67,.12)
+}
+.page-home .hero-actions .btn{min-width:180px}
+.page-home .home-metrics span{
+  backdrop-filter:blur(8px);
+  box-shadow:0 6px 20px rgba(29,75,67,.05)
+}
+.page-home .portal-card{
+  position:relative;
+  overflow:hidden;
+  border-color:rgba(29,75,67,.1)
+}
+.page-home .portal-card::after{
+  content:"→";
+  position:absolute;
+  right:16px;
+  top:14px;
+  color:var(--azul-escuro);
+  font-size:1.1rem;
+  font-weight:900;
+  opacity:.5;
+  transition:transform .2s,opacity .2s
+}
+.page-home .portal-card:hover::after{
+  transform:translateX(3px);
+  opacity:1
+}
+.page-home .portal-card-market::after{color:#fff}
+.page-home .section-intro{padding-top:46px}
+.page-home .visual-stories{padding-top:40px}
+
+.page-lugares .page-hero{
+  position:relative;
+  overflow:hidden;
+  margin-top:30px;
+  padding:52px clamp(24px,5vw,52px);
+  border-radius:32px;
+  background:
+    linear-gradient(135deg,rgba(29,75,67,.97),rgba(61,97,123,.92));
+  box-shadow:var(--shadow-soft)
+}
+.page-lugares .page-hero h1,
+.page-lugares .page-hero p{color:#fff}
+.page-lugares .page-hero .eyebrow{
+  color:#fff;
+  background:rgba(255,255,255,.13)
+}
+.page-lugares .page-hero p{max-width:720px;color:rgba(255,255,255,.82)}
+.page-lugares .filter-bar{
+  position:sticky;
+  top:78px;
+  z-index:18;
+  padding:10px;
+  border:1px solid rgba(29,75,67,.1);
+  border-radius:18px;
+  background:rgba(250,249,244,.94);
+  backdrop-filter:blur(14px);
+  box-shadow:0 10px 28px rgba(29,75,67,.07)
+}
+.page-lugares .content-card{
+  position:relative;
+  overflow:hidden
+}
+.page-lugares .content-card::before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:linear-gradient(var(--verde),var(--azul));
+  opacity:.7
+}
+.page-lugares .content-card .btn{
+  margin-top:auto;
+  width:100%
+}
+
+.page-market .market-banner{
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 18px 52px rgba(18,57,50,.18)
+}
+.page-market .market-banner-copy{max-width:780px}
+.page-market .quick-market-card{
+  position:relative;
+  overflow:hidden;
+  transition:transform .18s,border-color .18s,box-shadow .18s
+}
+.page-market .quick-market-card::after{
+  content:"›";
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--azul-escuro);
+  font-size:1.5rem;
+  font-weight:900;
+  opacity:.45
+}
+.page-market .quick-market-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(29,75,67,.25);
+  box-shadow:var(--shadow-soft)
+}
+.page-market #vitrine{scroll-margin-top:95px}
+.page-market .market-toolbar{
+  position:sticky;
+  top:78px;
+  z-index:17;
+  padding:12px;
+  border:1px solid rgba(29,75,67,.1);
+  border-radius:18px;
+  background:rgba(250,249,244,.95);
+  backdrop-filter:blur(14px);
+  box-shadow:0 10px 28px rgba(29,75,67,.07)
+}
+.page-market .product-card{
+  transition:transform .18s,box-shadow .18s,border-color .18s
+}
+.page-market .product-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(29,75,67,.22);
+  box-shadow:var(--shadow-lift)
+}
+.page-market .product-buy-actions .btn{width:100%}
+.page-market .market-trust-grid article{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg,#fff,rgba(238,242,239,.62))
+}
+
+.page-signup .fisher-signup-hero{
+  margin-top:20px;
+  padding-bottom:24px
+}
+.page-signup .simple-steps span{
+  border-color:rgba(29,75,67,.12);
+  box-shadow:0 5px 16px rgba(29,75,67,.04)
+}
+.page-signup .signup-help{
+  box-shadow:var(--shadow-soft)
+}
+.page-signup .simple-signup-form{
+  box-shadow:0 16px 44px rgba(29,75,67,.09)
+}
+.page-signup .signup-section{
+  scroll-margin-top:100px
+}
+.page-signup .big-check{
+  transition:border-color .18s,background .18s,transform .18s
+}
+.page-signup .big-check:active{transform:scale(.99)}
+
+.page-access .access-page{padding-top:52px}
+.page-access .access-chooser{
+  padding:34px;
+  border:1px solid var(--line-soft);
+  border-radius:32px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.97),rgba(233,216,182,.24));
+  box-shadow:var(--shadow-soft)
+}
+.page-access .access-choice{
+  position:relative;
+  overflow:hidden;
+  transition:transform .18s,border-color .18s,box-shadow .18s
+}
+.page-access .access-choice::after{
+  content:"→";
+  position:absolute;
+  right:18px;
+  bottom:16px;
+  color:var(--verde);
+  font-size:1.15rem;
+  font-weight:900;
+  opacity:.45
+}
+.page-access .access-choice:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-soft)
+}
+.page-access .quick-buy-note{
+  border:1px solid rgba(29,75,67,.08)
+}
+.page-access .auth-card{
+  box-shadow:var(--shadow-soft)
+}
+
+.mobile-quick-nav{
+  border-top-color:rgba(29,75,67,.1);
+  backdrop-filter:blur(18px)
+}
+.mobile-quick-nav a{
+  position:relative;
+  transition:background .18s,color .18s
+}
+.mobile-quick-nav a[aria-current="page"]::before{
+  content:"";
+  position:absolute;
+  top:2px;
+  width:28px;
+  height:3px;
+  border-radius:999px;
+  background:var(--coral)
+}
+.mobile-quick-nav a[aria-current="page"] span{
+  transform:translateY(1px)
+}
+
+@media(max-width:900px){
+  .page-home .site-home-hero{
+    padding:42px 30px;
+    border-radius:28px
+  }
+  .page-home .hero-copy h1::after{
+    width:62px;
+    height:62px;
+    border-radius:18px
+  }
+  .page-lugares .page-hero{
+    margin-top:20px;
+    padding:42px 28px;
+    border-radius:26px
+  }
+}
+
+@media(max-width:650px){
+  .page-home .site-home-hero{
+    width:calc(100% - 20px);
+    margin-top:10px;
+    padding:28px 18px 24px;
+    border-radius:24px
+  }
+  .page-home .site-home-hero::before{
+    width:190px;
+    height:190px;
+    right:-85px;
+    bottom:-90px;
+    border-width:38px
+  }
+  .page-home .hero-copy h1{
+    gap:10px;
+    font-size:clamp(2.65rem,13vw,3.8rem)
+  }
+  .page-home .hero-copy h1::after{
+    width:54px;
+    height:54px;
+    border-radius:16px
+  }
+  .page-home .hero-actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:9px
+  }
+  .page-home .hero-actions .btn{min-width:0}
+  .page-home .portal-card::after{top:12px;right:13px}
+  .page-home .visual-stories{padding-top:24px}
+
+  .page-lugares .page-hero{
+    width:calc(100% - 20px);
+    margin-top:10px;
+    padding:30px 18px;
+    border-radius:22px
+  }
+  .page-lugares .page-hero h1{font-size:2.45rem}
+  .page-lugares .section{padding-top:22px}
+  .page-lugares .filter-bar{
+    top:70px;
+    margin-inline:-14px;
+    padding:8px 14px;
+    border-left:0;
+    border-right:0;
+    border-radius:0
+  }
+  .page-lugares .content-card .btn{min-height:50px}
+
+  .page-market .market-banner{
+    margin-top:0;
+    padding-top:32px;
+    padding-bottom:28px;
+    border-radius:0 0 26px 26px
+  }
+  .page-market .market-banner h1{
+    font-size:clamp(2.35rem,11vw,3.35rem)
+  }
+  .page-market .market-fresh-note{
+    margin-top:14px!important;
+    line-height:1.45
+  }
+  .page-market .quick-market-actions{
+    gap:9px;
+    padding-top:18px
+  }
+  .page-market .quick-market-card{
+    min-height:74px;
+    padding:14px 40px 14px 14px
+  }
+  .page-market #vitrine{padding-top:24px}
+  .page-market .market-toolbar{
+    top:70px;
+    margin-inline:-14px;
+    padding:10px 14px;
+    border-left:0;
+    border-right:0;
+    border-radius:0
+  }
+  .page-market .market-toolbar .search-box,
+  .page-market .market-toolbar .select-box{gap:4px}
+  .page-market .market-toolbar input,
+  .page-market .market-toolbar select{min-height:48px}
+
+  .page-signup .fisher-signup-hero{
+    padding-top:30px
+  }
+  .page-signup .signup-layout{
+    display:flex;
+    flex-direction:column;
+    gap:18px
+  }
+  .page-signup .signup-layout>div{order:1;width:100%}
+  .page-signup .signup-layout>.signup-help{
+    order:2;
+    width:100%;
+    position:static;
+    padding:18px
+  }
+  .page-signup .signup-help h2{font-size:1.55rem}
+  .page-signup .plain-checklist{gap:7px}
+  .page-signup .signup-section{
+    margin-bottom:24px
+  }
+  .page-signup .signup-section legend{
+    align-items:flex-start;
+    line-height:1.2;
+    font-size:1.35rem
+  }
+  .page-signup .big-check{
+    min-height:68px;
+    padding:13px
+  }
+
+  .page-access .access-page{
+    width:calc(100% - 20px);
+    padding-top:18px
+  }
+  .page-access .access-chooser{
+    padding:22px 16px;
+    border-radius:24px;
+    text-align:left
+  }
+  .page-access .access-chooser h1{
+    font-size:2.65rem;
+    line-height:1
+  }
+  .page-access .access-choice-grid{gap:10px}
+  .page-access .access-choice{
+    min-height:104px;
+    padding:15px 38px 15px 15px;
+    border-radius:18px
+  }
+  .page-access .access-choice-icon{font-size:2rem}
+  .page-access .access-choice strong{font-size:1.35rem}
+  .page-access .quick-buy-note{
+    margin-top:18px;
+    padding:16px;
+    border-radius:16px
+  }
+  .page-access .compact-auth{
+    padding-top:10px
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .page-home .hero-copy h1::after{
+    background-image:none;
+    background-color:#fff
+  }
+}

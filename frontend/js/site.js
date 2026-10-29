@@ -162,10 +162,10 @@
     quickNav.className = 'mobile-quick-nav';
     quickNav.setAttribute('aria-label', 'Acesso rápido');
     quickNav.innerHTML = `
-      <a href="${prefix}index.html"><span aria-hidden="true">⌂</span><small>Início</small></a>
-      <a href="${prefix}guia.html"><span aria-hidden="true">⌖</span><small>Lugares</small></a>
-      <a href="${prefix}pescados.html"><span aria-hidden="true">◒</span><small>Pescados</small></a>
-      <a href="${prefix}${accountFile}"><span aria-hidden="true">◎</span><small>${accountLabel}</small></a>
+      <a href="${prefix}index.html" aria-label="Início"><span aria-hidden="true">⌂</span><small>Início</small></a>
+      <a href="${prefix}guia.html" aria-label="Lugares"><span aria-hidden="true">⌖</span><small>Lugares</small></a>
+      <a href="${prefix}pescados.html" aria-label="Pescados"><span aria-hidden="true">🦐</span><small>Pescados</small></a>
+      <a href="${prefix}${accountFile}" aria-label="${accountLabel}"><span aria-hidden="true">○</span><small>${accountLabel}</small></a>
     `;
     document.body.appendChild(quickNav);
     markCurrentNavigation(quickNav);
