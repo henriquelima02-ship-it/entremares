@@ -183,3 +183,28 @@
 @media(prefers-reduced-motion:reduce){
  .portal-tile,.portal-reading,.portal-community{transition:none}
 }
+
+/* Pescados e Povoados */
+.portal-page .main-nav a[href$="pescados.html"]{
+  border:1px solid rgba(29,75,67,.18);
+  background:rgba(29,75,67,.08);
+  color:#1d4b43;
+  font-weight:900
+}
+.portal-page .main-nav a[href$="pescados.html"][aria-current="page"]{
+  background:#1d4b43;
+  border-color:#1d4b43;
+  color:#fff
+}
+.portal-home .portal-market-callout{
+  margin-top:20px;
+  padding:clamp(24px,4vw,40px);
+  box-shadow:0 15px 34px rgba(29,75,67,.1)
+}
+.portal-home .portal-market-callout h2{font-size:clamp(1.8rem,3.3vw,2.6rem)}
+.portal-home .portal-market-callout .portal-market-actions{min-width:200px}
+@media(max-width:650px){
+  .portal-home .portal-market-callout{margin-top:12px;padding:22px 18px}
+  .portal-home .portal-market-callout .portal-market-actions{min-width:0}
+  .mobile-quick-nav a[href$="pescados.html"] span{font-size:1.5rem}
+}

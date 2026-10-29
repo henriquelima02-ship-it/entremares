@@ -69,6 +69,10 @@
   }
 
   enhanceBrandLogo();
+  // Atualiza a assinatura institucional também nas páginas internas e históricas.
+  document.querySelectorAll('.brand small, .site-footer span').forEach(el => {
+    el.textContent = el.textContent.replace('Saberes, Lugares e Produtos Caiçaras', 'Saberes, Povoados e Produtos Caiçaras');
+  });
   removePublicSubmissionLinks();
 
   if (toggle && nav) {
@@ -106,10 +110,10 @@
     const prefix = prefixForNav();
     const sections = [
       ['index.html', 'Início'],
-      ['guia.html', 'Lugares'],
+      ['pescados.html', 'Pescados'],
+      ['guia.html', 'Povoados'],
       ['saberes.html', 'Saberes'],
-      ['pesquisas.html', 'Pesquisas'],
-      ['pescados.html', 'Pescados']
+      ['pesquisas.html', 'Pesquisas']
     ];
     nav.replaceChildren(...sections.map(([file, label]) => {
       const link = document.createElement('a');
@@ -157,8 +161,8 @@
     quickNav.setAttribute('aria-label', 'Acesso rápido');
     quickNav.innerHTML = `
       <a href="${prefix}index.html" aria-label="Início"><span aria-hidden="true">⌂</span><small>Início</small></a>
-      <a href="${prefix}guia.html" aria-label="Lugares"><span aria-hidden="true">⌖</span><small>Lugares</small></a>
       <a href="${prefix}pescados.html" aria-label="Pescados"><span aria-hidden="true">🦐</span><small>Pescados</small></a>
+      <a href="${prefix}guia.html" aria-label="Povoados"><span aria-hidden="true">⌖</span><small>Povoados</small></a>
       <a href="${prefix}${accountFile}" aria-label="${accountLabel}"><span aria-hidden="true">○</span><small>${accountLabel}</small></a>
     `;
     document.body.appendChild(quickNav);
