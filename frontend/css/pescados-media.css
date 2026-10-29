@@ -1,0 +1,105 @@
+/* Imagens ilustrativas da vitrine e dos preparos — mobile-first */
+.market-product-art.product-art{
+  position:relative;
+  min-height:184px;
+  height:184px;
+  padding:10px 14px 28px;
+  overflow:hidden;
+  background:radial-gradient(circle at 50% 45%,#fffef9 0%,#e7ede9 72%,#d9e5df 100%);
+}
+.market-product-art .fish-media-img{
+  display:block;
+  width:min(100%,310px);
+  height:145px;
+  max-width:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 7px 7px rgba(25,62,56,.12))
+}
+.market-product-art .fish-media-fallback{
+  display:grid;
+  place-items:center;
+  font-size:3.6rem;
+  line-height:1;
+}
+.market-product-art .fish-media-caption{
+  position:absolute;
+  bottom:8px;
+  left:14px;
+  font-size:.66rem;
+  letter-spacing:.02em;
+  line-height:1.3;
+  text-transform:none;
+  font-weight:800;
+  color:#44615d;
+  background:rgba(255,255,255,.75);
+  border-radius:999px;
+  padding:4px 9px
+}
+.market-product-art .fish-state-tag{
+  position:absolute;
+  top:10px;
+  right:12px;
+  padding:3px 8px;
+  background:rgba(255,255,255,.78);
+  border-radius:99px;
+  font-size:.68rem;
+  font-weight:900;
+  color:#27574e;
+  text-transform:capitalize
+}
+.cut-selection-panel{grid-column:1/-1;min-width:0;margin:-3px 0 8px}
+.cut-selection-intro{font-size:.8rem;color:#506d70;margin:0 0 11px}
+.cut-visual-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.cut-visual-card{
+  min-height:125px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:5px;
+  padding:10px 7px;
+  border:1px solid rgba(29,75,67,.18);
+  background:#fff;
+  border-radius:14px;
+  cursor:pointer;
+  text-align:center;
+  color:#214c44
+}
+.cut-visual-card:hover{border-color:#1d4b43;background:#f7faf6}
+.cut-visual-card[aria-pressed="true"]{border:2px solid #1d4b43;background:#e8f1eb;box-shadow:0 0 0 2px rgba(29,75,67,.09)}
+.cut-visual-card img{width:100%;height:65px;object-fit:contain;display:block;pointer-events:none}
+.cut-visual-card .cut-option-fallback{min-height:65px;font-size:2.2rem;display:grid;place-items:center}
+.cut-visual-card strong{font-size:.8rem;line-height:1.25}
+.cut-visual-card small{font-size:.67rem;color:#526a6c;line-height:1.25}
+.cut-visual-card:focus-visible{outline:3px solid #d5a83c;outline-offset:2px}
+.cut-image-note{font-size:.75rem;line-height:1.45;color:#5f777a;margin:7px 0 10px}
+.product-editor .cut-grid .option-card{min-width:0;align-items:center}
+.product-editor .cut-editor-preview{width:62px;height:56px;object-fit:contain;flex:0 0 auto}
+.product-editor .cut-grid .option-card:has(input[data-edit-cut]:checked){border-color:#1d4b43;background:#eaf2ec}
+.preset-with-image{display:flex;gap:13px;align-items:center}
+.preset-with-image img{max-width:110px;width:33%;height:82px;object-fit:contain;flex:0 0 auto}
+.preset-with-image div{flex:1;min-width:0}
+.preset-with-image small{display:inline-block;margin-top:5px}
+@media(max-width:650px){
+  .market-product-art.product-art{height:172px;min-height:172px}
+  .market-product-art .fish-media-img{height:138px}
+  .cut-visual-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cut-visual-card{min-height:112px}
+  .product-editor .cut-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .product-editor .cut-grid .option-card{padding:10px;gap:6px}
+  .product-editor .cut-editor-preview{width:48px;height:46px}
+  .preset-with-image{flex-direction:row}
+}
+
+.species-gallery-section{margin-top:42px;padding-top:30px;border-top:1px solid rgba(29,75,67,.13)}
+.species-gallery-heading{display:flex;gap:22px;justify-content:space-between;align-items:end;margin-bottom:16px}
+.species-gallery-heading>div{display:grid;gap:7px}
+.species-gallery-heading h2{font-size:clamp(1.6rem,3vw,2.25rem);line-height:1.17}
+.species-gallery-heading p{max-width:360px;font-size:.8rem;color:#526b6b;line-height:1.45}
+.species-gallery-heading p strong{color:#1d4b43}
+.species-gallery{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px}
+.species-gallery figure{min-width:0;margin:0;padding:12px 9px 10px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:space-between;border:1px solid rgba(29,75,67,.12);border-radius:15px;background:linear-gradient(160deg,#fff,#f1f5ef)}
+.species-gallery img{display:block;width:100%;height:106px;object-fit:contain}
+.species-gallery figcaption{font-size:.86rem;font-weight:900;color:#1d4b43;text-align:center}
+@media(max-width:850px){.species-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.species-gallery-heading{align-items:start;flex-direction:column;gap:9px}.species-gallery{gap:7px}.species-gallery figure{padding:9px 5px;border-radius:12px}.species-gallery img{height:84px}.species-gallery figcaption{font-size:.76rem}}

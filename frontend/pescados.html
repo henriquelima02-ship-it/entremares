@@ -7,6 +7,7 @@
   <meta name="description" content="Consulte pescados anunciados por pescadores, veja opções de retirada e entrega e converse pelo WhatsApp.">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/portal.css">
+  <link rel="stylesheet" href="./css/pescados-media.css">
   <title>Pescados locais | Camarão na Tarrafa • EntreMarés</title>
 </head>
 <body class="portal-page portal-market">
@@ -50,6 +51,22 @@
     <div id="marketEmpty" class="empty-state hidden"><h3>Nenhum pescado disponível com esses filtros.</h3><p>Os anúncios são temporários e mudam conforme a disponibilidade informada pelos pescadores.</p></div>
   </section>
 
+
+  <section class="species-gallery-section portal-wrap" aria-labelledby="speciesGalleryTitle">
+    <div class="species-gallery-heading">
+      <div><span class="portal-kicker">Guia visual de pescados</span><h2 id="speciesGalleryTitle">Conheça algumas espécies.</h2></div>
+      <p>Representações digitais para facilitar o reconhecimento. <strong>Não são fotos de produtos à venda nem indicam estoque disponível.</strong></p>
+    </div>
+    <div class="species-gallery">
+      <figure><img src="./assets/pescados/camarao.webp" alt="Ilustração de camarões" loading="lazy"><figcaption>Camarão</figcaption></figure>
+      <figure><img src="./assets/pescados/robalo.webp" alt="Ilustração de robalo" loading="lazy"><figcaption>Robalo</figcaption></figure>
+      <figure><img src="./assets/pescados/tainha.webp" alt="Ilustração de tainha" loading="lazy"><figcaption>Tainha</figcaption></figure>
+      <figure><img src="./assets/pescados/pescadinha.webp" alt="Ilustração de pescadinha" loading="lazy"><figcaption>Pescadinha</figcaption></figure>
+      <figure><img src="./assets/pescados/siri.webp" alt="Ilustração de siri" loading="lazy"><figcaption>Siri</figcaption></figure>
+      <figure><img src="./assets/pescados/ostra.webp" alt="Ilustração de ostras" loading="lazy"><figcaption>Ostra</figcaption></figure>
+    </div>
+  </section>
+
   <section class="portal-market-bottom portal-wrap">
     <div><span class="portal-kicker">Pescadores e clientes</span><h2>Quer vender ou acompanhar seus pedidos?</h2><p>O acesso é separado para quem anuncia pescados e para quem faz pedidos.</p></div>
     <div class="portal-market-actions"><a href="./login.html?tipo=comprar" class="btn btn-secondary">Meus pedidos</a><a href="./login.html?tipo=vender" class="btn btn-primary">Área do pescador</a></div>
@@ -68,6 +85,10 @@
     <div class="form-grid">
       <label class="field"><span id="orderQuantityLabel">Quantidade</span><input id="orderQuantity" type="number" min="0.1" step="0.1" value="1" inputmode="decimal" required></label>
       <label class="field"><span>Corte / preparo</span><select id="orderCut"></select></label>
+      <div class="cut-selection-panel span-2">
+        <p class="cut-selection-intro">Escolha o preparo disponível. As imagens de cortes de peixe usam robalo como exemplo ilustrativo.</p>
+        <div id="cutVisualOptions" class="cut-visual-options" aria-label="Exemplos de cortes disponíveis"></div>
+      </div>
       <label class="field span-2"><span>Retirada ou entrega</span><select id="orderShipping"></select><small id="shippingNote"></small></label>
 
       <div id="customerConnectedNote" class="connected-customer span-2 hidden"></div>
@@ -90,6 +111,7 @@
 </footer>
 <script src="./js/site.js"></script>
 <script src="./js/api.js"></script>
+<script src="./js/pescados-media.js"></script>
 <script src="./js/pescados.js"></script>
 </body>
 </html>

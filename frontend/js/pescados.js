@@ -17,6 +17,7 @@
   const totalDetail = document.getElementById('orderTotalDetail');
   const result = document.getElementById('orderResult');
   const session = api.getSession();
+  const media = window.EntreMaresFishMedia;
 
   let products = [];
   let activeProduct = null;
@@ -102,11 +103,16 @@
 
     grid.innerHTML = visible.map(product => {
       const whatsapp = whatsappUrl(product);
+      const picture = media?.forSpecies(product.species, product.category);
+      const illustration = picture
+        ? `<img class="fish-media-img" src="${esc(picture.src)}" alt="${esc(picture.alt)}" loading="lazy" decoding="async">`
+        : `<span class="fish-media-fallback" aria-hidden="true">${categoryIcon(product.category)}</span>`;
       return `
         <article class="product-card market-product-card">
-          <div class="product-art product-art-${esc(product.category)}">
-            <span>${categoryIcon(product.category)}</span>
-            <small>${esc(product.state || 'fresco')}</small>
+          <div class="product-art product-art-${esc(product.category)} market-product-art">
+            ${illustration}
+            <span class="fish-state-tag">${esc(product.state || 'fresco')}</span>
+            <small class="fish-media-caption">${picture?.generic ? 'Ilustração genérica de peixe' : picture ? 'Imagem ilustrativa, não do anúncio' : 'Categoria do pescado'}</small>
           </div>
 
           <div class="product-body">
@@ -205,10 +211,46 @@
       .map(item => `<option value="${esc(item.id)}" data-extra="${Number(item.extraPerKg || 0)}">${esc(item.label)}${item.extraPerKg ? ` (+ ${brl(item.extraPerKg)}/${saleUnitLabel(activeProduct.saleUnit)})` : ''}</option>`)
       .join('');
 
+    renderVisualCuts();
     fillCustomer();
     await refreshShipping();
     calculateTotal();
     dialogOpen();
+  }
+
+
+  function renderVisualCuts() {
+    const holder = document.getElementById('cutVisualOptions');
+    if (!holder || !activeProduct) return;
+    const choices = [...cut.options];
+    holder.innerHTML = choices.map((option, index) => {
+      const picture = media?.forCut(option.value, activeProduct.category);
+      const visual = picture
+        ? `<img src="${esc(picture.src)}" alt="${esc(picture.alt)}" loading="lazy" decoding="async">`
+        : `<span class="cut-option-fallback" aria-hidden="true">${categoryIcon(activeProduct.category)}</span>`;
+      const extra = Number(option.dataset.extra || 0);
+      return `
+        <button class="cut-visual-card" type="button" data-cut-option="${index}"
+          aria-pressed="${option.selected ? 'true' : 'false'}">
+          ${visual}
+          <strong>${esc(option.textContent.split(' (+')[0])}</strong>
+          <small>${extra ? '+ ' + brl(extra) + '/' + saleUnitLabel(activeProduct.saleUnit) : 'Sem acréscimo'}</small>
+        </button>`;
+    }).join('');
+    holder.querySelectorAll('[data-cut-option]').forEach(button => {
+      button.addEventListener('click', () => {
+        cut.selectedIndex = Number(button.dataset.cutOption);
+        cut.dispatchEvent(new Event('change', {bubbles: true}));
+      });
+    });
+    holder.hidden = choices.length === 0;
+    syncVisualCuts();
+  }
+
+  function syncVisualCuts() {
+    document.querySelectorAll('[data-cut-option]').forEach(button => {
+      button.setAttribute('aria-pressed', String(Number(button.dataset.cutOption) === cut.selectedIndex));
+    });
   }
 
   async function refreshShipping() {
@@ -250,7 +292,7 @@
     calculateTotal();
   });
   quantity.addEventListener('input', calculateTotal);
-  cut.addEventListener('change', calculateTotal);
+  cut.addEventListener('change', () => { syncVisualCuts(); calculateTotal(); });
   shipping.addEventListener('change', updateShippingNote);
   document.querySelector('[data-close-dialog]').addEventListener('click', closeDialog);
 

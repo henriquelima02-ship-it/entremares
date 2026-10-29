@@ -126,7 +126,9 @@
       ? '<strong>Faixa de referência:</strong> escolha o preço de hoje dentro ou fora dessa faixa conforme a venda real.'
       : '<strong>Referência aproximada:</strong> confirme o preço de hoje antes de salvar.';
 
-    box.innerHTML = `${rangeHelp}<br>${esc(presetPriceText(item))}${item.note ? `<br><small>${esc(item.note)}</small>` : ''}`;
+    const preview = window.EntreMaresFishMedia?.forSpecies(item.name, item.category);
+    const previewImage = preview ? `<img src="${esc(preview.src)}" alt="${esc(preview.alt)}" loading="lazy" decoding="async">` : '';
+    box.innerHTML = `<div class="preset-with-image">${previewImage}<div>${rangeHelp}<br>${esc(presetPriceText(item))}${item.note ? `<br><small>${esc(item.note)}</small>` : ''}<br><small>Imagem ilustrativa, não do anúncio.</small></div></div>`;
     box.classList.remove('hidden');
   }
 
@@ -502,6 +504,23 @@
 
   $('fishPreset').addEventListener('change', event => applyPreset(event.target.value));
   $('editSaleUnit').addEventListener('change', updateSaleUnitFields);
+
+  function decorateCutEditor() {
+    document.querySelectorAll('[data-edit-cut]').forEach(checkbox => {
+      const picture = window.EntreMaresFishMedia?.forCut(checkbox.dataset.editCut, 'peixe');
+      const card = checkbox.closest('.option-card');
+      if (!picture || !card || card.querySelector('.cut-editor-preview')) return;
+      const img = document.createElement('img');
+      img.src = picture.src;
+      img.alt = picture.alt;
+      img.className = 'cut-editor-preview';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      card.insertBefore(img, card.querySelector('span'));
+    });
+  }
+  decorateCutEditor();
+
   populatePresetCatalog();
 
   $('newProductButton').addEventListener('click', () => openProductEditor());
