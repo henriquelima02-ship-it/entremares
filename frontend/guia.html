@@ -4,79 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1D4B43">
+  <meta name="description" content="Conheça Piaçaguera e Amparo e explore histórias, patrimônio, gastronomia e natureza no EntreMarés.">
   <link rel="stylesheet" href="./css/style.css">
-  <title>Guia Turístico | EntreMarés</title>
+  <link rel="stylesheet" href="./css/portal.css">
+  <title>Lugares e território | EntreMarés</title>
 </head>
-<body class="page-lugares">
-  <header class="topbar">
-    <a class="brand" href="./index.html">
-      <span class="brand-symbol">◉</span>
-      <span>
-        <strong>EntreMarés</strong>
-        <small>Saberes, Lugares e Produtos Caiçaras</small>
-      </span>
-    </a>
-    <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
-    <nav class="main-nav" data-main-nav>
-      <a href="./index.html">Início</a>
-      <a href="./guia.html">Guia Turístico</a>
-      <a href="./saberes.html">Saberes</a>
-      <a href="./pesquisas.html">Pesquisas</a>
-      <a href="./cadastro.html">Cadastro</a>
-      <a class="nav-cta" href="./contribuir.html">Enviar conteúdo</a>
-    </nav>
-  </header>
+<body class="portal-page portal-lugares">
+<a class="portal-skip" href="#conteudo">Ir para o conteúdo</a>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+  <nav class="main-nav" aria-label="Navegação principal" data-main-nav>
+    <a href="./index.html">Início</a>
+    <a href="./guia.html">Lugares</a>
+    <a href="./saberes.html">Saberes</a>
+    <a href="./pesquisas.html">Pesquisas</a>
+    <a href="./pescados.html">Pescados</a>
+  </nav>
+</header>
+<main id="conteudo">
+  <section class="portal-page-intro portal-wrap">
+    <span class="portal-kicker">Lugares e território</span>
+    <h1>Comunidades, paisagens e histórias para conhecer.</h1>
+    <p class="portal-lead">Explore Piaçaguera, Amparo e os temas que conectam natureza, pesca artesanal, cultura e vida comunitária.</p>
+    <nav class="portal-inpage-nav" aria-label="Nesta página"><a href="#comunidades">Comunidades</a><a href="#temas">Histórias e temas</a></nav>
+  </section>
 
-  <main>
-    <section class="page-hero">
-      <span class="eyebrow">Guia Turístico de Piaçaguera</span>
-      <h1>Território, cultura e experiências locais</h1>
-      <p>Área preparada para receber conteúdos validados sobre trilhas, locais, gastronomia, história, fauna, flora e cultura.</p>
-    </section>
-
-    <section class="section">
-      <div class="filter-bar">
-        <button class="chip active" data-guide-filter="all">Todos</button>
-        <button class="chip" data-guide-filter="trilha">Trilhas</button>
-        <button class="chip" data-guide-filter="local">Locais</button>
-        <button class="chip" data-guide-filter="gastronomia">Gastronomia</button>
-        <button class="chip" data-guide-filter="historia">História</button>
-        <button class="chip" data-guide-filter="fauna">Fauna</button>
-        <button class="chip" data-guide-filter="flora">Flora</button>
-        <button class="chip" data-guide-filter="cultura">Cultura</button>
-      </div>
-
-      <div class="content-grid" style="margin-bottom:18px">
-        <article class="content-card" data-featured-categories="fauna flora">
-          <div class="meta">
-            <span class="tag">Fauna e flora</span>
-            <span class="tag">Biodiversidade</span>
-          </div>
-          <h3>Fauna e flora de Piaçaguera</h3>
-          <p>Manguezais, águas estuarinas, Mata Atlântica, espécies ameaçadas, animais marinhos e bioinvasões no contexto de Piaçaguera e do Complexo Estuarino de Paranaguá.</p>
-          <small>Conteúdo de biodiversidade revisado</small>
-          <a class="btn btn-secondary content-link" href="./conteudos/fauna-flora-piacaguera.html">Ler conteúdo completo</a>
-        </article>
-      </div>
-
-      <div class="content-grid" id="guideGrid"></div>
-      <div class="empty-state hidden" id="guideEmpty">
-        <h3>Ainda não há conteúdo publicado nesta categoria.</h3>
-        <p>Use a área de curadoria para revisar e publicar pesquisas.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div>
-      <strong>EntreMarés</strong>
-      <span>Saberes, Lugares e Produtos Caiçaras • turismo • pesquisa • saberes</span>
+  <section class="portal-section portal-wrap" id="comunidades" aria-labelledby="comunidades-title">
+    <div class="portal-section-head"><div><span class="portal-kicker">Conheça as comunidades</span><h2 id="comunidades-title">Piaçaguera e Amparo</h2></div><p>O território contado por suas relações com a água, a memória e o cotidiano.</p></div>
+    <div class="portal-community-grid">
+      <a class="portal-community portal-community-piacaguera" href="./locais/piacaguera.html"><span>01 · Comunidade caiçara</span><strong>Piaçaguera</strong><p>Trapiche, patrimônio, educação do campo, histórias e conexão com a baía.</p><b>Conhecer Piaçaguera <span aria-hidden="true">↗</span></b></a>
+      <a class="portal-community portal-community-amparo" href="./locais/amparo.html"><span>02 · Comunidade caiçara</span><strong>Amparo</strong><p>Pesca artesanal, vida comunitária, tradições e caminhos do território.</p><b>Conhecer Amparo <span aria-hidden="true">↗</span></b></a>
     </div>
-    <a href="./curadoria.html">Área de curadoria</a>
-  </footer>
+  </section>
 
-  <script src="./js/site.js"></script>
-  <script src="./js/content-pages.js"></script>
-  <script src="./js/guide-featured.js"></script>
+  <section class="portal-section portal-wrap" id="temas" aria-labelledby="temas-title">
+    <div class="portal-section-head"><div><span class="portal-kicker">Caminhos de leitura</span><h2 id="temas-title">Explore por assunto.</h2></div><p>As páginas abaixo já fazem parte do acervo público do projeto.</p></div>
+    <div class="portal-reading-grid portal-reading-grid-four">
+      <a class="portal-reading" href="./conteudos/historia-piacaguera.html"><span class="portal-reading-type">História</span><strong>História de Piaçaguera</strong><span>Uma leitura sobre ocupação, território e transformações regionais.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-reading" href="./conteudos/igreja-sambaqui-piacaguera.html"><span class="portal-reading-type">Patrimônio</span><strong>Igreja e sambaqui de Piaçaguera</strong><span>Memória, patrimônio arqueológico e cuidados com a informação histórica.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-reading" href="./conteudos/fauna-flora-piacaguera.html"><span class="portal-reading-type">Natureza</span><strong>Fauna e flora</strong><span>Manguezais, Mata Atlântica e biodiversidade do estuário.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-reading" href="./conteudos/gastronomia-piacaguera-amparo.html"><span class="portal-reading-type">Gastronomia</span><strong>Sabores caiçaras</strong><span>Gastronomia e preparos documentados em Piaçaguera e Amparo.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+    </div>
+  </section>
+
+  <section class="portal-note portal-wrap"><strong>Um guia para conhecer, não apenas para visitar</strong><p>As informações reúnem contextos culturais, ambientais e históricos. Rotas e atividades que dependam de condições locais devem ser confirmadas com as comunidades antes de qualquer visita.</p></section>
+</main>
+<footer class="site-footer portal-footer">
+  <div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras</span><small>Território, memória, saberes e pesca artesanal.</small></div>
+  <div class="portal-footer-links"><a href="./guia.html">Explorar lugares</a><a href="./pescados.html">Camarão na Tarrafa</a></div>
+</footer>
+<script src="./js/site.js"></script>
 </body>
 </html>

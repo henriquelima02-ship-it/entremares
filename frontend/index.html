@@ -4,108 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1D4B43">
-  <meta name="description" content="EntreMarés — Saberes, Lugares e Produtos Caiçaras. Território, memória, ciência, turismo comunitário, biodiversidade, pesca artesanal e produtos locais.">
+  <meta name="description" content="EntreMarés: conheça Piaçaguera, Amparo, a memória, os saberes, as pesquisas e os produtos das comunidades caiçaras.">
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/portal.css">
   <title>EntreMarés | Saberes, Lugares e Produtos Caiçaras</title>
 </head>
-<body class="page-home">
+<body class="portal-page portal-home">
+<a class="portal-skip" href="#conteudo">Ir para o conteúdo</a>
 <header class="topbar">
   <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
   <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
-  <nav class="main-nav" data-main-nav>
+  <nav class="main-nav" aria-label="Navegação principal" data-main-nav>
     <a href="./index.html">Início</a>
     <a href="./guia.html">Lugares</a>
     <a href="./saberes.html">Saberes</a>
     <a href="./pesquisas.html">Pesquisas</a>
     <a href="./pescados.html">Pescados</a>
-    <a href="./cadastro.html">Para pescadores</a>
   </nav>
 </header>
-
-<main>
-  <section class="hero home-hero site-home-hero">
-    <div class="hero-copy">
-      <span class="eyebrow">Território • memória • saberes • produtos • ciência</span>
-      <h1>EntreMarés</h1>
-      <p class="hero-subtitle">Saberes, Lugares e Produtos Caiçaras</p>
-      <p>Conheça comunidades, histórias, natureza, pesquisas e produtos locais em uma plataforma construída a partir do território caiçara.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="./guia.html">Conhecer os lugares</a>
-        <a class="btn btn-secondary" href="./pescados.html">Ver pescados</a>
+<main id="conteudo">
+  <section class="portal-hero portal-wrap" aria-labelledby="intro-title">
+    <div class="portal-hero-copy">
+      <span class="portal-kicker">Território caiçara • Baía de Paranaguá</span>
+      <h1 id="intro-title">Entre lugares, <em>saberes</em> e marés.</h1>
+      <p class="portal-lead">Histórias, natureza, cultura e produtos locais reunidos para conhecer melhor o território e valorizar quem vive nele.</p>
+      <div class="portal-actions">
+        <a class="btn btn-primary" href="./guia.html">Começar pelos lugares <span aria-hidden="true">↗</span></a>
+        <a class="btn btn-secondary" href="./pescados.html">Conhecer os pescados</a>
       </div>
-      <div class="home-metrics" aria-label="Áreas do EntreMarés">
-        <span><strong>Lugares</strong><small>comunidades e rotas</small></span>
-        <span><strong>Saberes</strong><small>cultura e ciência</small></span>
-        <span><strong>Produtos</strong><small>pesca artesanal</small></span>
-      </div>
+      <p class="portal-support">EntreMarés conecta educação, memória comunitária, pesquisa e pesca artesanal.</p>
     </div>
-    <div class="hero-media-board" aria-label="Imagens de referência do território e da biodiversidade">
-      <figure class="hero-media hero-media-large"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Sotalia_guianensis_Guyane_fran%C3%A7aise_Amandine_Bordin_4.jpg" alt="Boto-cinza saltando sobre a água"><figcaption>Biodiversidade do estuário</figcaption></figure>
-      <figure class="hero-media"><img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Rhizophora_mangle_%28prop_roots%29.jpg" alt="Raízes do mangue-vermelho"><figcaption>Manguezal</figcaption></figure>
-      <figure class="hero-media"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Porto_de_paranagua.png" alt="Representação artística do Porto de Paranaguá"><figcaption>História e memória</figcaption></figure>
+    <aside class="portal-territory" aria-label="Comunidades em destaque">
+      <span class="portal-territory-label">Conheça o território</span>
+      <a href="./locais/piacaguera.html"><span class="portal-territory-number">01</span><span><strong>Piaçaguera</strong><small>Comunidade, patrimônio e paisagens</small></span><span aria-hidden="true">↗</span></a>
+      <a href="./locais/amparo.html"><span class="portal-territory-number">02</span><span><strong>Amparo</strong><small>Pesca artesanal, memória e vida comunitária</small></span><span aria-hidden="true">↗</span></a>
+      <span class="portal-territory-bottom">Duas comunidades. Muitas histórias para conhecer.</span>
+    </aside>
+  </section>
+
+  <section class="portal-section portal-wrap" aria-labelledby="caminhos-title">
+    <div class="portal-section-head"><div><span class="portal-kicker">Navegue pelo EntreMarés</span><h2 id="caminhos-title">O que você quer descobrir?</h2></div><p>Escolha um assunto e encontre páginas organizadas para leitura, consulta e exploração.</p></div>
+    <div class="portal-tile-grid">
+      <a class="portal-tile portal-tile-primary" href="./guia.html"><span class="portal-tile-kicker">01 · Lugares</span><strong>Pelos caminhos da baía</strong><span>Comunidades, território, patrimônio e gastronomia.</span><span class="portal-arrow">Explorar lugares <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-tile " href="./conteudos/historia-piacaguera.html"><span class="portal-tile-kicker">02 · Memórias</span><strong>Histórias do território</strong><span>Origens, lembranças e transformações da região.</span><span class="portal-arrow">Ler histórias <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-tile " href="./saberes.html"><span class="portal-tile-kicker">03 · Saberes</span><strong>Saberes que atravessam gerações</strong><span>Pesca, natureza, cultura e conhecimentos locais.</span><span class="portal-arrow">Conhecer saberes <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-tile " href="./pesquisas.html"><span class="portal-tile-kicker">04 · Pesquisas</span><strong>Ler e investigar</strong><span>Materiais de referência organizados por tema.</span><span class="portal-arrow">Ver o acervo <span aria-hidden="true">↗</span></span></a>
     </div>
   </section>
 
-  <section class="section section-intro">
-    <div class="section-head">
-      <span class="eyebrow">Escolha por onde começar</span>
-      <h2>Conteúdo organizado para encontrar o que importa com facilidade.</h2>
-      <p>O site prioriza leitura simples, navegação por assunto e acesso rápido às informações do território.</p>
-    </div>
-    <div class="portal-grid">
-      <a class="portal-card" href="./guia.html"><span aria-hidden="true">🗺️</span><div><small>Lugares</small><h3>Comunidades, trilhas e experiências</h3><p>Piaçaguera, Amparo, gastronomia, paisagens, história, fauna e flora.</p></div></a>
-      <a class="portal-card" href="./conteudos/historia-piacaguera.html"><span aria-hidden="true">🧭</span><div><small>Memórias</small><h3>História, patrimônio e relatos</h3><p>Memória oral, acontecimentos históricos, lendas e transformações do território.</p></div></a>
-      <a class="portal-card" href="./saberes.html"><span aria-hidden="true">🌊</span><div><small>Saberes</small><h3>Marés, pesca, ciência e sustentabilidade</h3><p>Conhecimentos tradicionais em diálogo com Ciências da Natureza.</p></div></a>
-      <a class="portal-card" href="./pesquisas.html"><span aria-hidden="true">📚</span><div><small>Pesquisas</small><h3>Produções estudantis revisadas</h3><p>Pesquisa de campo, documentos, entrevistas e materiais selecionados pela equipe.</p></div></a>
-      <a class="portal-card portal-card-market" href="./pescados.html"><span aria-hidden="true">🎣</span><div><small>Camarão na Tarrafa</small><h3>Pescadores, pescados, cortes e entrega</h3><p>A frente de pesca artesanal e comercialização do EntreMarés.</p></div></a>
+  <section class="portal-section portal-wrap portal-featured" aria-labelledby="leituras-title">
+    <div class="portal-section-head"><div><span class="portal-kicker">Leituras do território</span><h2 id="leituras-title">Comece por estas histórias.</h2></div><a class="portal-text-link" href="./pesquisas.html">Ver acervo <span aria-hidden="true">↗</span></a></div>
+    <div class="portal-reading-grid">
+      <a class="portal-reading" href="./conteudos/historia-piacaguera.html"><span class="portal-reading-type">Memória</span><strong>História de Piaçaguera</strong><span>Ocupações humanas, patrimônio e mudanças na Baía de Paranaguá.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-reading" href="./conteudos/fauna-flora-piacaguera.html"><span class="portal-reading-type">Natureza</span><strong>Fauna e flora de Piaçaguera</strong><span>Manguezais, biodiversidade marinha e registros da região.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-reading" href="./conteudos/gastronomia-piacaguera-amparo.html"><span class="portal-reading-type">Sabores</span><strong>Gastronomia de Piaçaguera e Amparo</strong><span>Tradições alimentares, frutos do mar e cozinha caiçara.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
     </div>
   </section>
 
-  <section class="section market-feature">
-    <div class="market-feature-copy">
-      <span class="eyebrow">Camarão na Tarrafa</span>
-      <h2>Uma área simples para pescadores e clientes.</h2>
-      <p>O pescador cria seu perfil primeiro. Depois, no próprio painel, cadastra os pescados, informa preço, quantidade, cortes e formas de retirada ou entrega.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="./pescados.html">Ver pescados disponíveis</a>
-        <a class="btn btn-secondary" href="./cadastro.html">Quero cadastrar como pescador</a>
-      </div>
-    </div>
-    <div class="market-flow">
-      <div><strong>1</strong><span>Crie seu perfil</span></div>
-      <div><strong>2</strong><span>Entre no painel</span></div>
-      <div><strong>3</strong><span>Cadastre o pescado</span></div>
-      <div><strong>4</strong><span>Receba pedidos</span></div>
-    </div>
+  <section class="portal-market-callout portal-wrap" aria-labelledby="mercado-title">
+    <div><span class="portal-kicker">Camarão na Tarrafa · frente de comercialização</span><h2 id="mercado-title">Do pescador para a sua mesa.</h2><p>Uma área própria para conhecer pescadores, consultar pescados anunciados e combinar pedidos, retirada ou entrega.</p></div>
+    <div class="portal-market-actions"><a class="btn btn-primary" href="./pescados.html">Ver pescados</a><a class="btn btn-secondary" href="./login.html?tipo=vender">Sou pescador</a></div>
   </section>
 
-  <section class="section visual-stories">
-    <div class="section-head">
-      <span class="eyebrow">Conheça o território</span>
-      <h2>Natureza, história e cultura em páginas próprias.</h2>
-      <p>Os conteúdos públicos são preparados e revisados pela equipe do projeto antes de aparecerem no site.</p>
-    </div>
-    <div class="image-story-grid">
-      <a href="./conteudos/fauna-flora-piacaguera.html" class="image-story"><img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Scarlet_Ibis_%28Eudocimus_ruber%29_RWD.jpg" alt="Guará"><span><small>Fauna</small><strong>Guará e aves do manguezal</strong></span></a>
-      <a href="./conteudos/fauna-flora-piacaguera.html" class="image-story"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Ocelot_%28Leopardus_pardalis%29-8.jpg/1280px-Ocelot_%28Leopardus_pardalis%29-8.jpg" alt="Jaguatirica"><span><small>Fauna terrestre</small><strong>Registros comunitários</strong></span></a>
-      <a href="./conteudos/historia-piacaguera.html" class="image-story"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Porto_de_paranagua.png" alt="Representação artística do Porto de Paranaguá"><span><small>Memória</small><strong>Paranaguá e as transformações da baía</strong></span></a>
-    </div>
-    <p class="visual-credit">Imagens de referência: Wikimedia Commons. Créditos e licenças são indicados nas páginas correspondentes.</p>
-  </section>
-
-  <section class="section split-banner public-content-note">
-    <div>
-      <span class="eyebrow">Conteúdo revisado</span>
-      <h2>O site publica materiais selecionados pela equipe.</h2>
-      <p>O envio público de pesquisas e documentos foi retirado. Assim, o visitante encontra apenas conteúdos já organizados e revisados no EntreMarés.</p>
-    </div>
-    <a class="btn btn-light" href="./pesquisas.html">Ver pesquisas publicadas</a>
-  </section>
+  <section class="portal-note portal-wrap"><strong>Sobre o EntreMarés</strong><p>O conteúdo cultural e educativo é apresentado em páginas selecionadas, sem envio público de postagens. As informações do território são organizadas a partir dos materiais de referência do projeto.</p></section>
 </main>
-
-<footer class="site-footer">
-  <div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras • território • memória • ciência • produtos locais</span></div>
-  <a href="./pescados.html">Camarão na Tarrafa</a>
+<footer class="site-footer portal-footer">
+  <div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras</span><small>Território, memória, saberes e pesca artesanal.</small></div>
+  <div class="portal-footer-links"><a href="./guia.html">Explorar lugares</a><a href="./pescados.html">Camarão na Tarrafa</a></div>
 </footer>
 <script src="./js/site.js"></script>
 </body>

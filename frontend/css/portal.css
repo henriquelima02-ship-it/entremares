@@ -1,0 +1,185 @@
+/* EntreMarés — portal editorial, mobile-first.
+   Camarão na Tarrafa permanece como módulo comercial independente. */
+.portal-page{
+  --portal-ink:#193e38;
+  --portal-ocean:#315b6d;
+  --portal-sand:#e9d8b6;
+  --portal-coral:#b7593d;
+  --portal-border:rgba(29,75,67,.13);
+  --portal-card:#fffefb;
+  background:#faf9f4;
+  color:#253745;
+  line-height:1.58
+}
+.portal-page .topbar{border-bottom-color:rgba(29,75,67,.1)}
+.portal-wrap{width:min(1140px,calc(100% - 32px));margin-inline:auto}
+.portal-skip{position:absolute;left:12px;top:-80px;z-index:90;background:#fff;color:var(--verde);padding:10px 16px;border-radius:10px;font-weight:800}
+.portal-skip:focus{top:8px}
+.portal-kicker{display:inline-flex;align-items:center;gap:8px;color:#815132;font-size:.76rem;letter-spacing:.1em;font-weight:900;text-transform:uppercase;line-height:1.5}
+.portal-page h1,.portal-page h2,.portal-page h3{color:var(--portal-ink)}
+.portal-page h1{font-family:var(--serif);font-size:clamp(2.75rem,6vw,5.5rem);line-height:1.06;letter-spacing:-.045em;max-width:950px}
+.portal-page h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.1rem);line-height:1.12}
+.portal-page h3{font-family:var(--serif)}
+.portal-page p{margin:0}
+.portal-lead{color:#435c62;font-size:clamp(1.04rem,1.8vw,1.27rem);line-height:1.64;max-width:650px}
+.portal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.portal-actions .btn{min-height:53px;gap:12px}
+.portal-section{padding-top:72px;padding-bottom:12px}
+.portal-section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:23px}
+.portal-section-head>div{display:grid;gap:10px}
+.portal-section-head>p{max-width:335px;color:#557076;font-size:.95rem}
+.portal-section-head .portal-kicker{color:var(--portal-coral)}
+.portal-hero{margin-top:24px;border-radius:31px;background:radial-gradient(circle at 70% 20%,rgba(213,168,60,.26),transparent 40%),linear-gradient(130deg,#fffdf6,#eee4d1 66%,#d8e4df);padding:clamp(24px,4.5vw,60px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(270px,.7fr);gap:42px;align-items:center;border:1px solid var(--portal-border);overflow:hidden}
+.portal-hero-copy{display:grid;align-content:start;gap:18px}
+.portal-hero-copy h1 em{font-style:italic;color:#a95940}
+.portal-hero-copy .portal-actions{margin-top:6px}
+.portal-support{font-size:.88rem;color:#516b69}
+.portal-territory{min-width:0;border-radius:26px;background:#1d4b43;color:#fff;padding:24px;display:grid;align-content:start;gap:8px;box-shadow:0 18px 45px rgba(29,75,67,.18)}
+.portal-territory-label{font-size:.75rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#e9d8b6;margin-bottom:12px}
+.portal-territory>a{color:#fff;text-decoration:none;display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center;min-height:98px;padding:12px 4px;border-top:1px solid rgba(255,255,255,.2)}
+.portal-territory>a>span:nth-child(2){display:grid;gap:4px}
+.portal-territory strong{font-family:var(--serif);font-size:1.5rem}
+.portal-territory small{font-size:.78rem;color:#dfebdf;line-height:1.45}
+.portal-territory-number{align-self:start;color:#e9d8b6;font-size:.74rem;font-weight:900}
+.portal-territory-bottom{color:#e9d8b6;font-size:.83rem;line-height:1.5;padding-top:12px;border-top:1px solid rgba(255,255,255,.2)}
+.portal-tile-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.portal-tile{min-width:0;display:flex;flex-direction:column;gap:12px;min-height:276px;padding:24px;border:1px solid var(--portal-border);border-radius:23px;background:var(--portal-card);color:#536870;text-decoration:none;box-shadow:0 7px 20px rgba(29,75,67,.04);transition:transform .2s,box-shadow .2s}
+.portal-tile:hover,.portal-reading:hover,.portal-community:hover{transform:translateY(-3px);box-shadow:0 15px 36px rgba(29,75,67,.1)}
+.portal-tile-kicker,.portal-reading-type{color:#a7543b;font-weight:900;font-size:.75rem;letter-spacing:.065em;text-transform:uppercase}
+.portal-tile>strong{font-family:var(--serif);font-size:1.65rem;line-height:1.16;color:var(--portal-ink)}
+.portal-tile>span:nth-child(3){font-size:.9rem;line-height:1.55}
+.portal-tile-primary{background:#e2eee8}
+.portal-arrow{margin-top:auto;display:flex;justify-content:space-between;gap:10px;align-items:center;color:#1d4b43;font-weight:900;font-size:.86rem}
+.portal-featured{padding-top:79px}
+.portal-reading-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.portal-reading{min-width:0;display:flex;flex-direction:column;gap:12px;min-height:228px;padding:24px 22px;background:var(--portal-card);border:1px solid var(--portal-border);border-radius:22px;text-decoration:none;color:#51676c;transition:transform .2s,box-shadow .2s}
+.portal-reading strong{font-family:var(--serif);font-size:1.55rem;line-height:1.22;color:#1d4b43}
+.portal-reading>span:nth-child(3){font-size:.89rem;line-height:1.56}
+.portal-reading-link{margin-top:auto;display:flex;justify-content:space-between;align-items:center;color:#1d4b43;font-size:.86rem;font-weight:900;padding-top:12px}
+.portal-reading-grid-four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.portal-text-link{font-weight:900;color:#1d4b43;text-decoration:none;white-space:nowrap}
+.portal-market-callout{margin-top:84px;padding:clamp(24px,5vw,52px);display:flex;gap:32px;align-items:center;justify-content:space-between;border-radius:28px;background:linear-gradient(125deg,#1d4b43,#345e71);color:#fff;overflow:hidden}
+.portal-market-callout h2{color:#fff;margin:12px 0}
+.portal-market-callout p{max-width:630px;color:#e8f0e9}
+.portal-market-callout .portal-kicker{color:#f1d28e}
+.portal-market-actions{display:grid;gap:10px;min-width:min(220px,100%)}
+.portal-market-actions .btn{white-space:nowrap;min-height:52px}
+.portal-market-callout .btn-primary{background:#f2e6cf;color:#1d4b43;box-shadow:none}
+.portal-market-callout .btn-secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
+.portal-note{margin-block:35px 68px;padding:18px 22px;border-left:4px solid #d5a83c;border-radius:0 15px 15px 0;background:rgba(233,216,182,.24);display:grid;gap:5px;color:#4e6269;font-size:.91rem}
+.portal-note strong{color:#1d4b43}
+.portal-footer{margin-top:50px;border-top:1px solid var(--portal-border);padding-bottom:calc(95px + env(safe-area-inset-bottom))}
+.portal-footer>div:first-child{gap:4px}
+.portal-footer small{color:#6d7b78}
+.portal-footer-links{display:flex!important;gap:16px!important;flex-wrap:wrap;align-items:center}
+.portal-page-intro{margin-top:25px;padding:clamp(26px,4.7vw,58px);border:1px solid var(--portal-border);border-radius:29px;background:radial-gradient(circle at 100% 0,rgba(213,168,60,.18),transparent 38%),linear-gradient(135deg,#f6f0e1,#fffdf9);display:grid;gap:19px}
+.portal-page-intro h1{font-size:clamp(2.65rem,5.7vw,4.9rem);max-width:940px}
+.portal-inpage-nav{display:flex;gap:9px;flex-wrap:wrap;margin-top:5px}
+.portal-inpage-nav a{text-decoration:none;border:1px solid var(--portal-border);background:#fff;border-radius:999px;padding:10px 14px;font-size:.87rem;font-weight:900;color:#1d4b43}
+.portal-community-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.portal-community{display:flex;flex-direction:column;gap:14px;min-height:305px;padding:30px;text-decoration:none;color:#fff;border-radius:25px;transition:transform .2s,box-shadow .2s;overflow:hidden;position:relative}
+.portal-community::after{content:"";position:absolute;right:-80px;bottom:-100px;width:240px;height:240px;border:40px solid rgba(255,255,255,.07);border-radius:50%;pointer-events:none}
+.portal-community-piacaguera{background:linear-gradient(130deg,#19463e,#3d617b)}
+.portal-community-amparo{background:linear-gradient(130deg,#365a69,#456d5a)}
+.portal-community>span{font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:#f3dfb5}
+.portal-community>strong{font-family:var(--serif);font-size:clamp(2.5rem,5vw,4.4rem);line-height:1}
+.portal-community>p{max-width:400px;color:#e8ece6}
+.portal-community>b{margin-top:auto;font-size:.92rem;display:flex;gap:13px;align-items:center;color:#fff}
+.portal-theme-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.portal-theme{min-height:230px;background:#eaf1eb;border:1px solid rgba(29,75,67,.12);padding:24px;border-radius:22px;display:flex;flex-direction:column;gap:14px}
+.portal-theme-index{font-size:.8rem;font-weight:900;color:#a7543b}
+.portal-theme h3{font-size:1.6rem;line-height:1.15}
+.portal-theme p{color:#4c6366;font-size:.91rem}
+.portal-research-note{margin-top:60px;padding:28px 30px;border-radius:23px;background:#e4eee8;border:1px solid rgba(29,75,67,.12);display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.portal-research-note>div{display:grid;gap:12px}
+.portal-research-note h2{font-size:clamp(1.8rem,3vw,2.5rem)}
+.portal-research-note p{color:#456065}
+.portal-market-hero{margin-top:25px;border-radius:29px;background:linear-gradient(130deg,#204b43,#345c71);padding:clamp(26px,4.5vw,56px);display:grid;grid-template-columns:1.4fr .6fr;gap:34px;align-items:center;color:#fff}
+.portal-market-hero h1{color:#fff;max-width:720px;margin:16px 0}
+.portal-market-hero .portal-kicker{color:#f1d28e}
+.portal-market-hero .portal-lead{color:#e4ece8}
+.portal-market-hero .btn-primary{background:#edddbd;color:#204b43;box-shadow:none}
+.portal-market-hero .btn-secondary{color:#fff;background:transparent;border:1px solid rgba(255,255,255,.5)}
+.portal-market-explain{padding:25px;border-radius:22px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.19)}
+.portal-market-explain>strong{font-family:var(--serif);font-size:1.45rem}
+.portal-market-explain ol{padding-left:22px;line-height:1.8}
+.portal-market-explain small{color:#e6ede8;line-height:1.5}
+.portal-vitrine{scroll-margin-top:105px}
+.portal-market .market-toolbar{position:sticky;top:76px;z-index:20;display:flex;padding:13px;border:1px solid var(--portal-border);border-radius:18px;background:rgba(250,249,244,.98);backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(29,75,67,.08)}
+.portal-market .product-card{box-shadow:0 10px 24px rgba(29,75,67,.06)}
+.portal-market-bottom{margin-top:60px;border-top:1px solid var(--portal-border);padding-top:30px;display:flex;gap:24px;justify-content:space-between;align-items:center}
+.portal-market-bottom>div:first-child{display:grid;gap:10px}
+.portal-market-bottom h2{font-size:clamp(1.8rem,4vw,2.7rem)}
+.portal-market-bottom p{color:#536c71}
+.portal-market-bottom .portal-market-actions{min-width:220px}
+.portal-market-bottom .btn-secondary{color:#1d4b43;background:#fff;border:1px solid var(--portal-border)}
+.portal-page a:focus-visible,.portal-page button:focus-visible{outline-offset:3px}
+@media(max-width:1050px){
+ .portal-tile-grid,.portal-reading-grid-four{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .portal-tile{min-height:250px}
+ .portal-hero{grid-template-columns:1fr .86fr;gap:24px}
+}
+@media(max-width:850px){
+ .portal-hero,.portal-market-hero{grid-template-columns:1fr}
+ .portal-territory{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ .portal-territory-label,.portal-territory-bottom{grid-column:1/-1}
+ .portal-territory>a{border-top:1px solid rgba(255,255,255,.2)}
+ .portal-reading-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .portal-community-grid{grid-template-columns:1fr 1fr}
+ .portal-market-callout,.portal-market-bottom{align-items:flex-start;flex-direction:column}
+ .portal-market-actions{display:flex;flex-wrap:wrap}
+}
+@media(max-width:650px){
+ .portal-wrap{width:calc(100% - 26px)}
+ .portal-page .topbar{padding-inline:12px}
+ .portal-page h1{font-size:clamp(2.55rem,12vw,3.85rem)}
+ .portal-page h2{font-size:clamp(1.9rem,8.5vw,2.45rem)}
+ .portal-kicker{font-size:.7rem}
+ .portal-section{padding-top:43px;padding-bottom:2px}
+ .portal-section-head{align-items:start;flex-direction:column;gap:9px;margin-bottom:17px}
+ .portal-section-head>p{max-width:100%}
+ .portal-hero{margin-top:10px;padding:24px 18px;border-radius:22px;gap:22px}
+ .portal-hero-copy{gap:13px}
+ .portal-hero-copy h1{font-size:clamp(2.65rem,12vw,3.7rem)}
+ .portal-hero-copy .portal-actions{margin-top:6px}
+ .portal-actions{width:100%;display:grid;grid-template-columns:1fr;gap:9px}
+ .portal-actions .btn{width:100%;text-align:center}
+ .portal-territory{padding:19px;border-radius:19px;display:grid;grid-template-columns:1fr;gap:5px}
+ .portal-territory-label,.portal-territory-bottom{grid-column:auto}
+ .portal-territory>a{min-height:78px;padding:11px 0}
+ .portal-territory strong{font-size:1.36rem}
+ .portal-tile-grid,.portal-reading-grid,.portal-reading-grid-four{grid-template-columns:1fr;gap:10px}
+ .portal-tile{min-height:0;padding:19px 19px 17px;gap:9px;border-radius:18px}
+ .portal-tile>strong{font-size:1.42rem}
+ .portal-arrow{padding-top:9px}
+ .portal-reading{min-height:0;padding:19px;border-radius:18px;gap:9px}
+ .portal-reading strong{font-size:1.42rem}
+ .portal-reading-link{padding-top:5px}
+ .portal-market-callout{margin-top:45px;padding:24px 20px;border-radius:20px;gap:20px}
+ .portal-market-actions{width:100%;display:grid;grid-template-columns:1fr}
+ .portal-market-actions .btn{width:100%;white-space:normal}
+ .portal-page-intro{margin-top:10px;padding:26px 19px;border-radius:22px;gap:14px}
+ .portal-page-intro h1{font-size:clamp(2.45rem,11vw,3.5rem)}
+ .portal-inpage-nav{margin-top:0}
+ .portal-community-grid,.portal-theme-grid{grid-template-columns:1fr;gap:10px}
+ .portal-community{min-height:236px;padding:23px;border-radius:19px}
+ .portal-community>strong{font-size:3.1rem}
+ .portal-theme{min-height:0;padding:20px;border-radius:18px;gap:10px}
+ .portal-theme h3{font-size:1.38rem}
+ .portal-research-note{grid-template-columns:1fr;gap:12px;margin-top:40px;padding:22px;border-radius:18px}
+ .portal-market-hero{margin-top:0;width:100%;padding:31px 19px;border-radius:0 0 24px 24px;gap:24px}
+ .portal-market-hero h1{font-size:clamp(2.5rem,12vw,3.7rem)}
+ .portal-market-explain{padding:20px;border-radius:17px}
+ .portal-market-explain ol{margin-bottom:6px}
+ .portal-vitrine{scroll-margin-top:80px}
+ .portal-market .market-toolbar{top:70px;margin-inline:-13px;padding:10px 13px;border-left:0;border-right:0;border-radius:0;align-items:stretch;flex-direction:column;gap:8px}
+ .portal-market .search-box,.portal-market .select-box{width:100%}
+ .portal-market .search-box input,.portal-market .select-box select{min-height:47px}
+ .portal-market-bottom{margin-top:40px}
+ .portal-note{margin-block:30px 35px;padding:16px}
+ .portal-footer{padding-top:27px;padding-bottom:calc(105px + env(safe-area-inset-bottom))}
+ .portal-footer-links{flex-direction:row}
+}
+@media(prefers-reduced-motion:reduce){
+ .portal-tile,.portal-reading,.portal-community{transition:none}
+}

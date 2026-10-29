@@ -1,2 +1,55 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#1D4B43"><link rel="stylesheet" href="./css/style.css"><title>Pesquisas | EntreMarés</title></head><body><header class="topbar"><a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a><button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button><nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./guia.html">Guia Turístico</a><a href="./saberes.html">Saberes</a><a href="./pesquisas.html">Pesquisas</a><a href="./cadastro.html">Cadastro</a><a class="nav-cta" href="./contribuir.html">Enviar conteúdo</a></nav></header><main><section class="page-hero"><span class="eyebrow">Produção dos estudantes</span><h1>Pesquisas selecionadas</h1><p>Biblioteca de conteúdos revisados. Para preservar a privacidade, o protótipo sugere identificar os trabalhos por turma, grupo responsável ou equipe, sem expor nomes de estudantes.</p></section><section class="section"><div class="toolbar"><input id="researchSearch" class="search-input" type="search" placeholder="Buscar por título, tema ou palavra-chave..."><select id="researchCategory" class="select-input"><option value="all">Todas as categorias</option><option value="turismo">Turismo</option><option value="historia">História e memória</option><option value="cultura">Cultura</option><option value="gastronomia">Gastronomia</option><option value="fauna">Fauna</option><option value="flora">Flora</option><option value="ciencia">Ciência e Natureza</option><option value="pesca">Pesca artesanal</option></select></div><div class="content-grid" id="researchGrid"></div><div class="empty-state hidden" id="researchEmpty"><h3>Nenhuma pesquisa publicada foi encontrada.</h3></div></section></main><footer class="site-footer"><div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras • pesquisas • memória • território</span></div><a href="./curadoria.html">Área de curadoria</a></footer><script src="./js/site.js"></script><script src="./js/content-pages.js"></script></body></html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1D4B43">
+  <meta name="description" content="Acervo de apoio e leituras de referência do EntreMarés sobre história, patrimônio, biodiversidade e cultura caiçara.">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/portal.css">
+  <title>Pesquisas e acervo | EntreMarés</title>
+</head>
+<body class="portal-page portal-pesquisas">
+<a class="portal-skip" href="#conteudo">Ir para o conteúdo</a>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+  <nav class="main-nav" aria-label="Navegação principal" data-main-nav>
+    <a href="./index.html">Início</a>
+    <a href="./guia.html">Lugares</a>
+    <a href="./saberes.html">Saberes</a>
+    <a href="./pesquisas.html">Pesquisas</a>
+    <a href="./pescados.html">Pescados</a>
+  </nav>
+</header>
+<main id="conteudo">
+  <section class="portal-page-intro portal-wrap">
+    <span class="portal-kicker">Acervo e investigação</span>
+    <h1>Conhecer o território também é pesquisar.</h1>
+    <p class="portal-lead">Reunimos leituras já disponíveis para apoiar perguntas, pesquisas de campo e atividades escolares sobre as comunidades caiçaras.</p>
+  </section>
+
+  <section class="portal-section portal-wrap" aria-labelledby="acervo-title">
+    <div class="portal-section-head"><div><span class="portal-kicker">Acervo de referência</span><h2 id="acervo-title">Materiais para consultar.</h2></div><p>Textos temáticos do projeto. Cada página apresenta informações e contextos próprios, sem representar uma postagem de usuário.</p></div>
+    <div class="portal-reading-grid portal-reading-grid-four">
+      <a class="portal-reading" href="./conteudos/historia-piacaguera.html"><span class="portal-reading-type">História e território</span><strong>História de Piaçaguera</strong><span>Ocupações, memória regional e transformações na Baía de Paranaguá.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-reading" href="./conteudos/igreja-sambaqui-piacaguera.html"><span class="portal-reading-type">Patrimônio e arqueologia</span><strong>Igreja e sambaqui</strong><span>Patrimônio, fontes documentais e questões ainda em pesquisa.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-reading" href="./conteudos/fauna-flora-piacaguera.html"><span class="portal-reading-type">Ciências da Natureza</span><strong>Fauna e flora</strong><span>Biodiversidade, ambientes e distinção entre registros locais e regionais.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+      <a class="portal-reading" href="./conteudos/gastronomia-piacaguera-amparo.html"><span class="portal-reading-type">Cultura e alimentação</span><strong>Gastronomia caiçara</strong><span>Preparos documentados, frutos do mar e tradições comunitárias.</span><span class="portal-reading-link">Explorar conteúdo <span aria-hidden="true">↗</span></span></a>
+    </div>
+  </section>
+
+  <section class="portal-research-note portal-wrap">
+    <div><span class="portal-kicker">Produção estudantil</span><h2>Como entram os trabalhos dos estudantes?</h2></div>
+    <p>Esta página não recebe envios públicos. Trabalhos escolares somente devem aparecer no acervo quando houver materiais efetivamente selecionados e revisados pela equipe pedagógica. Até aqui, não apresentamos exemplos fictícios como pesquisas publicadas.</p>
+  </section>
+
+  <section class="portal-note portal-wrap"><strong>Pesquisa com responsabilidade</strong><p>Os conteúdos distinguem informações documentadas, referências regionais e pontos que ainda precisam de confirmação em campo. Isso faz parte do processo de investigação.</p></section>
+</main>
+<footer class="site-footer portal-footer">
+  <div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras</span><small>Território, memória, saberes e pesca artesanal.</small></div>
+  <div class="portal-footer-links"><a href="./guia.html">Explorar lugares</a><a href="./pescados.html">Camarão na Tarrafa</a></div>
+</footer>
+<script src="./js/site.js"></script>
+</body>
+</html>

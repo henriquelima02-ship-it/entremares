@@ -44,16 +44,6 @@
     }
   }
 
-  function ensureNavLink(file, label, beforeFile = '') {
-    if (!nav || nav.querySelector(`a[href$="${file}"]`)) return;
-    const link = document.createElement('a');
-    link.href = `${prefixForNav()}${file}`;
-    link.textContent = label;
-    const before = beforeFile ? nav.querySelector(`a[href$="${beforeFile}"]`) : null;
-    if (before) nav.insertBefore(link, before);
-    else nav.appendChild(link);
-  }
-
   function currentSectionFile() {
     const path = window.location.pathname.toLowerCase();
     if (/\/(conteudos|locais)\//.test(path)) return 'guia.html';
@@ -112,35 +102,39 @@
   }
 
   if (nav) {
-    nav.querySelectorAll('a[href$="guia.html"]').forEach(link => {
-      if (/guia turístico/i.test(link.textContent)) link.textContent = 'Lugares';
-    });
-    nav.querySelectorAll('a[href$="cadastro.html"]').forEach(link => {
-      if (/cadastro/i.test(link.textContent)) link.textContent = 'Para pescadores';
-    });
-
-    ensureNavLink('pescadores.html', 'Pescadores', 'pescados.html');
-    ensureNavLink('pescados.html', 'Pescados', 'cadastro.html');
+    // Navegação pública única: conteúdos editoriais + frente de pescados.
+    const prefix = prefixForNav();
+    const sections = [
+      ['index.html', 'Início'],
+      ['guia.html', 'Lugares'],
+      ['saberes.html', 'Saberes'],
+      ['pesquisas.html', 'Pesquisas'],
+      ['pescados.html', 'Pescados']
+    ];
+    nav.replaceChildren(...sections.map(([file, label]) => {
+      const link = document.createElement('a');
+      link.href = `${prefix}${file}`;
+      link.textContent = label;
+      return link;
+    }));
 
     const currentSession = session();
-    if (!nav.querySelector('[data-session-nav]')) {
-      const account = document.createElement('a');
-      account.dataset.sessionNav = 'true';
-      if (currentSession?.user?.role === 'pescador') {
-        account.href = `${prefixForNav()}painel-pescador.html`;
-        account.textContent = 'Meu painel';
-      } else if (currentSession?.user?.curator) {
-        account.href = `${prefixForNav()}curadoria-comercial.html`;
-        account.textContent = 'Curadoria';
-      } else if (currentSession?.user?.role === 'cliente') {
-        account.href = `${prefixForNav()}minha-conta.html`;
-        account.textContent = 'Meus pedidos';
-      } else {
-        account.href = `${prefixForNav()}login.html`;
-        account.textContent = 'Comprar / Vender';
-      }
-      nav.appendChild(account);
+    const account = document.createElement('a');
+    account.dataset.sessionNav = 'true';
+    if (currentSession?.user?.role === 'pescador') {
+      account.href = `${prefix}painel-pescador.html`;
+      account.textContent = 'Meu painel';
+    } else if (currentSession?.user?.curator) {
+      account.href = `${prefix}curadoria-comercial.html`;
+      account.textContent = 'Curadoria comercial';
+    } else if (currentSession?.user?.role === 'cliente') {
+      account.href = `${prefix}minha-conta.html`;
+      account.textContent = 'Meus pedidos';
+    } else {
+      account.href = `${prefix}login.html`;
+      account.textContent = 'Entrar';
     }
+    nav.appendChild(account);
     markCurrentNavigation(nav);
   }
 

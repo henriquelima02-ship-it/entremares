@@ -4,68 +4,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1D4B43">
-  <meta name="description" content="Pescados artesanais disponíveis no Camarão na Tarrafa: contato rápido pelo WhatsApp, cortes, retirada e entrega.">
+  <meta name="description" content="Consulte pescados anunciados por pescadores, veja opções de retirada e entrega e converse pelo WhatsApp.">
   <link rel="stylesheet" href="./css/style.css">
-  <title>Comprar pescados | Camarão na Tarrafa • EntreMarés</title>
+  <link rel="stylesheet" href="./css/portal.css">
+  <title>Pescados locais | Camarão na Tarrafa • EntreMarés</title>
 </head>
-<body class="page-market">
+<body class="portal-page portal-market">
+<a class="portal-skip" href="#conteudo">Ir para o conteúdo</a>
 <header class="topbar">
   <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Lugares e Produtos Caiçaras</small></span></a>
   <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
-  <nav class="main-nav" data-main-nav>
+  <nav class="main-nav" aria-label="Navegação principal" data-main-nav>
     <a href="./index.html">Início</a>
     <a href="./guia.html">Lugares</a>
-    <a href="./pescadores.html">Pescadores</a>
-    <a href="./pescados.html">Comprar</a>
-    <a href="./login.html?tipo=vender">Vender</a>
+    <a href="./saberes.html">Saberes</a>
+    <a href="./pesquisas.html">Pesquisas</a>
+    <a href="./pescados.html">Pescados</a>
   </nav>
 </header>
-
-<main>
-  <section class="market-banner market-buy-banner">
-    <div class="market-banner-copy">
-      <span class="eyebrow">Camarão na Tarrafa</span>
-      <h1>Comprar pescado ficou mais simples.</h1>
-      <p>Veja o que está disponível agora e fale direto com o pescador pelo WhatsApp. Se preferir, monte o pedido no site e acompanhe pela sua conta.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#vitrine">Ver pescados disponíveis</a>
-        <a class="btn btn-secondary" href="./login.html?tipo=comprar">Entrar como cliente</a>
-      </div>
-      <p class="market-fresh-note"><strong>Disponibilidade curta:</strong> cada anúncio fica ativo por 24, 36 ou 42 horas e depois sai automaticamente da vitrine até o pescador renovar.</p>
+<main id="conteudo">
+  <section class="portal-market-hero portal-wrap">
+    <div>
+      <span class="portal-kicker">Camarão na Tarrafa · Comprar e vender</span>
+      <h1>Pescado local, com contato direto.</h1>
+      <p class="portal-lead">Consulte os anúncios disponíveis e converse com o pescador. Você também pode registrar o pedido no site para acompanhar pela sua conta.</p>
+      <div class="portal-actions"><a href="#vitrine" class="btn btn-primary">Ver pescados disponíveis <span aria-hidden="true">↗</span></a><a href="./login.html?tipo=vender" class="btn btn-secondary">Sou pescador</a></div>
     </div>
-    <div class="market-seal"><span>🐟</span><strong>Direto do pescador</strong><small>WhatsApp • retirada • entrega</small></div>
+    <aside class="portal-market-explain" aria-label="Como funciona">
+      <strong>Como funciona</strong>
+      <ol><li>Veja o pescado anunciado.</li><li>Confira as opções de retirada ou entrega.</li><li>Combine os detalhes com o pescador.</li></ol>
+      <small>Anúncios temporários: a disponibilidade precisa ser confirmada antes da compra.</small>
+    </aside>
   </section>
 
-  <section class="section quick-market-actions">
-    <a class="quick-market-card" href="./pescados.html#vitrine"><span>🛒</span><div><strong>Quero comprar</strong><small>Escolha um pescado e chame no WhatsApp.</small></div></a>
-    <a class="quick-market-card" href="./minha-conta.html"><span>📦</span><div><strong>Meus pedidos</strong><small>Acompanhe pedidos feitos com sua conta.</small></div></a>
-    <a class="quick-market-card" href="./login.html?tipo=vender"><span>🎣</span><div><strong>Quero vender</strong><small>Acesso ao painel do pescador.</small></div></a>
-  </section>
-
-  <section class="section" id="vitrine">
-    <div class="section-head">
-      <span class="eyebrow">Disponível agora</span>
-      <h2>Pescados anunciados pelos pescadores</h2>
-      <p id="marketMode">Carregando disponibilidade...</p>
+  <section id="vitrine" class="portal-section portal-wrap portal-vitrine" aria-labelledby="vitrine-title">
+    <div class="portal-section-head">
+      <div><span class="portal-kicker">Vitrine de pescados</span><h2 id="vitrine-title">O que está disponível?</h2></div>
+      <p id="marketMode" aria-live="polite">Carregando disponibilidade...</p>
     </div>
-
-    <div class="market-toolbar">
+    <div class="market-toolbar" role="search" aria-label="Filtrar pescados">
       <label class="search-box"><span>Buscar pescado</span><input id="productSearch" type="search" placeholder="Camarão, tainha, robalo..."></label>
       <label class="select-box"><span>Categoria</span><select id="categoryFilter"><option value="all">Todas</option><option value="peixe">Peixes</option><option value="crustaceo">Crustáceos</option><option value="molusco">Moluscos</option><option value="outro">Outros</option></select></label>
     </div>
-
     <div id="productGrid" class="market-grid"></div>
-    <div id="marketEmpty" class="empty-state hidden">
-      <h3>Nenhum pescado disponível com esses filtros.</h3>
-      <p>Os anúncios são temporários. Volte mais tarde ou confira novamente quando os pescadores renovarem o estoque.</p>
-    </div>
+    <div id="marketEmpty" class="empty-state hidden"><h3>Nenhum pescado disponível com esses filtros.</h3><p>Os anúncios são temporários e mudam conforme a disponibilidade informada pelos pescadores.</p></div>
   </section>
 
-  <section class="section trust-grid market-trust-grid">
-    <article><span>💬</span><h3>WhatsApp rápido</h3><p>Quando o pescador autoriza, você pode abrir uma conversa com uma mensagem pronta sobre o pescado escolhido.</p></article>
-    <article><span>⏱️</span><h3>Anúncios temporários</h3><p>Os pescados ficam ativos por 24 a 42 horas para reduzir anúncios antigos ou estoque desatualizado.</p></article>
-    <article><span>🛶</span><h3>Retirada ou entrega</h3><p>Cada pescador informa as opções disponíveis para sua comunidade e sua rota.</p></article>
-    <article><span>🤝</span><h3>Confirmação direta</h3><p>Preço, quantidade, corte, horário e logística são confirmados antes da entrega.</p></article>
+  <section class="portal-market-bottom portal-wrap">
+    <div><span class="portal-kicker">Pescadores e clientes</span><h2>Quer vender ou acompanhar seus pedidos?</h2><p>O acesso é separado para quem anuncia pescados e para quem faz pedidos.</p></div>
+    <div class="portal-market-actions"><a href="./login.html?tipo=comprar" class="btn btn-secondary">Meus pedidos</a><a href="./login.html?tipo=vender" class="btn btn-primary">Área do pescador</a></div>
   </section>
 </main>
 
@@ -97,10 +84,9 @@
     <div id="orderResult" class="result-card hidden" aria-live="polite"></div>
   </form>
 </dialog>
-
-<footer class="site-footer">
-  <div><strong>EntreMarés</strong><span>Camarão na Tarrafa • pesca artesanal, produtos locais e logística comunitária</span></div>
-  <a href="./login.html?tipo=vender">Área do pescador</a>
+<footer class="site-footer portal-footer">
+  <div><strong>EntreMarés</strong><span>Saberes, Lugares e Produtos Caiçaras</span><small>Território, memória, saberes e pesca artesanal.</small></div>
+  <div class="portal-footer-links"><a href="./guia.html">Explorar lugares</a><a href="./pescados.html">Camarão na Tarrafa</a></div>
 </footer>
 <script src="./js/site.js"></script>
 <script src="./js/api.js"></script>
