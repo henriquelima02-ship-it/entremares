@@ -23,7 +23,7 @@
       displayName: 'Pescador demonstrativo',
       community: 'Baía de Paranaguá',
       pickupReference: 'Ponto de retirada a combinar',
-      bio: 'Perfil fictício utilizado para testar o painel e a logística do Camarão na Tarrafa.',
+      bio: 'Perfil fictício utilizado para testar o painel e a logística de pescados no EntreMarés.',
       whatsappPublic: false,
       whatsapp: '',
       shipping: {

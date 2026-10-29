@@ -601,7 +601,7 @@ h3 {
   }
 }
 
-/* EntreMarés — camada visual do site e módulo Camarão na Tarrafa */
+/* EntreMarés — camada visual do site e módulo de pescados */
 .site-home-hero{min-height:78vh}
 .home-metrics{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
 .home-metrics span{display:grid;min-width:130px;padding:12px 15px;border:1px solid rgba(29,75,67,.12);border-radius:16px;background:rgba(255,255,255,.72)}

@@ -82,7 +82,7 @@
     const phone = String(product.fisherman?.whatsapp || '').replace(/\D/g, '');
     if (!phone) return '';
     const message = [
-      'Olá! Vi este pescado no EntreMarés / Camarão na Tarrafa:',
+      'Olá! Vi este pescado no EntreMarés:',
       `• ${product.species}`,
       `• ${brl(product.pricePerKg)} por ${saleUnitLabel(product.saleUnit)}`,
       `• ${Number(product.quantityKg || 0).toLocaleString('pt-BR')} ${stockUnitLabel(product.saleUnit, product.quantityKg)} anunciados`,

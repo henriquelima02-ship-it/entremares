@@ -1,127 +1,55 @@
 # EntreMarés
 
-**Saberes, Lugares e Produtos Caiçaras**
+**Saberes, Povoados e Produtos Caiçaras**
 
-EntreMarés é um ecossistema digital voltado à valorização do território caiçara, reunindo memória, cultura, turismo comunitário, pesca artesanal, gastronomia, biodiversidade, ciência, pesquisas estudantis, produtos locais, tecnologia e economia comunitária.
+O **EntreMarés** é um portal digital de valorização do território caiçara. Reúne informações sobre povoados, memória, patrimônio, saberes tradicionais, biodiversidade, gastronomia e pesca artesanal. A vitrine de pescados e o acesso de pescadores fazem parte da mesma plataforma.
 
-O projeto nasceu como **Camarão na Tarrafa**, inicialmente concentrado na pesca artesanal, na valorização dos pescadores, na comercialização de pescados e na logística comunitária. Com a ampliação das pesquisas históricas, territoriais, culturais, ambientais e pedagógicas, o projeto passou a exigir uma marca capaz de representar esse conjunto mais amplo.
+## Áreas do portal
 
-A relação entre as marcas é:
+- **Pescados:** anúncios de pesca artesanal, perfis de pescadores, preços, quantidades, cortes, formas de retirada e entrega, pedidos e acompanhamento.
+- **Povoados:** Piaçaguera e Amparo, seus contextos territoriais e os conteúdos associados.
+- **Saberes:** acervo editorial que reúne conhecimentos e pesquisas, com busca e classificação por memória e patrimônio, natureza e biodiversidade, cultura, alimentação e pesca.
 
-- **EntreMarés** → marca e ecossistema principal.
-- **Camarão na Tarrafa** → frente interna dedicada à pesca artesanal, pescadores, pescados, produtos locais, preço justo, cadastro, anúncios, pedidos, retirada, entrega e logística comunitária.
+O endereço antigo `pesquisas.html` encaminha para `saberes.html`, evitando uma duplicação do acervo. Os conteúdos disponíveis são selecionados e apresentados sem postagens públicas livres.
 
-## Núcleos da plataforma
+## O que está implementado
 
-### Lugares / Rotas
-Trilhas, comunidades, pontos de interesse, gastronomia, paisagens, história, fauna, flora e experiências locais.
+O frontend está na pasta `frontend/` e utiliza HTML, CSS e JavaScript. Inclui:
 
-### Memórias
-História do território, povos originários, ocupação, memória oral, patrimônio, relatos comunitários, lendas e acontecimentos históricos.
+- página inicial, vitrine de pescados, páginas de povoados e acervo de saberes;
+- páginas de História de Piaçaguera, Igreja e sambaqui, Fauna e flora e Gastronomia de Piaçaguera e Amparo;
+- cadastro e acesso de clientes e pescadores;
+- painel do pescador para gerenciar perfil, anúncios, estoque e pedidos;
+- curadoria comercial de perfis e pescados;
+- seleções de cortes e modalidades de retirada ou entrega;
+- imagens ilustrativas de pescados e cortes, identificadas como referências visuais;
+- adaptação de telas para navegação no celular.
 
-### Saberes
-Pesca artesanal, marés, navegação, culinária, técnicas tradicionais, biodiversidade, ciência, saúde e sustentabilidade.
+O cadastro de anúncios e a publicação de perfis/pescados passam pela curadoria prevista no sistema. A disponibilidade dos produtos pode vencer conforme o prazo configurado.
 
-### Pesquisas
-Produções estudantis, pesquisa de campo, documentos e conteúdos submetidos à revisão e à curadoria antes da publicação.
+## API e persistência
 
-### Camarão na Tarrafa
-Frente de pesca artesanal e comercialização com perfis de pescadores, pescados, cortes, estoque, preço, retirada, entrega comunitária, frete colaborativo e pedidos.
+A pasta `backend/` contém uma API Node.js/Express com autenticação, rotas de usuários, pescadores, produtos, frete, pedidos e curadoria. O código inclui persistência para testes e suporte a infraestrutura de banco de dados. A disponibilidade do serviço e a configuração efetiva de persistência em produção precisam de verificação operacional antes da abertura a pedidos reais.
 
-## Estado atual do protótipo
+Consulte [backend/README.md](backend/README.md) para as rotas, variáveis de ambiente, requisitos de implantação e orientações de segurança.
 
-O frontend já funciona como portal no GitHub Pages e reúne:
+## Publicação
 
-- página inicial do EntreMarés;
-- Guia Turístico;
-- páginas de Piaçaguera e Amparo;
-- História de Piaçaguera;
-- Igreja e Sambaqui;
-- Fauna e Flora;
-- Gastronomia;
-- Saberes;
-- Pesquisas;
-- contribuição e curadoria de conteúdo;
-- vitrine pública de pescados;
-- página pública de pescadores;
-- cadastro de clientes e pescadores;
-- login;
-- painel do pescador;
-- curadoria comercial.
+O GitHub Pages publica os arquivos de `frontend/` por meio do workflow em `.github/workflows/pages.yml`.
 
-A frente Camarão na Tarrafa já possui fluxo inicial para:
+Site: https://henriquelima02-ship-it.github.io/entremares/
 
-1. criar perfil do pescador;
-2. cadastrar pescado e estoque;
-3. definir cortes e acréscimos;
-4. definir retirada, entrega ou frete;
-5. receber pedidos;
-6. atualizar o andamento do pedido;
-7. pausar e editar anúncios;
-8. enviar perfis e produtos à curadoria antes da publicação.
+## Pesquisa, curadoria e respeito ao território
 
-## Backend
+O EntreMarés articula saberes tradicionais e conteúdos de referência. Os textos devem distinguir informação documental, registro comunitário e pontos que ainda exigem pesquisa de campo.
 
-O diretório `backend/` contém uma API Node.js/Express com:
-
-- autenticação com bcrypt + JWT;
-- autorização de pescador;
-- autorização de curadoria por e-mail configurado no ambiente;
-- persistência JSON separada dos dados versionados;
-- rotas de pescadores, produtos, frete, pedidos, painel e curadoria;
-- configuração para execução em container.
-
-A persistência JSON ainda é de protótipo. A evolução prevista para produção é a migração para um banco transacional, preferencialmente PostgreSQL.
-
-## Estrutura principal
-
-```text
-entremares/
-├── README.md
-├── backend/
-│   ├── Dockerfile
-│   ├── .env.example
-│   ├── README.md
-│   ├── data/
-│   │   ├── db.json
-│   │   └── seed.json
-│   └── src/
-├── frontend/
-│   ├── index.html
-│   ├── guia.html
-│   ├── saberes.html
-│   ├── pesquisas.html
-│   ├── cadastro.html
-│   ├── login.html
-│   ├── painel-pescador.html
-│   ├── pescadores.html
-│   ├── pescados.html
-│   ├── contribuir.html
-│   ├── curadoria.html
-│   ├── curadoria-comercial.html
-│   ├── conteudos/
-│   ├── locais/
-│   ├── css/
-│   └── js/
-└── .github/workflows/
-```
-
-## Curadoria e responsabilidade
-
-O EntreMarés adota a lógica de **pesquisa → curadoria → publicação**. Isso vale tanto para conteúdos históricos/científicos quanto para perfis e anúncios comerciais.
-
-A curadoria deve preservar:
-
-- rigor histórico e científico;
-- distinção entre memória oral, registro comunitário e informação documental;
-- autorização para uso de imagens, entrevistas e relatos;
-- privacidade de estudantes, moradores e pescadores;
-- revisão de informações públicas antes da publicação;
-- respeito aos saberes tradicionais e à autoria comunitária.
+A curadoria considera rigor histórico e científico, autoria, autorização de uso de imagens e entrevistas, segurança alimentar, privacidade de moradores, estudantes e pescadores e respeito aos saberes caiçaras.
 
 ## Identidade visual
 
-A identidade própria do EntreMarés continua em desenvolvimento. A paleta atual permanece:
+A marca utilizada na plataforma é **EntreMarés**, com a assinatura **Saberes, Povoados e Produtos Caiçaras**. A identidade utiliza referências naturais do mangue, maré, água, areia e pesca artesanal.
+
+Cores de referência:
 
 - Verde Mangue — `#1D4B43`
 - Azul Estuário — `#3D617B`
@@ -129,5 +57,3 @@ A identidade própria do EntreMarés continua em desenvolvimento. A paleta atual
 - Sol Dourado — `#D5A83C`
 - Coral — `#D9704A`
 - Branco — `#FAF9F4`
-
-O símbolo `◉` permanece provisoriamente até a consolidação da identidade visual definitiva.

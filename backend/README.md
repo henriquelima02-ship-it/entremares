@@ -1,6 +1,6 @@
 # Backend EntreMarés
 
-API Node.js/Express para a frente **Camarão na Tarrafa**, responsável por cadastro, autenticação, perfis de pescadores, pescados, cortes, retirada/entrega/frete colaborativo, pedidos, painel do pescador e curadoria comercial.
+API Node.js/Express do **EntreMarés**, responsável por cadastro, autenticação, perfis de pescadores, pescados, cortes, retirada/entrega/frete colaborativo, pedidos, painel do pescador e curadoria comercial.
 
 ## Executar localmente
 

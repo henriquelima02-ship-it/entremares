@@ -26,7 +26,7 @@ app.get('/api/health', async (req, res) => {
     await readDb();
     res.json({
       service: 'EntreMarés API',
-      module: 'Camarão na Tarrafa',
+      module: 'Pescados',
       status: 'ok',
       storage: storageMode,
       time: new Date().toISOString()
@@ -35,7 +35,7 @@ app.get('/api/health', async (req, res) => {
     console.error('Falha no health check da persistência:', error);
     res.status(503).json({
       service: 'EntreMarés API',
-      module: 'Camarão na Tarrafa',
+      module: 'Pescados',
       status: 'degraded',
       storage: storageMode,
       time: new Date().toISOString()
