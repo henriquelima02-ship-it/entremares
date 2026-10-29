@@ -46,7 +46,9 @@
 
   function currentSectionFile() {
     const path = window.location.pathname.toLowerCase();
-    if (/\/(conteudos|locais)\//.test(path)) return 'guia.html';
+    if (/\/conteudos\//.test(path)) return 'saberes.html';
+    if (/\/locais\//.test(path)) return 'guia.html';
+    if (path.endsWith('/pesquisas.html')) return 'saberes.html';
     return path.split('/').filter(Boolean).pop() || 'index.html';
   }
 
@@ -112,8 +114,7 @@
       ['index.html', 'Início'],
       ['pescados.html', 'Pescados'],
       ['guia.html', 'Povoados'],
-      ['saberes.html', 'Saberes'],
-      ['pesquisas.html', 'Pesquisas']
+      ['saberes.html', 'Saberes']
     ];
     nav.replaceChildren(...sections.map(([file, label]) => {
       const link = document.createElement('a');
