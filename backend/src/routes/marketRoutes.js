@@ -473,7 +473,9 @@ router.get('/dashboard', async (req, res, next) => {
     if (!fisherman) return res.status(404).json({ error: 'Perfil de pescador não encontrado.' });
 
     const products = db.products
-      .filter(item => item.fishermanId === fisherman.id)
+      // Arquivados permanecem no banco para preservar pedidos antigos,
+      // mas não devem aparecer em Meus pescados nem nos indicadores.
+      .filter(item => item.fishermanId === fisherman.id && item.status !== 'deleted')
       .map(availabilityView)
       .sort((a, b) => String(b.updatedAt || b.createdAt).localeCompare(String(a.updatedAt || a.createdAt)));
 

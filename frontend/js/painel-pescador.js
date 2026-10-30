@@ -174,9 +174,11 @@
 
   function renderProducts(products) {
     const box = $('myProducts');
-    $('productsEmpty').classList.toggle('hidden', products.length > 0);
+    // Segurança extra para respostas antigas ou em cache.
+    const visibleProducts = (products || []).filter(product => product.status !== 'deleted');
+    $('productsEmpty').classList.toggle('hidden', visibleProducts.length > 0);
 
-    box.innerHTML = products.map(product => {
+    box.innerHTML = visibleProducts.map(product => {
       const cuts = product.cuts?.length
         ? product.cuts.map(cut => cut.label || cutLabels[cut.id] || cut.id).join(' • ')
         : 'A combinar';
