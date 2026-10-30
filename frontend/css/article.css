@@ -413,3 +413,10 @@
   .page-territory-story .story-photo,.story-photo .story-photo-media>img,
   .story-photo-expand{transition:none!important;transform:none!important}
 }
+
+/* Fotografia de pesca artesanal: enquadramento mais alto preserva as canoas e as redes. */
+.page-territory-story .story-shrimp-photo{margin-top:22px;margin-bottom:29px}
+.page-territory-story .story-shrimp-photo .story-photo--wide .story-photo-media{aspect-ratio:3/2}
+@media(max-width:720px){
+  .page-territory-story .story-shrimp-photo .story-photo--wide .story-photo-media{aspect-ratio:4/3}
+}
