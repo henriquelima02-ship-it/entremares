@@ -626,3 +626,40 @@
   .page-saberes-gastro .saber-amparo-highlights{margin:0 20px 16px}
   .page-saberes-gastro .saber-amparo-link{margin:0 20px 24px}
 }
+
+
+/* Os bastidores da apuração ficam acessíveis ao fim da reportagem,
+   sem interromper o encerramento da narrativa. */
+.page-saberes-gastro .story-facts{margin:34px 0 40px}
+.page-saberes-gastro .story-closing{margin:16px 0 25px}
+.page-saberes-gastro .saber-followup{margin:10px 0 44px}
+.page-saberes-gastro .saber-research-details{
+  margin:22px 0 30px;border:1px solid rgba(29,75,67,.15);
+  border-radius:17px;background:#f3f5f0;overflow:hidden
+}
+.page-saberes-gastro .saber-research-details>summary{
+  display:flex;align-items:center;gap:13px;cursor:pointer;
+  padding:18px 20px;list-style:none;color:#204f44
+}
+.page-saberes-gastro .saber-research-details>summary::-webkit-details-marker{display:none}
+.page-saberes-gastro .saber-research-details>summary:hover{background:#e7eee8}
+.page-saberes-gastro .saber-research-details>summary:focus-visible{outline:3px solid #d5a83c;outline-offset:-3px}
+.page-saberes-gastro .saber-research-summary-icon{display:grid;place-items:center;background:#deebe2;border-radius:11px;width:40px;height:40px;flex:none}
+.page-saberes-gastro .saber-research-summary-icon .em-svg{width:21px;height:21px}
+.page-saberes-gastro .saber-research-summary-text{display:grid;gap:4px;min-width:0;flex:1}
+.page-saberes-gastro .saber-research-summary-text strong{font-size:.94rem;line-height:1.4}
+.page-saberes-gastro .saber-research-summary-text small{font-size:.83rem;color:#526867;line-height:1.4}
+.page-saberes-gastro .saber-research-chevron{font-size:1.35rem;font-weight:800;line-height:1}
+.page-saberes-gastro .saber-research-details[open] .saber-research-chevron{transform:rotate(45deg)}
+.page-saberes-gastro .saber-research-content{display:grid;gap:21px;padding:5px 23px 22px;border-top:1px solid rgba(29,75,67,.1)}
+.page-saberes-gastro .saber-research-panel{margin:0;padding-top:16px}
+.page-saberes-gastro .saber-research-panel+.saber-research-panel{border-top:1px solid rgba(29,75,67,.14)}
+.page-saberes-gastro .saber-research-panel h3{color:#245347;font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.2rem,2.7vw,1.58rem);margin:0 0 10px}
+.page-saberes-gastro .saber-research-panel p,
+.page-saberes-gastro .saber-research-panel li{font-size:.93rem;line-height:1.7;color:#42595a}
+.page-saberes-gastro .saber-research-panel li{margin-bottom:9px}
+@media(max-width:650px){
+ .page-saberes-gastro .saber-research-details>summary{padding:16px 13px;gap:10px}
+ .page-saberes-gastro .saber-research-content{padding:5px 15px 18px}
+ .page-saberes-gastro .saber-research-summary-icon{width:35px;height:35px}
+}
