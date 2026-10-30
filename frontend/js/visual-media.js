@@ -17,7 +17,7 @@
       src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Ocelot_%28Leopardus_pardalis%29-8.jpg/1280px-Ocelot_%28Leopardus_pardalis%29-8.jpg',
       alt: 'Jaguatirica sobre um tronco',
       credit: 'Wikimedia Commons',
-      href: 'https://commons.wikimedia.org/wiki/Leopardus_pardalis'
+      href: 'https://commons.wikimedia.org/wiki/File:Ocelot_%28Leopardus_pardalis%29-8.jpg'
     },
     'Mangue-vermelho': {
       src: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Rhizophora_mangle_%28prop_roots%29.jpg',
@@ -41,16 +41,38 @@
 
   function figure(item, className = 'species-photo') {
     const fig = document.createElement('figure');
-    fig.className = className;
+    fig.className = className + ' story-photo story-photo--species';
     fig.dataset.emMedia = 'true';
+    fig.dataset.photoSource = item.href;
+    const media = document.createElement('div');
+    media.className = 'story-photo-media';
     const img = document.createElement('img');
     img.src = item.src;
-    img.alt = item.alt;
+    img.dataset.large = item.src;
+    img.alt = item.alt + '. Imagem de referência, não registro fotográfico de Piaçaguera.';
     img.loading = 'lazy';
     img.decoding = 'async';
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'story-photo-expand';
+    button.setAttribute('data-photo-open', '');
+    button.setAttribute('aria-label', 'Ampliar imagem de referência: ' + item.alt);
+    button.textContent = 'Ampliar foto';
+    media.append(img, button);
     const caption = document.createElement('figcaption');
-    caption.innerHTML = `Imagem de referência • <a href="${item.href}" target="_blank" rel="noopener noreferrer">${item.credit}</a>`;
-    fig.append(img, caption);
+    const description = document.createElement('span');
+    description.className = 'story-photo-caption';
+    description.textContent = 'Imagem de referência da espécie — não registrada nesta fotografia em Piaçaguera.';
+    const attribution = document.createElement('small');
+    attribution.className = 'story-photo-attribution';
+    const link = document.createElement('a');
+    link.href = item.href;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = item.credit;
+    attribution.append('Foto: ', link, '. Crédito e licença completos no arquivo original.');
+    caption.append(description, attribution);
+    fig.append(media, caption);
     return fig;
   }
 

@@ -420,3 +420,102 @@
 @media(max-width:720px){
   .page-territory-story .story-shrimp-photo .story-photo--wide .story-photo-media{aspect-ratio:4/3}
 }
+
+
+/* Caderno Saberes — reportagens com texto de revista e rigor editorial. */
+.page-saberes-story .article-page.feature-story{width:min(1040px,calc(100% - 32px))}
+.page-saberes-story .story-hero h1{max-width:980px}
+.page-saberes-story .story-jump-links{justify-content:flex-start}
+.page-saberes-story .saber-chapters,
+.page-saberes-story .timeline{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:start;gap:23px;margin:24px 0 42px
+}
+.page-saberes-story .timeline-section{
+  grid-column:1/-1;min-width:0;margin:0;padding:clamp(23px,3vw,34px);
+  background:#fffefa;border:1px solid rgba(29,75,67,.11);
+  box-shadow:0 10px 26px rgba(29,75,67,.045);border-radius:22px
+}
+.page-saberes-story .timeline-section.story-half{grid-column:span 1;align-self:stretch}
+.page-saberes-story .timeline-section .period-label{
+  color:#a4573d;letter-spacing:.095em;font-size:.73rem;
+  background:none;padding:0;border:0;border-radius:0;margin-bottom:14px
+}
+.page-saberes-story .timeline-section h2{
+  color:#1d4b43;font-family:Georgia,'Times New Roman',serif;
+  letter-spacing:-.025em;line-height:1.2;font-size:clamp(1.7rem,3.2vw,2.35rem)
+}
+.page-saberes-story .timeline-section.story-half h2{font-size:clamp(1.6rem,2.5vw,2.02rem)}
+.page-saberes-story .timeline-section p,
+.page-saberes-story .timeline-section li{font-size:1.005rem;line-height:1.82;color:#394e54}
+.page-saberes-story .timeline-section p:last-child{margin-bottom:0}
+.page-saberes-story .timeline-section h3{color:#27534d;line-height:1.3}
+.page-saberes-story .story-media-grid,
+.page-saberes-story .story-media-split{grid-column:1/-1;max-width:100%}
+.page-saberes-story .story-media-split .story-photo-side{
+  min-height:350px;background:linear-gradient(145deg,#e6eee7,#f5f0e6)
+}
+.page-saberes-story .story-photo--landscape .story-photo-media{aspect-ratio:4/3}
+.page-saberes-story .saber-chapters>.story-media-split{margin:4px 0 6px}
+.page-saberes-story .timeline>.story-media-split{margin:4px 0 6px}
+.page-saberes-story .story-photo .story-photo-media img{
+  display:block;width:100%;height:100%;object-fit:cover
+}
+.page-saberes-story .story-photo--artwork .story-photo-media{background:#eae8de}
+.page-saberes-story .story-photo--artwork .story-photo-media img{object-fit:contain}
+.page-saberes-story .story-photo-context{display:block}
+.page-saberes-story .story-curiosity{margin:25px 0 6px}
+.page-saberes-story .story-curiosity p{font-size:.965rem;line-height:1.7}
+.page-saberes-story .saber-followup{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  margin:28px 0 0;padding:20px 0;border-top:1px solid rgba(29,75,67,.17)
+}
+.page-saberes-story .saber-followup a{
+  display:inline-flex;align-items:center;gap:8px;padding:11px 14px;
+  background:#e8f0e9;border-radius:999px;font-size:.88rem;
+  font-weight:800;color:#1d4b43;text-decoration:none
+}
+.page-saberes-story .saber-followup a:hover{background:#d5e4db}
+.page-saberes-story .saber-followup .em-svg{width:18px;height:18px}
+.page-saberes-story .story-closing{max-width:none;margin:36px 0 32px}
+.page-saberes-story .story-facts{margin-top:22px}
+.page-saberes-story .story-method{margin-top:40px}
+.page-saberes-story .story-method .story-note-item{
+  margin:10px 0 16px;padding:13px 16px;
+  border-radius:13px;background:rgba(255,255,255,.75);
+  border-left:3px solid #d5a83c
+}
+.page-saberes-story .story-method .story-note-item strong{color:#1d4b43}
+.page-saberes-story .pending-research{
+  margin-top:28px;padding:clamp(23px,4vw,34px);
+  color:#34554d;background:linear-gradient(130deg,#e6eee7,#f3f0e8);
+  border:1px solid rgba(29,75,67,.13)
+}
+.page-saberes-story .pending-research h2,
+.page-saberes-story .pending-research h3{color:#1d4b43;font-family:Georgia,'Times New Roman',serif}
+.page-saberes-story .pending-research p,
+.page-saberes-story .pending-research li{color:#3b5457;line-height:1.76}
+.page-saberes-story sup{font-size:.68em;opacity:.75;font-weight:700}
+.page-saberes-story sup a{text-decoration:none;color:#4c7480}
+.page-saberes-story sup a:hover{text-decoration:underline}
+.page-saberes-story .species-card{min-width:0}
+.page-saberes-story .species-card p{font-size:.93rem;line-height:1.65}
+.page-saberes-story .species-photo{margin:0 0 13px;max-width:100%}
+.page-saberes-story .species-photo img{max-width:100%;width:100%;height:auto;display:block;border-radius:11px}
+.page-saberes-story .species-photo figcaption{font-size:.78rem;color:#496168;margin-top:5px;line-height:1.4}
+.page-saberes-story .bio-table-wrap{max-width:100%}
+.page-saberes-story .story-photo--species{border-radius:14px;box-shadow:none;margin:0 0 14px}
+.page-saberes-story .story-photo--species .story-photo-media{aspect-ratio:5/4;border-radius:13px 13px 0 0}
+.page-saberes-story .story-photo--species figcaption{padding:10px 12px 13px}
+.page-saberes-story .story-photo--species .story-photo-caption{font-size:.82rem}
+.page-saberes-story .story-photo--species .story-photo-expand{padding:7px 11px;min-height:40px;font-size:.78rem}
+.page-saberes-story .story-photo-unavailable .story-photo-media{min-height:140px}
+@media(max-width:780px){
+  .page-saberes-story .timeline,
+  .page-saberes-story .saber-chapters{grid-template-columns:1fr;gap:18px}
+  .page-saberes-story .timeline-section.story-half{grid-column:1/-1}
+  .page-saberes-story .timeline-section{padding:21px 18px}
+  .page-saberes-story .timeline-section p{font-size:1rem}
+  .page-saberes-story .story-media-split .story-photo-side{min-height:auto}
+  .page-saberes-story .story-photo--landscape .story-photo-media{aspect-ratio:5/4}
+}

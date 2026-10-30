@@ -65,18 +65,25 @@
     if (event.key === 'Escape' && viewer.open) hide();
   });
 
-  frames.forEach(frame => {
-    const button = frame.querySelector('[data-photo-open]');
-    const image = frame.querySelector('img');
-    button?.addEventListener('click', () => show(frame, button));
-    image?.addEventListener('error', () => {
-      image.dataset.photoUnavailable = 'true';
-      frame.classList.add('story-photo-unavailable');
-      if (button) button.disabled = true;
-      const notice = document.createElement('p');
-      notice.className = 'story-photo-fallback';
-      notice.textContent = 'A fotografia não carregou. Consulte o arquivo original no crédito abaixo.';
-      frame.querySelector('.story-photo-media')?.append(notice);
-    }, { once: true });
+  // Delegação: funciona também para as fotografias das espécies inseridas
+  // depois do carregamento, sem duplicar ouvintes por imagem.
+  document.addEventListener('click', event => {
+    const button = event.target.closest?.('[data-photo-open]');
+    const frame = button?.closest('.story-photo[data-photo-source]');
+    if (frame && !button.disabled) show(frame, button);
   });
+  document.addEventListener('error', event => {
+    const image = event.target;
+    if (!image.matches?.('.story-photo[data-photo-source] .story-photo-media > img')) return;
+    const frame = image.closest('.story-photo');
+    if (!frame || image.dataset.photoUnavailable === 'true') return;
+    image.dataset.photoUnavailable = 'true';
+    frame.classList.add('story-photo-unavailable');
+    const button = frame.querySelector('[data-photo-open]');
+    if (button) button.disabled = true;
+    const notice = document.createElement('p');
+    notice.className = 'story-photo-fallback';
+    notice.textContent = 'A fotografia não carregou. Consulte o arquivo original no crédito abaixo.';
+    frame.querySelector('.story-photo-media')?.append(notice);
+  }, true);
 })();
