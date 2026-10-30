@@ -117,12 +117,14 @@
         }
       });
 
-      const modeText = registration.demo
-        ? 'Este foi um cadastro de teste salvo somente neste navegador.'
-        : 'Seu perfil foi enviado para revisão da equipe.';
-      result.innerHTML = '<strong>Cadastro criado com sucesso.</strong> ' + modeText +
-        ' <a class="result-action" href="./painel-pescador.html">Entrar no meu painel</a>';
-      result.classList.remove('hidden');
+      if (registration.recoveryCodes?.length) {
+        window.EntreMaresRecoveryCodes.show(result, registration.recoveryCodes, './painel-pescador.html');
+      } else {
+        result.innerHTML = registration.demo
+          ? '<strong>Cadastro demonstrativo.</strong> Os dados ficam somente neste navegador. <a class="result-action" href="./painel-pescador.html">Entrar no painel</a>'
+          : '<strong>Cadastro criado.</strong> <a class="result-action" href="./painel-pescador.html">Entrar no painel</a>';
+        result.classList.remove('hidden');
+      }
       form.classList.add('signup-complete');
       result.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } catch (error) {

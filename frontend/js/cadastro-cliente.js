@@ -56,12 +56,12 @@
         }
       });
 
-      result.innerHTML = '<strong>Conta criada.</strong> Agora você pode acompanhar seus pedidos. <a class="result-action" href="./pescados.html">Ver pescados</a>';
-      result.classList.remove('hidden');
       form.classList.add('signup-complete');
-
-      if (!response.demo) {
-        setTimeout(() => { window.location.href = './pescados.html'; }, 900);
+      if (response.recoveryCodes?.length) {
+        window.EntreMaresRecoveryCodes.show(result, response.recoveryCodes, './minha-conta.html');
+      } else {
+        result.innerHTML = '<strong>Conta criada.</strong> <a class="result-action" href="./pescados.html">Ver pescados</a>';
+        result.classList.remove('hidden');
       }
     } catch (error) {
       result.innerHTML = `<strong>Não foi possível criar a conta.</strong> ${error.message}`;

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1D4B43"><meta name="description" content="Gerencie seus códigos de recuperação e altere a senha com segurança.">
+<title>Segurança da conta | EntreMarés</title><link rel="stylesheet" href="./css/style.css"></head>
+<body class="page-access page-recovery"><header class="topbar">
+<a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Povoados e Produtos Caiçaras</small></span></a>
+<button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+<nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./pescados.html">Pescados</a><a href="./guia.html">Povoados</a><a href="./saberes.html">Saberes</a></nav>
+</header>
+<main class="recovery-shell">
+<section class="recovery-header"><span class="eyebrow">Área privada · EntreMarés</span><h1>Segurança da conta</h1>
+<p>Mantenha seu acesso protegido sem depender de e-mail. Guarde os códigos de recuperação em um local privado.</p>
+<a id="backAccount" class="text-link" href="./painel-pescador.html">Voltar ao meu painel</a></section>
+<div class="recovery-security-grid">
+<section class="form-card recovery-security-card">
+<h2>Códigos de recuperação</h2><p>Os códigos são usados se você esquecer a senha. Cada um só pode ser utilizado uma vez. Gere novos códigos quando acabarem ou se perder os anteriores.</p>
+<p id="securityCount" class="recovery-hint">Verificando seus códigos...</p>
+<form id="recoveryCodesForm">
+<label class="field"><span>Senha atual *</span><input id="codesPassword" type="password" autocomplete="current-password" required></label>
+<button id="generateCodes" class="btn btn-primary btn-wide" type="submit">Gerar novos códigos</button>
+</form><p class="recovery-hint">Ao gerar novos códigos, os antigos deixam de funcionar.</p>
+<div id="newRecoveryCodes" class="hidden"></div>
+<p id="codesResult" class="recovery-feedback" role="status" aria-live="polite"></p>
+</section>
+<section class="form-card recovery-security-card">
+<h2>Trocar minha senha</h2><p>Você pode alterá-la a qualquer momento. Depois, entre novamente com a nova senha.</p>
+<form id="changePasswordForm">
+<label class="field"><span>Senha atual *</span><input id="currentPassword" type="password" autocomplete="current-password" required></label>
+<label class="field"><span>Nova senha *</span><input id="newPassword" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
+<label class="field"><span>Confirmar nova senha *</span><input id="newPasswordConfirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
+<button id="changePasswordButton" class="btn btn-secondary btn-wide" type="submit">Alterar senha</button></form>
+<p id="securityPasswordResult" class="recovery-feedback" role="status" aria-live="polite"></p>
+</section></div></main>
+<footer class="site-footer"><div><strong>EntreMarés</strong><span>Segurança da conta</span></div><a href="./pescados.html">Ver pescados</a></footer>
+<script src="./js/site.js"></script><script src="./js/api.js"></script><script src="./js/recovery-codes.js"></script><script src="./js/seguranca.js"></script>
+</body></html>

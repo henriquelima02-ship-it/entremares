@@ -297,6 +297,41 @@
     throw new Error('No modo de teste, use um dos acessos demonstrativos.');
   }
 
+  async function recoveryOptions() {
+    if (!base) return { smsAvailable: false, backupCodesAvailable: false, demo: true };
+    return request('/users/recovery/options');
+  }
+  async function requestRecoverySms(identifier) {
+    if (!base) throw new Error('Recuperação disponível somente no sistema online.');
+    return request('/users/recovery/request', {
+      method: 'POST', body: JSON.stringify({ identifier })
+    });
+  }
+  async function resetPassword({ identifier, method, code, newPassword }) {
+    if (!base) throw new Error('Recuperação disponível somente no sistema online.');
+    return request('/users/recovery/reset', {
+      method: 'POST', body: JSON.stringify({ identifier, method, code, newPassword })
+    });
+  }
+  async function recoveryCount() {
+    if (!base) return { available: 0, demo: true };
+    return request('/users/recovery/codes', {}, true);
+  }
+  async function renewRecoveryCodes(password) {
+    if (!base) throw new Error('Códigos de recuperação disponíveis somente no sistema online.');
+    return request('/users/recovery/codes', {
+      method: 'POST', body: JSON.stringify({ password })
+    }, true);
+  }
+  async function changePassword(currentPassword, newPassword) {
+    if (!base) throw new Error('Alteração de senha disponível somente no sistema online.');
+    const response = await request('/users/password/change', {
+      method: 'POST', body: JSON.stringify({ currentPassword, newPassword })
+    }, true);
+    setSession(null);
+    return response;
+  }
+
   function startDemoFisherSession() {
     const data = demoData();
     const fisherman = data.fishermen[0];
@@ -880,6 +915,12 @@
     setSession,
     registerUser,
     login,
+    recoveryOptions,
+    requestRecoverySms,
+    resetPassword,
+    recoveryCount,
+    renewRecoveryCodes,
+    changePassword,
     logout,
     refreshMe,
     startDemoFisherSession,

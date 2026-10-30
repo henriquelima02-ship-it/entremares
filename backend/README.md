@@ -100,3 +100,21 @@ Sem URL configurada, o site entra em **modo demonstrativo local**. Nesse modo, n
 ## Container
 
 O `Dockerfile` incluído em `backend/` permite publicar a API em serviços que executem containers. Para produção, use HTTPS, um `AUTH_SECRET` forte, CORS restrito ao domínio do site e armazenamento persistente.
+
+## Recuperação de senha sem e-mail
+
+A recuperação é autônoma com **cinco códigos individuais** apresentados uma única vez após o cadastro de cliente ou pescador. Cada código tem 96 bits aleatórios e é armazenado somente como hash SHA-256 no registro do usuário. A pessoa guarda os códigos em local privado e pode redefinir a senha usando o telefone cadastrado e um código, sem e-mail nem atendimento humano. Um código utilizado deixa de funcionar. A troca da senha invalida as sessões anteriores.
+
+- `GET /api/users/recovery/options` — informa se SMS está habilitado.
+- `POST /api/users/recovery/reset` — telefone, `method: "backup"`, `code` e `newPassword`.
+- `GET /api/users/recovery/codes` — quantidade restante, requer login.
+- `POST /api/users/recovery/codes` — gera cinco novos códigos, requer login e senha atual; substitui os anteriores.
+- `POST /api/users/password/change` — troca a senha com a senha atual; requer login.
+- `POST /api/users/recovery/request` — solicita código via SMS quando o provedor está configurado.
+- `POST /api/users/recovery/reset` com `method: "sms"` — valida código SMS via Twilio Verify e redefine senha.
+
+Para envio opcional por SMS, crie um serviço em [Twilio Verify](https://www.twilio.com/docs/verify/api) e configure no Render, em **Environment**, as variáveis `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` e `TWILIO_VERIFY_SERVICE_SID`. Nenhuma credencial deve ser enviada para o GitHub. O Twilio pode cobrar pelo envio de SMS; verificar preço e configuração do serviço. Sem essas variáveis a interface de SMS fica oculta, mantendo os códigos de recuperação como método independente e gratuito.
+
+Os endpoints de recuperação aplicam limitação por conexão e identificador de conta, mensagem neutra na solicitação de SMS e senha criptografada por bcrypt. Em ambiente com múltiplas instâncias, substituir o limitador em memória por um compartilhado (Redis ou banco de dados).
+
+**Importante:** quem já tinha conta antes dessa implementação deve acessar **Segurança da conta**, digitar sua senha atual e gerar os primeiros códigos. Se a pessoa esquecer a senha antes de guardar códigos e o serviço de SMS ainda não estiver configurado, não é possível verificar automaticamente a propriedade da conta. Não criar recuperação baseada apenas em nome, comunidade ou número digitado.

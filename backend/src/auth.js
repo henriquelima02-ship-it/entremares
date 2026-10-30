@@ -25,7 +25,8 @@ function signToken(user) {
     {
       role: user.role,
       email: user.email,
-      curator: isCuratorEmail(user.email)
+      curator: isCuratorEmail(user.email),
+      credentialVersion: user.credentialVersion || null
     },
     authSecret(),
     { subject: user.id, expiresIn: '7d' }
@@ -40,8 +41,8 @@ async function resolveAuthFromRequest(req) {
   const payload = jwt.verify(token, authSecret());
   const db = await readDb();
   const user = db.users.find(item => item.id === payload.sub);
-  if (!user) {
-    const error = new Error('Sessão inválida.');
+  if (!user || (user.credentialVersion || null) !== (payload.credentialVersion || null)) {
+    const error = new Error('Sessão inválida. Entre novamente.');
     error.status = 401;
     throw error;
   }

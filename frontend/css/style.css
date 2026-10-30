@@ -1802,3 +1802,44 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:750px) {
   .dashboard-item-actions .btn-delete-product { flex: 1 0 100%; }
 }
+
+/* Recuperação de acesso e gerenciamento de segurança — uso em celular. */
+.recovery-shell{width:min(1050px,calc(100% - 28px));margin:clamp(22px,4vw,65px) auto 80px}
+.recovery-header{max-width:790px;display:grid;gap:13px;margin-bottom:25px}
+.recovery-header h1{font-family:var(--serif);font-size:clamp(2.4rem,6vw,4rem);line-height:1.08;color:var(--verde)}
+.recovery-header p{font-size:1.07rem;max-width:700px;color:#52656a}
+.recovery-header .text-link{width:max-content}
+.recovery-panel{max-width:630px;display:grid;gap:16px}
+.recovery-panel form,.recovery-security-card form{display:grid;gap:15px}
+.recovery-panel .field,.recovery-security-card .field{display:grid;gap:7px}
+.recovery-methods{display:grid;gap:9px}
+.recovery-methods label{display:flex;align-items:center;gap:10px;padding:15px;background:#f2f6f2;border:1px solid rgba(29,75,67,.15);border-radius:14px;cursor:pointer;line-height:1.45}
+.recovery-methods input{width:20px;height:20px;accent-color:var(--verde);flex:0 0 auto}
+.recovery-hint{font-size:.87rem;color:#586f70;line-height:1.55}
+.recovery-feedback{color:#274f49;font-size:.9rem;line-height:1.6;min-height:1.3em}
+.recovery-security-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:17px}
+.recovery-security-card{display:grid;gap:15px}
+.recovery-security-card h2{font-family:var(--serif);font-size:1.75rem;color:var(--verde)}
+.recovery-security-card>p{color:#536d71}
+.login-password-tools{display:flex;gap:15px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:10px 0 15px}
+.login-password-tools .text-link{font-size:.91rem;font-weight:800;color:#1d4b43}
+.recovery-code-panel{padding:19px;background:#f0f4ee;border:1px solid rgba(29,75,67,.25);border-radius:18px;display:grid;gap:12px}
+.recovery-code-panel h3{font-family:var(--serif);font-size:1.47rem;color:var(--verde)}
+.recovery-code-panel p{font-size:.9rem;line-height:1.5;color:#435e5f}
+.recovery-code-list{display:grid;grid-template-columns:1fr;gap:7px;list-style-position:inside;margin:0;padding:0}
+.recovery-code-list li{padding:9px 12px;background:#fff;border:1px solid rgba(29,75,67,.1);border-radius:10px;font-size:.85rem}
+.recovery-code-list code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.065em;font-weight:800;color:#173e37;word-break:break-word}
+.recovery-code-actions{display:flex;gap:8px;flex-wrap:wrap}
+.recovery-code-actions .btn{flex:1 1 155px}
+.recovery-ack{margin:8px 0 0}
+.recovery-code-panel [aria-disabled="true"]{opacity:.48;cursor:not-allowed}
+.recovery-code-panel [aria-disabled="false"]{opacity:1}
+@media(max-width:770px){.recovery-security-grid{grid-template-columns:1fr}}
+@media(max-width:600px){
+ .recovery-shell{width:calc(100% - 26px);margin:18px auto 90px}
+ .recovery-header h1{font-size:2.55rem}
+ .recovery-panel,.recovery-security-card{padding:19px 16px}
+ .recovery-code-panel{padding:15px 12px}
+ .recovery-code-list code{font-size:.83rem;letter-spacing:.025em}
+ .recovery-code-actions{flex-direction:column}
+}
