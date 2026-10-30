@@ -22,10 +22,10 @@
 <main id="conteudo">
   <section class="portal-market-hero portal-wrap">
     <div>
-      <span class="portal-kicker">Pesca artesanal · Vitrine de pescados</span>
+      <span class="portal-kicker"><span data-icon="fish" aria-hidden="true"></span> Pesca artesanal · Vitrine de pescados</span>
       <h1>Pescados da pesca artesanal.</h1>
       <p class="portal-lead">Consulte os anúncios disponíveis e converse com o pescador. Você também pode registrar o pedido no site para acompanhar pela sua conta.</p>
-      <div class="portal-actions"><a href="#vitrine" class="btn btn-primary">Ver pescados disponíveis <span aria-hidden="true">↗</span></a><a href="./login.html?tipo=vender" class="btn btn-secondary">Sou pescador</a></div>
+      <div class="portal-actions"><a href="#vitrine" class="btn btn-primary"><span data-icon="fish" aria-hidden="true"></span> Ver pescados disponíveis <span aria-hidden="true">↗</span></a><a href="./login.html?tipo=vender" class="btn btn-secondary"><span data-icon="user" aria-hidden="true"></span> Sou pescador</a></div>
     </div>
     <aside class="portal-market-explain" aria-label="Como funciona">
       <strong>Como funciona</strong>
@@ -40,8 +40,8 @@
       <p id="marketMode" aria-live="polite">Carregando disponibilidade...</p>
     </div>
     <div class="market-toolbar" role="search" aria-label="Filtrar pescados">
-      <label class="search-box"><span>Buscar pescado</span><input id="productSearch" type="search" placeholder="Camarão, tainha, robalo..."></label>
-      <label class="select-box"><span>Categoria</span><select id="categoryFilter"><option value="all">Todas</option><option value="peixe">Peixes</option><option value="crustaceo">Crustáceos</option><option value="molusco">Moluscos</option><option value="outro">Outros</option></select></label>
+      <label class="search-box"><span><span data-icon="search" aria-hidden="true"></span> Buscar pescado</span><input id="productSearch" type="search" placeholder="Camarão, tainha, robalo..."></label>
+      <label class="select-box"><span><span data-icon="tag" aria-hidden="true"></span> Categoria</span><select id="categoryFilter"><option value="all">Todas</option><option value="peixe">Peixes</option><option value="crustaceo">Crustáceos</option><option value="molusco">Moluscos</option><option value="outro">Outros</option></select></label>
     </div>
     <div id="productGrid" class="market-grid"></div>
     <div id="marketEmpty" class="empty-state hidden"><h3>Nenhum pescado disponível com esses filtros.</h3><p>Os anúncios são temporários e mudam conforme a disponibilidade informada pelos pescadores.</p></div>
@@ -65,7 +65,7 @@
 
   <section class="portal-market-bottom portal-wrap">
     <div><span class="portal-kicker">Pescadores e clientes</span><h2>Quer vender ou acompanhar seus pedidos?</h2><p>O acesso é separado para quem anuncia pescados e para quem faz pedidos.</p></div>
-    <div class="portal-market-actions"><a href="./login.html?tipo=comprar" class="btn btn-secondary">Meus pedidos</a><a href="./login.html?tipo=vender" class="btn btn-primary">Área do pescador</a></div>
+    <div class="portal-market-actions"><a href="./login.html?tipo=comprar" class="btn btn-secondary"><span data-icon="bag" aria-hidden="true"></span> Meus pedidos</a><a href="./login.html?tipo=vender" class="btn btn-primary"><span data-icon="dashboard" aria-hidden="true"></span> Área do pescador</a></div>
   </section>
 </main>
 
@@ -80,12 +80,12 @@
 
     <div class="form-grid">
       <label class="field"><span id="orderQuantityLabel">Quantidade</span><input id="orderQuantity" type="number" min="0.1" step="0.1" value="1" inputmode="decimal" required></label>
-      <label class="field"><span>Corte / preparo</span><select id="orderCut"></select></label>
+      <label class="field"><span><span data-icon="cut" aria-hidden="true"></span> Corte / preparo</span><select id="orderCut"></select></label>
       <div class="cut-selection-panel span-2">
         <p class="cut-selection-intro">Escolha o preparo disponível. As imagens de cortes de peixe usam robalo como exemplo ilustrativo.</p>
         <div id="cutVisualOptions" class="cut-visual-options" aria-label="Exemplos de cortes disponíveis"></div>
       </div>
-      <label class="field span-2"><span>Retirada ou entrega</span><select id="orderShipping"></select><small id="shippingNote"></small></label>
+      <label class="field span-2"><span><span data-icon="truck" aria-hidden="true"></span> Retirada ou entrega</span><select id="orderShipping"></select><small id="shippingNote"></small></label>
 
       <div id="customerConnectedNote" class="connected-customer span-2 hidden"></div>
 
@@ -96,7 +96,7 @@
     </div>
 
     <div class="order-total"><span>Estimativa</span><strong id="orderTotal">R$ 0,00</strong><small id="orderTotalDetail"></small></div>
-    <button class="btn btn-primary btn-wide" type="submit">Registrar pedido</button>
+    <button class="btn btn-primary btn-wide" type="submit"><span data-icon="check" aria-hidden="true"></span> Registrar pedido</button>
     <p class="security-note">Registrar um pedido não substitui a confirmação final do pescador.</p>
     <div id="orderResult" class="result-card hidden" aria-live="polite"></div>
   </form>

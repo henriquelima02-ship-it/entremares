@@ -195,14 +195,14 @@
               <strong>${brl(product.pricePerKg)}<small>/${esc(saleUnitLabel(product.saleUnit))}</small></strong>
             </div>
 
-            ${remaining ? `<div class="dashboard-availability">⏱ ${esc(remaining)}</div>` : ''}
+            ${remaining ? `<div class="dashboard-availability"><span data-icon="clock" aria-hidden="true"></span> ${esc(remaining)}</div>` : ''}
             <p>${esc(product.description || 'Sem descrição pública.')}</p>
 
             <div class="dashboard-item-meta">
-              <span><strong>${Number(product.quantityKg || 0).toLocaleString('pt-BR')} ${esc(saleUnitStockLabel(product.saleUnit, product.quantityKg))}</strong> em estoque</span>
+              <span><span data-icon="package" aria-hidden="true"></span> <strong>${Number(product.quantityKg || 0).toLocaleString('pt-BR')} ${esc(saleUnitStockLabel(product.saleUnit, product.quantityKg))}</strong> em estoque</span>
               <span>${esc(product.state || 'fresco')}</span>
-              <span>Prazo: ${Number(product.availabilityHours || 36)}h</span>
-              <span>Cortes: ${esc(cuts)}</span>
+              <span><span data-icon="clock" aria-hidden="true"></span> Prazo: ${Number(product.availabilityHours || 36)}h</span>
+              <span><span data-icon="cut" aria-hidden="true"></span> Cortes: ${esc(cuts)}</span>
             </div>
 
             ${product.status === 'paused' && product.pauseReason === 'community_unavailable'
@@ -216,21 +216,22 @@
           </div>
 
           <div class="dashboard-item-actions">
-            <button class="btn btn-secondary" type="button" data-edit-product="${esc(product.id)}">Editar</button>
+            <button class="btn btn-secondary" type="button" data-edit-product="${esc(product.id)}"><span data-icon="pencil" aria-hidden="true"></span> Editar</button>
             ${canRenew
-              ? `<button class="btn btn-primary" type="button" data-product-action="renew" data-product-id="${esc(product.id)}">${product.status === 'paused' ? 'Confirmar disponibilidade' : `Renovar ${Number(product.availabilityHours || 36)}h`}</button>`
+              ? `<button class="btn btn-primary" type="button" data-product-action="renew" data-product-id="${esc(product.id)}"><span data-icon="${product.status === 'paused' ? 'check' : 'refresh'}" aria-hidden="true"></span> ${product.status === 'paused' ? 'Confirmar disponibilidade' : `Renovar ${Number(product.availabilityHours || 36)}h`}</button>`
               : ''}
             ${product.status === 'published'
-              ? `<button class="btn btn-secondary" type="button" data-product-action="pause" data-product-id="${esc(product.id)}">Pausar</button>`
+              ? `<button class="btn btn-secondary" type="button" data-product-action="pause" data-product-id="${esc(product.id)}"><span data-icon="pause" aria-hidden="true"></span> Pausar</button>`
               : product.status === 'paused'
                 ? ''
                 : product.status === 'rejected'
                   ? `<button class="btn btn-primary" type="button" data-product-action="submit" data-product-id="${esc(product.id)}">Enviar para revisão</button>`
                   : ''}
-            <button class="btn btn-delete-product" type="button" data-delete-product="${esc(product.id)}">Excluir anúncio</button>
+            <button class="btn btn-delete-product" type="button" data-delete-product="${esc(product.id)}"><span data-icon="trash" aria-hidden="true"></span> Excluir anúncio</button>
           </div>
         </article>`;
     }).join('');
+    window.EntreMaresIcons?.decorate(box);
 
     box.querySelectorAll('[data-delete-product]').forEach(button => {
       button.addEventListener('click', async () => {
@@ -326,13 +327,14 @@
                 ].map(([value,label]) => `<option value="${value}" ${order.status === value ? 'selected' : ''}>${label}</option>`).join('')}
               </select>
             </label>
-            <button class="btn btn-primary" type="button" data-save-order="${esc(order.id)}">Salvar status</button>
+            <button class="btn btn-primary" type="button" data-save-order="${esc(order.id)}"><span data-icon="check" aria-hidden="true"></span> Salvar status</button>
             ${!['recusado', 'cancelado', 'concluido'].includes(order.status)
-              ? `<button class="btn btn-secondary" type="button" data-order-unavailable="${esc(order.id)}">Sem estoque: recusar pedido e pausar anúncio</button>`
+              ? `<button class="btn btn-secondary" type="button" data-order-unavailable="${esc(order.id)}"><span data-icon="alert" aria-hidden="true"></span> Sem estoque: recusar pedido e pausar anúncio</button>`
               : ''}
           </div>
         </article>`;
     }).join('');
+    window.EntreMaresIcons?.decorate(box);
 
     box.querySelectorAll('[data-order-unavailable]').forEach(button => {
       button.addEventListener('click', async () => {

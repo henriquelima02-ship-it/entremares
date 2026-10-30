@@ -8,7 +8,7 @@
 <nav class="main-nav" data-main-nav><a href="./index.html">Início</a><a href="./pescados.html">Pescados</a><a href="./guia.html">Povoados</a><a href="./saberes.html">Saberes</a></nav>
 </header>
 <main class="recovery-shell">
-<section class="recovery-header"><span class="eyebrow">Acesso seguro · EntreMarés</span><h1>Esqueceu sua senha?</h1>
+<section class="recovery-header"><span class="eyebrow"><span data-icon="shield" aria-hidden="true"></span> Acesso seguro · EntreMarés</span><h1>Esqueceu sua senha?</h1>
 <p>Use o telefone cadastrado e um código de recuperação que você guardou ao criar a conta. Se o envio por SMS estiver habilitado, também poderá receber um código no celular.</p></section>
 <section class="recovery-panel form-card">
 <div class="recovery-methods" role="group" aria-label="Escolha como recuperar a conta">
@@ -19,11 +19,11 @@
 <p id="recoverySmsUnavailable" class="recovery-hint">O envio automático por SMS ainda não está habilitado. Os códigos de recuperação funcionam sem e-mail.</p>
 <form id="recoveryForm" novalidate>
 <label class="field"><span>Telefone usado no cadastro *</span><input id="recoveryPhone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="Ex.: (41) 99999-9999"></label>
-<div id="requestSmsRow" class="hidden"><button id="requestSms" class="btn btn-secondary btn-wide" type="button">Enviar código por SMS</button></div>
+<div id="requestSmsRow" class="hidden"><button id="requestSms" class="btn btn-secondary btn-wide" type="button"><span data-icon="phone" aria-hidden="true"></span> Enviar código por SMS</button></div>
 <label class="field"><span id="recoveryCodeLabel">Código de recuperação *</span><input id="recoveryCode" type="text" required autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" placeholder="Cole ou digite seu código"></label>
 <label class="field"><span>Nova senha *</span><input id="recoveryNewPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password" required><small>Mínimo de 8 caracteres.</small></label>
 <label class="field"><span>Confirme a nova senha *</span><input id="recoveryConfirm" type="password" minlength="8" maxlength="128" autocomplete="new-password" required></label>
-<button id="recoverySubmit" class="btn btn-primary btn-wide" type="submit">Redefinir minha senha</button>
+<button id="recoverySubmit" class="btn btn-primary btn-wide" type="submit"><span data-icon="key" aria-hidden="true"></span> Redefinir minha senha</button>
 </form><p id="recoveryResult" class="recovery-feedback" role="status" aria-live="polite"></p>
 <p class="recovery-hint"><a href="./login.html">Voltar ao acesso</a></p>
 </section></main>

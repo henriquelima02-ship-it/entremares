@@ -121,30 +121,31 @@
               <strong class="price">${brl(product.pricePerKg)}<small>/${esc(saleUnitLabel(product.saleUnit))}</small></strong>
             </div>
 
-            <div class="availability-badge">⏱ ${esc(remainingText(product))}</div>
+            <div class="availability-badge"><span data-icon="clock" aria-hidden="true"></span> ${esc(remainingText(product))}</div>
             <p>${esc(product.description || 'Pescado artesanal cadastrado na plataforma.')}</p>
 
             <div class="product-info">
-              <span><strong>${Number(product.quantityKg || 0).toLocaleString('pt-BR')} ${esc(stockUnitLabel(product.saleUnit, product.quantityKg))}</strong> anunciados</span>
-              <span><strong>Pescador:</strong> ${esc(product.fisherman?.displayName || 'Pescador cadastrado')}</span>
-              <span>${esc(product.fisherman?.community || '')}</span>
+              <span><span data-icon="package" aria-hidden="true"></span> <strong>${Number(product.quantityKg || 0).toLocaleString('pt-BR')} ${esc(stockUnitLabel(product.saleUnit, product.quantityKg))}</strong> anunciados</span>
+              <span><span data-icon="user" aria-hidden="true"></span> <strong>Pescador:</strong> ${esc(product.fisherman?.displayName || 'Pescador cadastrado')}</span>
+              <span><span data-icon="pin" aria-hidden="true"></span> ${esc(product.fisherman?.community || '')}</span>
             </div>
 
-            <div class="cut-line"><strong>Cortes:</strong> ${esc(cutsText(product))}</div>
+            <div class="cut-line"><span data-icon="cut" aria-hidden="true"></span> <strong>Cortes:</strong> ${esc(cutsText(product))}</div>
             <div class="mini-tags">${shippingTags(product)}</div>
             ${product.originNote ? `<small class="origin-note">${esc(product.originNote)}</small>` : ''}
 
             <div class="product-buy-actions">
-              ${whatsapp ? `<a class="btn whatsapp-btn btn-wide" href="${whatsapp}" target="_blank" rel="noopener noreferrer" data-whatsapp-product="${esc(product.id)}">Chamar no WhatsApp</a>` : ''}
-              <button class="btn ${whatsapp ? 'btn-secondary' : 'btn-primary'} btn-wide" type="button" data-order="${esc(product.id)}">Fazer pedido no site</button>
+              ${whatsapp ? `<a class="btn whatsapp-btn btn-wide" href="${whatsapp}" target="_blank" rel="noopener noreferrer" data-whatsapp-product="${esc(product.id)}"><span data-icon="phone" aria-hidden="true"></span> Chamar no WhatsApp</a>` : ''}
+              <button class="btn ${whatsapp ? 'btn-secondary' : 'btn-primary'} btn-wide" type="button" data-order="${esc(product.id)}"><span data-icon="bag" aria-hidden="true"></span> Fazer pedido no site</button>
             </div>
             <div class="product-report-actions" aria-label="Sinalizar problemas de disponibilidade">
-              <button type="button" class="product-report-link" data-report-unavailable="${esc(product.id)}">Não está disponível</button>
-              <button type="button" class="product-report-link" data-report-failed="${esc(product.id)}">Não consegui comprar</button>
+              <button type="button" class="product-report-link" data-report-unavailable="${esc(product.id)}"><span data-icon="alert" aria-hidden="true"></span> Não está disponível</button>
+              <button type="button" class="product-report-link" data-report-failed="${esc(product.id)}"><span data-icon="alert" aria-hidden="true"></span> Não consegui comprar</button>
             </div>
           </div>
         </article>`;
     }).join('');
+    window.EntreMaresIcons?.decorate(grid);
 
     empty.classList.toggle('hidden', visible.length > 0);
     grid.querySelectorAll('[data-order]').forEach(button => {

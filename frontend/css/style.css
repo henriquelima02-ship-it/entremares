@@ -1843,3 +1843,54 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
  .recovery-code-list code{font-size:.83rem;letter-spacing:.025em}
  .recovery-code-actions{flex-direction:column}
 }
+
+/* EntreMarés: sistema de ícones SVG local (sem fontes ou CDN). */
+.em-svg{width:1.15em;height:1.15em;display:inline-block;flex:0 0 auto;vertical-align:-.16em;stroke:currentColor;fill:none}
+[data-icon]{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.btn .em-svg{font-size:1rem}
+.main-nav a{display:inline-flex;align-items:center;gap:8px}
+.main-nav a>.em-svg{width:19px;height:19px;opacity:.94}
+.main-nav a[aria-current="page"]>.em-svg{opacity:1}
+.menu-toggle .em-svg{width:23px;height:23px}
+.mobile-quick-nav a>.em-svg{display:block;width:25px;height:25px}
+.mobile-quick-nav a[aria-current="page"]>.em-svg{stroke-width:2.2}
+.dashboard-hero .dashboard-actions .btn,.dashboard-item-actions .btn,
+.product-buy-actions .btn,.login-password-tools .text-link{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px
+}
+.dashboard-item-meta .em-svg,.product-info .em-svg{color:#3d617b;width:15px;height:15px}
+.dashboard-availability .em-svg,.availability-badge .em-svg{width:16px;height:16px}
+.dashboard-summary article>span .em-svg{width:18px;height:18px;color:#315b6d}
+.access-choice-icon{width:57px;height:57px;display:grid;place-items:center;border-radius:17px;color:#1d4b43;background:rgba(29,75,67,.09)}
+.access-choice-icon>.em-svg{width:32px;height:32px}
+.access-choice-sell .access-choice-icon{background:rgba(61,97,123,.12);color:#3d617b}
+.recovery-header .eyebrow>.em-svg,.recovery-security-card h2 .em-svg{width:21px;height:21px}
+.recovery-security-card h2{display:flex;align-items:center;gap:10px}
+.recovery-methods label [data-icon] .em-svg{width:22px;height:22px}
+.recovery-panel .btn,.recovery-security-card .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px}
+@media(max-width:650px){
+  .mobile-quick-nav a>.em-svg{width:24px;height:24px}
+  .mobile-quick-nav a{gap:5px}
+  .dashboard-item-actions .btn{min-height:48px}
+}
+
+/* Integração dos ícones aos anúncios e aos painéis gerados por JavaScript. */
+.product-info>span,.dashboard-item-meta>span{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.product-info .em-svg,.dashboard-item-meta .em-svg{width:15px;height:15px;color:#3d617b}
+.cut-line [data-icon]{margin-right:4px;color:#3d617b}
+.cut-line .em-svg{width:16px;height:16px}
+.product-report-actions .product-report-link{display:inline-flex;align-items:center;gap:5px}
+.product-report-actions .em-svg{width:15px;height:15px}
+.product-buy-actions .btn .em-svg,.dashboard-item-actions .btn .em-svg{width:18px;height:18px}
+.dashboard-summary article>span{display:inline-flex;align-items:center;gap:8px}
+.dashboard-hero .dashboard-actions .btn .em-svg{width:19px;height:19px}
+.dashboard-item-actions .btn-delete-product .em-svg{color:currentColor}
+.search-box>span,.select-box>span{display:inline-flex;align-items:center;gap:7px}
+.search-box>span .em-svg,.select-box>span .em-svg{width:16px;height:16px}
+.order-dialog .field>span:has([data-icon]){display:inline-flex;align-items:center;gap:8px}
+.order-dialog .field>span .em-svg{width:16px;height:16px;color:#315b6d}
+@media(max-width:650px){
+ .product-report-actions .product-report-link{min-height:44px}
+ .dashboard-item-actions .btn{gap:7px}
+ .dashboard-summary article>span{gap:7px}
+}
