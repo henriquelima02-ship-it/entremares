@@ -222,6 +222,7 @@
       <a href="${prefix}index.html" aria-label="Início">${svgIcon('home')}<small>Início</small></a>
       <a href="${prefix}pescados.html" aria-label="Pescados">${svgIcon('fish')}<small>Pescados</small></a>
       <a href="${prefix}guia.html" aria-label="Povoados">${svgIcon('map')}<small>Povoados</small></a>
+      <a href="${prefix}saberes.html" aria-label="Saberes">${svgIcon('book')}<small>Saberes</small></a>
       <a href="${prefix}${accountFile}" aria-label="${accountLabel}">${svgIcon(accountFile === 'painel-pescador.html' ? 'dashboard' : accountFile === 'minha-conta.html' ? 'bag' : 'user')}<small>${accountLabel}</small></a>
     `;
     document.body.appendChild(quickNav);
