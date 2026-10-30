@@ -20,10 +20,10 @@
       href: 'https://commons.wikimedia.org/wiki/File:Ocelot_%28Leopardus_pardalis%29-8.jpg'
     },
     'Mangue-vermelho': {
-      src: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Rhizophora_mangle_%28prop_roots%29.jpg',
-      alt: 'Raízes-escora do mangue-vermelho',
-      credit: 'Wikimedia Commons',
-      href: 'https://commons.wikimedia.org/wiki/File:Rhizophora_mangle_(prop_roots).jpg'
+      src: 'https://commons.wikimedia.org/wiki/Special:FilePath/APA_de_Guaraque%C3%A7aba_-_fundo_da_ba%C3%ADa_de_Antonina_vista_mangue_e_serra_ibitiraquire_-_Marcos_Peretti_Maranh%C3%A3o(14).jpg?width=900',
+      alt: 'Paisagem de manguezal no Rio do Meio, Baía de Antonina, Paraná',
+      credit: 'Marcos Peretti Maranhão (2011) • CC BY-SA 4.0 • Wikimedia Commons',
+      href: 'https://commons.wikimedia.org/wiki/File:APA_de_Guaraque%C3%A7aba_-_fundo_da_ba%C3%ADa_de_Antonina_vista_mangue_e_serra_ibitiraquire_-_Marcos_Peretti_Maranh%C3%A3o(14).jpg'
     },
     'Gralha-azul': {
       src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Cyanocorax_caeruleus.jpg',
@@ -62,7 +62,10 @@
     const caption = document.createElement('figcaption');
     const description = document.createElement('span');
     description.className = 'story-photo-caption';
-    description.textContent = 'Imagem de referência da espécie — não registrada nesta fotografia em Piaçaguera.';
+    const title = item === media['Mangue-vermelho'] ? 'Mangue-vermelho' : '';
+    description.textContent = title === 'Mangue-vermelho'
+      ? 'Manguezal da Baía de Antonina (PR), como referência do habitat; a fotografia não identifica individualmente mangue-vermelho em Piaçaguera.'
+      : 'Imagem de referência da espécie — não registrada nesta fotografia em Piaçaguera.';
     const attribution = document.createElement('small');
     attribution.className = 'story-photo-attribution';
     const link = document.createElement('a');
