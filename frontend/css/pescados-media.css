@@ -103,3 +103,10 @@
 .species-gallery figcaption{font-size:.86rem;font-weight:900;color:#1d4b43;text-align:center}
 @media(max-width:850px){.species-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.species-gallery-heading{align-items:start;flex-direction:column;gap:9px}.species-gallery{gap:7px}.species-gallery figure{padding:9px 5px;border-radius:12px}.species-gallery img{height:84px}.species-gallery figcaption{font-size:.76rem}}
+/* Relatos e disponibilidade — vitrine com autogestão */
+.product-report-actions{display:flex;flex-wrap:wrap;gap:5px 14px;padding-top:9px;border-top:1px solid rgba(29,75,67,.12)}
+.product-report-link{border:0;background:transparent;color:#466b69;font-size:.77rem;font-weight:800;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:7px 0;min-height:39px;text-align:left}
+.product-report-link:hover{color:#9e4d35}
+.product-report-link:disabled{opacity:.4;cursor:wait}
+.product-report-link:focus-visible{outline:3px solid #d5a83c;outline-offset:3px;border-radius:4px}
+@media(max-width:650px){.product-report-actions{justify-content:space-between;gap:6px}.product-report-link{font-size:.74rem}}

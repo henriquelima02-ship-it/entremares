@@ -72,7 +72,8 @@ router.post('/register', async (req, res, next) => {
         collaborativeFee: Number(profile.shipping?.collaborativeFee || 0),
         notes: String(profile.shipping?.notes || '').trim()
       },
-      status: 'pending_review',
+      status: 'published',
+      publishedAt: now,
       createdAt: now,
       updatedAt: now
     } : null;
@@ -83,7 +84,7 @@ router.post('/register', async (req, res, next) => {
     });
 
     res.status(201).json({
-      message: fisherman ? 'Cadastro de pescador recebido para revisão.' : 'Cadastro de cliente realizado.',
+      message: fisherman ? 'Cadastro criado. Você já pode anunciar pescados.' : 'Cadastro de cliente realizado.',
       token: signToken(user),
       user: publicUser(user),
       fisherman

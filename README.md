@@ -20,16 +20,16 @@ O frontend está na pasta `frontend/` e utiliza HTML, CSS e JavaScript. Inclui:
 - páginas de História de Piaçaguera, Igreja e sambaqui, Fauna e flora e Gastronomia de Piaçaguera e Amparo;
 - cadastro e acesso de clientes e pescadores;
 - painel do pescador para gerenciar perfil, anúncios, estoque e pedidos;
-- curadoria comercial de perfis e pescados;
+- publicação automática de pescados com autogestão da disponibilidade;
 - seleções de cortes e modalidades de retirada ou entrega;
 - imagens ilustrativas de pescados e cortes, identificadas como referências visuais;
 - adaptação de telas para navegação no celular.
 
-O cadastro de anúncios e a publicação de perfis/pescados passam pela curadoria prevista no sistema. A disponibilidade dos produtos pode vencer conforme o prazo configurado.
+O cadastro de pescadores e a publicação dos anúncios são automáticos, sem fila de aprovação. Os anúncios têm validade de 24, 36 ou 42 horas. A oferta sai da vitrine com estoque zerado ou prazo vencido. Dois relatos independentes de indisponibilidade em até 24 horas pausam o anúncio até que o pescador confirme novamente; uma recusa de pedido por falta de estoque também o pausa. A equipe pode manter ferramentas de auditoria, mas sua atuação não é requisito para anunciar.
 
 ## API e persistência
 
-A pasta `backend/` contém uma API Node.js/Express com autenticação, rotas de usuários, pescadores, produtos, frete, pedidos e curadoria. O código inclui persistência para testes e suporte a infraestrutura de banco de dados. A disponibilidade do serviço e a configuração efetiva de persistência em produção precisam de verificação operacional antes da abertura a pedidos reais.
+A pasta `backend/` contém uma API Node.js/Express com autenticação, rotas de usuários, pescadores, produtos, frete, pedidos, alertas de disponibilidade e ferramentas de auditoria. O código inclui persistência para testes e suporte a infraestrutura de banco de dados. A disponibilidade do serviço e a configuração efetiva de persistência em produção precisam de verificação operacional antes da abertura a pedidos reais.
 
 Consulte [backend/README.md](backend/README.md) para as rotas, variáveis de ambiente, requisitos de implantação e orientações de segurança.
 

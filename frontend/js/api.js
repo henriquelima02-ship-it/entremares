@@ -144,7 +144,23 @@
   function demoData() {
     try {
       const saved = JSON.parse(localStorage.getItem(DEMO_KEY) || 'null');
-      if (saved && Array.isArray(saved.products)) return normalizeDemoData(saved);
+      if (saved && Array.isArray(saved.products)) {
+      const data = normalizeDemoData(saved);
+      const now = nowIso();
+      let migrated = false;
+      for (const f of data.fishermen) if (f.status === 'pending_review') {
+        f.status = 'published'; f.publishedAt = now; migrated = true;
+      }
+      for (const p of data.products) if (p.status === 'pending_review') {
+        if (Number(p.quantityKg) > 0) {
+          p.status = 'published'; p.publishedAt = now;
+          p.expiresAt = expiryIso(p.availabilityHours);
+        } else { p.status = 'paused'; p.pauseReason = 'no_stock'; }
+        migrated = true;
+      }
+      if (migrated) localStorage.setItem(DEMO_KEY, JSON.stringify(data));
+      return data;
+    }
     } catch (_) {}
     const initial = clone(seed);
     localStorage.setItem(DEMO_KEY, JSON.stringify(initial));
@@ -248,7 +264,8 @@
         whatsappPublic: payload.profile?.whatsappPublic !== false,
         whatsapp: '',
         shipping: payload.profile?.shipping || { pickup: true },
-        status: 'pending_review',
+        status: 'published',
+        publishedAt: nowIso(),
         updatedAt: nowIso()
       };
       data.fishermen.push(fisherman);
@@ -367,14 +384,17 @@
       ...payload,
       availabilityHours: normalizeHours(payload.availabilityHours),
       expiresAt: null,
-      status: 'pending_review',
+      status: 'published',
+      publishedAt: nowIso(),
+      expiresAt: expiryIso(payload.availabilityHours),
+      availabilityReports: [],
       createdAt: nowIso(),
       updatedAt: nowIso()
     };
     data.products.unshift(product);
     saveDemo(data);
     return {
-      message: 'Pescado salvo apenas neste navegador em modo demonstrativo.',
+      message: 'Pescado publicado em modo demonstrativo (somente neste navegador).',
       product: productWithAvailability(product),
       demo: true
     };
@@ -411,6 +431,42 @@
       fisherman: fishermanFor(data, item.fishermanId)
     }));
     return { items, demo: true };
+  }
+
+  function reporterId() {
+    const key = 'entremares_report_browser_v1';
+    let id = localStorage.getItem(key);
+    if (!id) {
+      id = window.crypto?.randomUUID?.() || `report_${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
+      localStorage.setItem(key, id);
+    }
+    return id;
+  }
+
+  async function reportProduct(productId, reason = 'unavailable') {
+    const browserId = reporterId();
+    if (base) return request(`/market/products/${encodeURIComponent(productId)}/report`, {
+      method: 'POST', body: JSON.stringify({ reason, browserId })
+    });
+    const data = demoData();
+    const product = data.products.find(p => p.id === productId && isActive(p));
+    if (!product) throw new Error('Este anúncio já não está disponível.');
+    const since = Date.now() - 24 * 3600000;
+    const reports = (product.availabilityReports || []).filter(r => Date.parse(r.at) >= since);
+    if (reports.some(r => r.fingerprint === browserId)) {
+      return { paused: false, duplicate: true, message: 'Seu relato já foi registrado.' };
+    }
+    reports.push({ fingerprint: browserId, at: nowIso(), reason });
+    product.availabilityReports = reports.slice(-2);
+    if (reports.length >= 2) {
+      product.status = 'paused';
+      product.pauseReason = 'community_unavailable';
+      product.updatedAt = nowIso();
+    }
+    saveDemo(data);
+    return { paused: product.status === 'paused', message: product.status === 'paused'
+      ? 'Anúncio pausado até o pescador confirmar a disponibilidade.'
+      : 'Relato registrado. Outro relato independente pausa o anúncio.' };
   }
 
   async function shippingOptions(productId, quantityKg = 1) {
@@ -564,7 +620,7 @@
       orders,
       summary: {
         productsPublished: products.filter(item => item.active).length,
-        productsPending: products.filter(item => item.status === 'pending_review').length,
+        productsPending: products.filter(item => ['paused', 'pending_review'].includes(item.status)).length,
         productsExpired: products.filter(item => item.expired && item.status === 'published').length,
         openOrders: orders.filter(item => !['concluido', 'recusado', 'cancelado'].includes(item.status)).length,
         totalOrders: orders.length
@@ -588,7 +644,7 @@
 
     Object.assign(fisherman, payload, { updatedAt: nowIso() });
     if (payload.shipping) fisherman.shipping = { ...(fisherman.shipping || {}), ...payload.shipping };
-    if (fisherman.status === 'rejected') fisherman.status = 'pending_review';
+    if (fisherman.status === 'rejected' || fisherman.status === 'pending_review') fisherman.status = 'published';
 
     saveDemo(data);
     setSession({ ...session, fisherman });
@@ -613,15 +669,6 @@
 
     const nextShipping = payload.shipping ? { ...(product.shipping || {}), ...payload.shipping } : product.shipping;
     const nextCuts = payload.cuts || product.cuts;
-    const requiresReview =
-      (payload.species !== undefined && String(payload.species).trim() !== String(product.species || '')) ||
-      (payload.pricePerKg !== undefined && Number(payload.pricePerKg) !== Number(product.pricePerKg)) ||
-      (payload.category !== undefined && String(payload.category) !== String(product.category || '')) ||
-      (payload.saleUnit !== undefined && String(payload.saleUnit || 'kg') !== String(product.saleUnit || 'kg')) ||
-      (payload.originNote !== undefined && String(payload.originNote).trim() !== String(product.originNote || '')) ||
-      (payload.description !== undefined && String(payload.description).trim() !== String(product.description || '')) ||
-      (payload.cuts !== undefined && JSON.stringify(nextCuts) !== JSON.stringify(product.cuts || [])) ||
-      (payload.shipping !== undefined && JSON.stringify(nextShipping) !== JSON.stringify(product.shipping || {}));
 
     Object.assign(product, payload, {
       availabilityHours: normalizeHours(payload.availabilityHours ?? product.availabilityHours),
@@ -633,19 +680,23 @@
     if (product.status === 'published' && payload.availabilityHours !== undefined) {
       product.expiresAt = expiryIso(product.availabilityHours);
     }
-    if (requiresReview && product.status === 'published') {
-      product.status = 'pending_review';
-      product.expiresAt = null;
+    if (product.status === 'rejected' || product.status === 'pending_review') {
+      product.status = Number(product.quantityKg) > 0 ? 'published' : 'paused';
+      if (product.status === 'published') {
+        product.publishedAt = nowIso();
+        product.expiresAt = expiryIso(product.availabilityHours);
+        product.availabilityReports = [];
+      }
     }
-    if (product.status === 'rejected') {
-      product.status = 'pending_review';
-      product.expiresAt = null;
+    if (Number(product.quantityKg) <= 0 && product.status === 'published') {
+      product.status = 'paused';
+      product.pauseReason = 'no_stock';
     }
 
     saveDemo(data);
     return {
-      message: product.status === 'pending_review'
-        ? 'Alterações salvas e enviadas para revisão.'
+      message: product.status === 'paused'
+        ? 'Anúncio pausado. Confirme a disponibilidade para reativar.'
         : 'Pescado atualizado no modo demonstrativo.',
       product: productWithAvailability(product),
       demo: true
@@ -666,13 +717,13 @@
 
     if (action === 'pause') {
       product.status = 'paused';
-    } else if (action === 'renew') {
-      if (Number(product.quantityKg) <= 0) throw new Error('Atualize o estoque antes de renovar.');
-      product.status = 'published';
-      product.expiresAt = expiryIso(product.availabilityHours);
     } else {
-      product.status = 'pending_review';
-      product.expiresAt = null;
+      if (Number(product.quantityKg) <= 0) throw new Error('Atualize o estoque antes de publicar.');
+      product.status = 'published';
+      product.publishedAt = nowIso();
+      product.expiresAt = expiryIso(product.availabilityHours);
+      product.pauseReason = '';
+      product.availabilityReports = [];
     }
 
     product.updatedAt = nowIso();
@@ -683,11 +734,11 @@
     };
   }
 
-  async function setOrderStatus(orderId, status) {
+  async function setOrderStatus(orderId, status, reason = '') {
     if (base) {
       return request(`/market/dashboard/orders/${encodeURIComponent(orderId)}/status`, {
         method: 'PATCH',
-        body: JSON.stringify({ status })
+        body: JSON.stringify({ status, reason })
       }, true);
     }
 
@@ -703,6 +754,10 @@
       order.stockRestored = true;
     }
 
+    if (status === 'recusado' && reason === 'unavailable') for (const i of order.items || []) {
+      const p = data.products.find(p => p.id === i.productId);
+      if (p) { p.status = 'paused'; p.pauseReason = 'seller_unavailable'; p.availabilityReports = []; }
+    }
     order.status = status;
     order.updatedAt = nowIso();
     saveDemo(data);
@@ -810,6 +865,7 @@
     updateProduct,
     setProductStatus,
     setOrderStatus,
+    reportProduct,
     curationSummary,
     curationPending,
     curateFisherman,

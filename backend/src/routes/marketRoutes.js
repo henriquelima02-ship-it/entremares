@@ -136,9 +136,14 @@ function publicFisherman(db, fisherman) {
   };
 }
 
+function publicAvailability(product) {
+  const { availabilityReports, ...visible } = availabilityView(product);
+  return visible;
+}
+
 function productView(db, product) {
   return {
-    ...availabilityView(product),
+    ...publicAvailability(product),
     fisherman: publicFisherman(db, db.fishermen.find(item => item.id === product.fishermanId))
   };
 }
@@ -211,6 +216,49 @@ router.get('/products/:id', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+// Relatos independentes são uma verificação comunitária leve: dois em
+// até 24h pausam temporariamente o anúncio. Nenhuma denúncia o apaga.
+router.post('/products/:id/report', async (req, res, next) => {
+  try {
+    const reason = String(req.body?.reason || '');
+    if (!['unavailable', 'purchase_failed'].includes(reason)) {
+      return res.status(400).json({ error: 'Motivo de sinalização inválido.' });
+    }
+    const browserId = String(req.body?.browserId || '').slice(0, 100);
+    if (!/^[a-zA-Z0-9_-]{16,100}$/.test(browserId)) {
+      return res.status(400).json({ error: 'Não foi possível validar este relato.' });
+    }
+    const fingerprint = crypto.createHash('sha256')
+      .update([process.env.AUTH_SECRET || 'entremares-report', req.ip, req.get('user-agent') || '', browserId].join('|'))
+      .digest('hex');
+    const outcome = await mutateDb(db => {
+      const product = db.products.find(p => p.id === req.params.id);
+      if (!product || !isPublicProduct(product)) {
+        throw Object.assign(new Error('Este pescado já não está disponível.'), { status: 409 });
+      }
+      const since = Date.now() - 24 * 3600000;
+      const fresh = (product.availabilityReports || []).filter(r =>
+        Number.isFinite(Date.parse(r.at)) && Date.parse(r.at) >= since
+      );
+      if (fresh.some(r => r.fingerprint === fingerprint)) {
+        return { paused: false, duplicate: true };
+      }
+      fresh.push({ fingerprint, at: new Date().toISOString(), reason });
+      product.availabilityReports = fresh.slice(-2);
+      if (fresh.length >= 2) {
+        product.status = 'paused';
+        product.pauseReason = 'community_unavailable';
+        product.updatedAt = new Date().toISOString();
+      }
+      return { paused: product.status === 'paused', duplicate: false };
+    });
+    res.json({ ...outcome, message: outcome.paused
+      ? 'O anúncio foi pausado até o pescador confirmar a disponibilidade.'
+      : outcome.duplicate ? 'Seu relato já foi registrado.'
+      : 'Relato registrado. Um segundo relato independente pausa o anúncio.' });
+  } catch (error) { next(error); }
 });
 
 router.get('/shipping/options', async (req, res, next) => {
@@ -439,7 +487,7 @@ router.get('/dashboard', async (req, res, next) => {
       orders,
       summary: {
         productsPublished: products.filter(item => item.active).length,
-        productsPending: products.filter(item => item.status === 'pending_review').length,
+        productsPending: products.filter(item => item.status === 'pending_review' || item.status === 'paused').length,
         productsExpired: products.filter(item => item.expired && item.status === 'published').length,
         openOrders: orders.filter(item => !['concluido', 'recusado', 'cancelado'].includes(item.status)).length,
         totalOrders: orders.length
@@ -464,7 +512,7 @@ router.patch('/dashboard/profile', async (req, res, next) => {
       if (req.body?.shipping) item.shipping = normalizeShipping(req.body.shipping, item.shipping || {});
       item.updatedAt = new Date().toISOString();
 
-      if (item.status === 'rejected') item.status = 'pending_review';
+      if (item.status === 'rejected' || item.status === 'pending_review') item.status = 'published';
       return item;
     });
 
@@ -511,15 +559,17 @@ router.post('/dashboard/products', async (req, res, next) => {
       cuts: normalizeCuts(body.cuts),
       shipping: normalizeShipping(body.shipping || {}, fisherman.shipping || {}),
       availabilityHours: normalizeAvailabilityHours(body.availabilityHours),
-      expiresAt: null,
-      status: 'pending_review',
+      publishedAt: now,
+      expiresAt: expiresFromNow(body.availabilityHours),
+      status: 'published',
+      availabilityReports: [],
       createdAt: now,
       updatedAt: now
     };
 
     await mutateDb(store => store.products.push(product));
     res.status(201).json({
-      message: 'Pescado cadastrado e enviado para curadoria. A contagem de disponibilidade começa quando ele for publicado.',
+      message: 'Pescado publicado automaticamente na vitrine. A disponibilidade já está valendo.',
       product
     });
   } catch (error) {
@@ -542,15 +592,6 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
         ? normalizeShipping(body.shipping, item.shipping || {})
         : item.shipping;
 
-      const requiresReview =
-        (body.species !== undefined && String(body.species).trim() !== String(item.species || '')) ||
-        (body.pricePerKg !== undefined && money(Number(body.pricePerKg)) !== money(Number(item.pricePerKg))) ||
-        (body.category !== undefined && String(body.category).trim() !== String(item.category || '')) ||
-        (body.saleUnit !== undefined && normalizeSaleUnit(body.saleUnit) !== normalizeSaleUnit(item.saleUnit)) ||
-        (body.originNote !== undefined && String(body.originNote).trim() !== String(item.originNote || '')) ||
-        (body.description !== undefined && String(body.description).trim() !== String(item.description || '')) ||
-        (body.cuts !== undefined && JSON.stringify(nextCuts) !== JSON.stringify(item.cuts || [])) ||
-        (body.shipping !== undefined && JSON.stringify(nextShipping) !== JSON.stringify(item.shipping || {}));
 
       if (body.species !== undefined) item.species = String(body.species).trim();
       if (body.scientificName !== undefined) item.scientificName = String(body.scientificName).trim();
@@ -591,13 +632,19 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
         if (item.status === 'published') item.expiresAt = expiresFromNow(item.availabilityHours);
       }
 
-      if (requiresReview && item.status === 'published') {
-        item.status = 'pending_review';
-        item.expiresAt = null;
+      // Edições não passam por curadoria manual. Uma pausa por relatos
+      // continua até o pescador confirmar a disponibilidade (renovar).
+      if (item.status === 'pending_review' || item.status === 'rejected') {
+        item.status = Number(item.quantityKg) > 0 ? 'published' : 'paused';
+        if (item.status === 'published') {
+          item.publishedAt = new Date().toISOString();
+          item.expiresAt = expiresFromNow(item.availabilityHours);
+          item.availabilityReports = [];
+        }
       }
-      if (item.status === 'rejected') {
-        item.status = 'pending_review';
-        item.expiresAt = null;
+      if (Number(item.quantityKg) <= 0 && item.status === 'published') {
+        item.status = 'paused';
+        item.pauseReason = 'no_stock';
       }
 
       item.updatedAt = new Date().toISOString();
@@ -605,9 +652,9 @@ router.patch('/dashboard/products/:id', async (req, res, next) => {
     });
 
     res.json({
-      message: product.status === 'pending_review'
-        ? 'Alterações salvas e enviadas para revisão.'
-        : 'Pescado atualizado.',
+      message: product.status === 'paused'
+        ? 'Alterações salvas. Confirme a disponibilidade para voltar à vitrine.'
+        : 'Pescado atualizado na vitrine.',
       product: availabilityView(product)
     });
   } catch (error) {
@@ -630,19 +677,16 @@ router.patch('/dashboard/products/:id/status', async (req, res, next) => {
 
       if (action === 'pause') {
         item.status = 'paused';
-      } else if (action === 'submit') {
-        item.status = 'pending_review';
-        item.expiresAt = null;
+        item.pauseReason = 'fisher_paused';
       } else {
-        const previouslyPublished = item.status === 'published' || item.status === 'paused' || Boolean(item.publishedAt);
-        if (!previouslyPublished) {
-          throw Object.assign(new Error('Este pescado precisa ser aprovado antes da primeira renovação.'), { status: 409 });
-        }
         if (Number(item.quantityKg) <= 0) {
-          throw Object.assign(new Error('Atualize o estoque antes de renovar o anúncio.'), { status: 409 });
+          throw Object.assign(new Error('Atualize o estoque antes de publicar.'), { status: 409 });
         }
         item.status = 'published';
+        item.publishedAt = new Date().toISOString();
         item.expiresAt = expiresFromNow(item.availabilityHours);
+        item.pauseReason = '';
+        item.availabilityReports = [];
       }
 
       item.updatedAt = new Date().toISOString();
@@ -653,7 +697,7 @@ router.patch('/dashboard/products/:id/status', async (req, res, next) => {
       ? 'Anúncio pausado.'
       : action === 'renew'
         ? `Disponibilidade renovada por ${normalizeAvailabilityHours(product.availabilityHours)} horas.`
-        : 'Anúncio enviado para revisão.';
+        : 'Anúncio publicado automaticamente.';
 
     res.json({ message, product: availabilityView(product) });
   } catch (error) {
@@ -703,6 +747,17 @@ router.patch('/dashboard/orders/:id/status', async (req, res, next) => {
         item.stockRestored = true;
       }
 
+      if (nextStatus === 'recusado' && req.body?.reason === 'unavailable') {
+        // O pescador confirmou que não pode atender: o produto sai da vitrine.
+        for (const orderItem of item.items) {
+          const product = db.products.find(p => p.id === orderItem.productId);
+          if (!product) continue;
+          product.status = 'paused';
+          product.pauseReason = 'seller_unavailable';
+          product.availabilityReports = [];
+          product.updatedAt = new Date().toISOString();
+        }
+      }
       item.status = nextStatus;
       item.updatedAt = new Date().toISOString();
       return item;

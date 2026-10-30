@@ -23,7 +23,7 @@
   const statusLabel = value => ({
     published: 'publicado',
     expired: 'prazo vencido',
-    pending_review: 'em revisão',
+    pending_review: 'publicando',
     paused: 'pausado',
     rejected: 'ajustes solicitados',
     recebido: 'recebido',
@@ -202,13 +202,20 @@
               <span>Cortes: ${esc(cuts)}</span>
             </div>
 
-            ${product.reviewNote ? `<div class="review-note"><strong>Curadoria:</strong> ${esc(product.reviewNote)}</div>` : ''}
+            ${product.status === 'paused' && product.pauseReason === 'community_unavailable'
+              ? '<div class="review-note"><strong>Aviso da comunidade:</strong> houve relatos de indisponibilidade. Confirme o estoque e use “Confirmar disponibilidade”.</div>'
+              : product.status === 'paused' && product.pauseReason === 'seller_unavailable'
+                ? '<div class="review-note"><strong>Venda não atendida:</strong> o anúncio foi pausado. Corrija o estoque e confirme a disponibilidade.</div>'
+                : product.status === 'paused' && product.pauseReason === 'no_stock'
+                  ? '<div class="review-note"><strong>Estoque zerado:</strong> adicione estoque para reativar.</div>'
+                  : ''}
+            ${product.reviewNote ? `<div class="review-note"><strong>Observação:</strong> ${esc(product.reviewNote)}</div>` : ''}
           </div>
 
           <div class="dashboard-item-actions">
             <button class="btn btn-secondary" type="button" data-edit-product="${esc(product.id)}">Editar</button>
             ${canRenew
-              ? `<button class="btn btn-primary" type="button" data-product-action="renew" data-product-id="${esc(product.id)}">Renovar ${Number(product.availabilityHours || 36)}h</button>`
+              ? `<button class="btn btn-primary" type="button" data-product-action="renew" data-product-id="${esc(product.id)}">${product.status === 'paused' ? 'Confirmar disponibilidade' : `Renovar ${Number(product.availabilityHours || 36)}h`}</button>`
               : ''}
             ${product.status === 'published'
               ? `<button class="btn btn-secondary" type="button" data-product-action="pause" data-product-id="${esc(product.id)}">Pausar</button>`
@@ -296,10 +303,27 @@
               </select>
             </label>
             <button class="btn btn-primary" type="button" data-save-order="${esc(order.id)}">Salvar status</button>
+            ${!['recusado', 'cancelado', 'concluido'].includes(order.status)
+              ? `<button class="btn btn-secondary" type="button" data-order-unavailable="${esc(order.id)}">Sem estoque: recusar pedido e pausar anúncio</button>`
+              : ''}
           </div>
         </article>`;
     }).join('');
 
+    box.querySelectorAll('[data-order-unavailable]').forEach(button => {
+      button.addEventListener('click', async () => {
+        if (!window.confirm('Confirmar falta de estoque? O pedido será recusado, a reserva devolvida e o anúncio pausado até você corrigir e confirmar a disponibilidade.')) return;
+        button.disabled = true;
+        try {
+          await api.setOrderStatus(button.dataset.orderUnavailable, 'recusado', 'unavailable');
+          await load();
+        } catch (error) {
+          window.alert(error.message);
+        } finally {
+          button.disabled = false;
+        }
+      });
+    });
     box.querySelectorAll('[data-save-order]').forEach(button => {
       button.addEventListener('click', async () => {
         const select = box.querySelector(`[data-order-status="${CSS.escape(button.dataset.saveOrder)}"]`);

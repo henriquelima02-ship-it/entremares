@@ -34,6 +34,7 @@ Copie `.env.example` para o ambiente de execução e configure os valores reais:
 - `GET /api/market/fishermen/:id`
 - `GET /api/market/products`
 - `GET /api/market/products/:id`
+- `POST /api/market/products/:id/report` (relato de disponibilidade, sem login)
 - `GET /api/market/shipping/options`
 - `POST /api/market/orders`
 - `GET /api/market/orders/:id`
@@ -90,7 +91,10 @@ Sem URL configurada, o site entra em **modo demonstrativo local**. Nesse modo, n
 - O token do frontend fica em `sessionStorage`.
 - Perfis públicos não expõem e-mail, telefone ou documentos particulares.
 - Coordenadas sensíveis, pontos de espécies ameaçadas e informações pessoais da comunidade não devem ser publicados.
-- Perfis de pescadores e pescados entram em filas de curadoria separadas antes da publicação.
+- Perfis e pescados são publicados automaticamente. Registros antigos pendentes são liberados na inicialização; recusados e pausados não são reativados nessa migração.
+- Dois relatos distintos, limitados por identificador de navegador e impressão digital pseudonimizada da conexão, em até 24 horas pausam o anúncio; um relato isolado não o remove.
+- O pescador pode reativar após confirmar o estoque. Uma recusa de pedido informada como falta de estoque pausa imediatamente o anúncio.
+- A assinatura do navegador não prova identidade; use validação adicional antes de escalar o mecanismo para produção ampla.
 
 ## Container
 

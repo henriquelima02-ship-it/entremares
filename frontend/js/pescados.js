@@ -138,6 +138,10 @@
               ${whatsapp ? `<a class="btn whatsapp-btn btn-wide" href="${whatsapp}" target="_blank" rel="noopener noreferrer" data-whatsapp-product="${esc(product.id)}">Chamar no WhatsApp</a>` : ''}
               <button class="btn ${whatsapp ? 'btn-secondary' : 'btn-primary'} btn-wide" type="button" data-order="${esc(product.id)}">Fazer pedido no site</button>
             </div>
+            <div class="product-report-actions" aria-label="Sinalizar problemas de disponibilidade">
+              <button type="button" class="product-report-link" data-report-unavailable="${esc(product.id)}">Não está disponível</button>
+              <button type="button" class="product-report-link" data-report-failed="${esc(product.id)}">Não consegui comprar</button>
+            </div>
           </div>
         </article>`;
     }).join('');
@@ -145,6 +149,27 @@
     empty.classList.toggle('hidden', visible.length > 0);
     grid.querySelectorAll('[data-order]').forEach(button => {
       button.addEventListener('click', () => openOrder(button.dataset.order));
+    });
+    grid.querySelectorAll('[data-report-unavailable], [data-report-failed]').forEach(button => {
+      button.addEventListener('click', async () => {
+        const id = button.dataset.reportUnavailable || button.dataset.reportFailed;
+        const reason = button.dataset.reportFailed ? 'purchase_failed' : 'unavailable';
+        const confirmation = reason === 'purchase_failed'
+          ? 'Você tentou comprar e não conseguiu porque o pescado não estava mais disponível?'
+          : 'Você confirmou que este pescado já não está disponível?';
+        if (!window.confirm(confirmation + '\n\nRelatos repetidos ou falsos prejudicam os pescadores.')) return;
+        button.disabled = true;
+        try {
+          const response = await api.reportProduct(id, reason);
+          window.alert(response.message);
+          if (response.paused) await load();
+        } catch (error) {
+          window.alert(error.message || 'Não foi possível registrar o relato.');
+          await load();
+        } finally {
+          button.disabled = false;
+        }
+      });
     });
   }
 
@@ -154,7 +179,7 @@
       products = response.items || [];
       marketMode.textContent = response.demo
         ? 'Vitrine demonstrativa. Os exemplos abaixo não representam estoque comercial real.'
-        : 'Mostramos somente pescados com estoque e prazo de disponibilidade ativo. Os anúncios saem automaticamente da vitrine ao vencer.';
+        : 'Anúncios publicados automaticamente enquanto houver estoque e prazo válido. Indisponibilidades confirmadas também retiram anúncios da vitrine.';
       draw();
     } catch (error) {
       marketMode.textContent = `Não foi possível carregar a vitrine: ${error.message}`;
@@ -332,6 +357,9 @@
     } catch (error) {
       result.innerHTML = `<strong>Não foi possível registrar.</strong> ${esc(error.message)}`;
       result.classList.remove('hidden');
+      if (/indispon[ií]vel|disponibilidade encerrada|estoque/i.test(error.message)) {
+        await load();
+      }
     } finally {
       submit.disabled = false;
       submit.textContent = 'Registrar pedido';
