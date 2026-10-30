@@ -45,6 +45,7 @@ Copie `.env.example` para o ambiente de execução e configure os valores reais:
 - `POST /api/market/dashboard/products`
 - `PATCH /api/market/dashboard/products/:id`
 - `PATCH /api/market/dashboard/products/:id/status`
+- `DELETE /api/market/dashboard/products/:id` (arquiva o anúncio do próprio pescador, sem apagar pedidos; bloqueado enquanto houver pedidos em andamento)
 - `GET /api/market/dashboard/orders`
 - `PATCH /api/market/dashboard/orders/:id/status`
 

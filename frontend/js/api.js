@@ -610,7 +610,7 @@
 
     const fisherman = fishermanFor(data, fishermanId);
     const products = data.products
-      .filter(item => item.fishermanId === fishermanId)
+      .filter(item => item.fishermanId === fishermanId && item.status !== 'deleted')
       .map(productWithAvailability);
     const orders = data.orders.filter(item => item.fishermanId === fishermanId);
 
@@ -701,6 +701,37 @@
       product: productWithAvailability(product),
       demo: true
     };
+  }
+
+  async function deleteProduct(productId) {
+    if (base) {
+      return request(`/market/dashboard/products/${encodeURIComponent(productId)}`, {
+        method: 'DELETE'
+      }, true);
+    }
+
+    const data = demoData();
+    const session = getSession();
+    const product = data.products.find(item => item.id === productId && item.status !== 'deleted');
+    if (!product) throw new Error('Pescado não encontrado.');
+    if (product.fishermanId !== session?.fisherman?.id) {
+      throw new Error('Você não pode excluir o anúncio de outro pescador.');
+    }
+    const hasOpenOrder = data.orders.some(order =>
+      order.fishermanId === product.fishermanId &&
+      !['concluido', 'recusado', 'cancelado'].includes(order.status) &&
+      (order.items || []).some(item => item.productId === product.id)
+    );
+    if (hasOpenOrder) {
+      throw new Error('Este pescado possui um pedido em andamento. Finalize ou resolva o pedido antes de excluir.');
+    }
+    product.status = 'deleted';
+    product.deletedAt = nowIso();
+    product.updatedAt = product.deletedAt;
+    product.expiresAt = null;
+    product.availabilityReports = [];
+    saveDemo(data);
+    return { message: 'Anúncio excluído. O histórico de pedidos foi preservado.', demo: true };
   }
 
   async function setProductStatus(productId, action) {
@@ -863,6 +894,7 @@
     dashboard,
     updateFisherProfile,
     updateProduct,
+    deleteProduct,
     setProductStatus,
     setOrderStatus,
     reportProduct,

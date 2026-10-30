@@ -154,7 +154,7 @@ function fishermanForUser(db, userId) {
 
 function assertOwnedProduct(db, productId, fishermanId) {
   const product = db.products.find(item => item.id === productId);
-  if (!product) throw Object.assign(new Error('Pescado não encontrado.'), { status: 404 });
+  if (!product || product.status === 'deleted') throw Object.assign(new Error('Pescado não encontrado.'), { status: 404 });
   if (product.fishermanId !== fishermanId) {
     throw Object.assign(new Error('Você não pode alterar este pescado.'), { status: 403 });
   }
@@ -700,6 +700,36 @@ router.patch('/dashboard/products/:id/status', async (req, res, next) => {
         : 'Anúncio publicado automaticamente.';
 
     res.json({ message, product: availabilityView(product) });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Arquivamento seguro: só o dono pode retirar um anúncio.
+ // O histórico de pedidos permanece preservado e os pedidos abertos são protegidos.
+router.delete('/dashboard/products/:id', async (req, res, next) => {
+  try {
+    const archived = await mutateDb(db => {
+      const fisherman = fishermanForUser(db, req.auth.user.id);
+      if (!fisherman) throw Object.assign(new Error('Perfil de pescador não encontrado.'), { status: 404 });
+      const product = assertOwnedProduct(db, req.params.id, fisherman.id);
+      const hasOpenOrder = db.orders.some(order =>
+        order.fishermanId === fisherman.id &&
+        !['concluido', 'recusado', 'cancelado'].includes(order.status) &&
+        (order.items || []).some(item => item.productId === product.id)
+      );
+      if (hasOpenOrder) {
+        throw Object.assign(new Error('Este pescado possui um pedido em andamento. Finalize ou resolva o pedido antes de excluir o anúncio.'), { status: 409 });
+      }
+      const now = new Date().toISOString();
+      product.status = 'deleted';
+      product.deletedAt = now;
+      product.updatedAt = now;
+      product.expiresAt = null;
+      product.availabilityReports = [];
+      return { id: product.id, status: 'deleted' };
+    });
+    res.json({ message: 'Anúncio excluído da vitrine e do painel. O histórico de pedidos foi preservado.', product: archived });
   } catch (error) {
     next(error);
   }

@@ -9,6 +9,7 @@
   }
 
   const state = { dashboard: null, editing: null };
+  let productSubmitBusy = false;
   const $ = id => document.getElementById(id);
 
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
@@ -224,9 +225,30 @@
                 : product.status === 'rejected'
                   ? `<button class="btn btn-primary" type="button" data-product-action="submit" data-product-id="${esc(product.id)}">Enviar para revisão</button>`
                   : ''}
+            <button class="btn btn-delete-product" type="button" data-delete-product="${esc(product.id)}">Excluir anúncio</button>
           </div>
         </article>`;
     }).join('');
+
+    box.querySelectorAll('[data-delete-product]').forEach(button => {
+      button.addEventListener('click', async () => {
+        const product = state.dashboard?.products?.find(item => item.id === button.dataset.deleteProduct);
+        if (!product) return;
+        const description = `${product.species} — ${brl(product.pricePerKg)}/${saleUnitLabel(product.saleUnit)}, ${Number(product.quantityKg || 0).toLocaleString('pt-BR')} ${saleUnitStockLabel(product.saleUnit, product.quantityKg)}; status: ${statusLabel(effectiveStatus(product))}`;
+        if (!window.confirm(`Excluir este anúncio?\\n\\n${description}\\n\\nEle desaparecerá da vitrine e do seu painel. Pedidos anteriores serão preservados. Esta ação não pode ser desfeita.`)) return;
+        button.disabled = true;
+        button.textContent = 'Excluindo...';
+        try {
+          const response = await api.deleteProduct(product.id);
+          await load();
+          window.alert(response.message || 'Anúncio excluído.');
+        } catch (error) {
+          window.alert(error.message || 'Não foi possível excluir o anúncio.');
+          button.disabled = false;
+          button.textContent = 'Excluir anúncio';
+        }
+      });
+    });
 
     box.querySelectorAll('[data-edit-product]').forEach(button => {
       button.addEventListener('click', () => openProductEditor(button.dataset.editProduct));
@@ -488,6 +510,7 @@
 
   $('productForm').addEventListener('submit', async event => {
     event.preventDefault();
+    if (productSubmitBusy) return;
     if (!$('productForm').checkValidity()) {
       $('productForm').reportValidity();
       return;
@@ -495,6 +518,12 @@
 
     const result = $('productResult');
     result.classList.add('hidden');
+    const saveButton = $('productForm').querySelector('button[type="submit"]');
+    const originalLabel = saveButton.textContent;
+    productSubmitBusy = true;
+    saveButton.disabled = true;
+    saveButton.textContent = 'Salvando...';
+    let saved = false;
 
     const payload = {
       species: $('editSpecies').value.trim(),
@@ -519,10 +548,22 @@
       result.innerHTML = `<strong>Salvo.</strong> ${esc(response.message || '')}`;
       result.classList.remove('hidden');
       await load();
-      setTimeout(() => closeDialog($('productEditor')), 700);
+      saved = true;
+      setTimeout(() => {
+        closeDialog($('productEditor'));
+        productSubmitBusy = false;
+        saveButton.disabled = false;
+        saveButton.textContent = originalLabel;
+      }, 700);
     } catch (error) {
       result.innerHTML = `<strong>Não foi possível salvar.</strong> ${esc(error.message)}`;
       result.classList.remove('hidden');
+    } finally {
+      if (!saved) {
+        productSubmitBusy = false;
+        saveButton.disabled = false;
+        saveButton.textContent = originalLabel;
+      }
     }
   });
 

@@ -1780,3 +1780,25 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     background-color:#fff
   }
 }
+
+/* Exclusão de anúncios: ação secundária e identificável no painel do pescador. */
+.dashboard-item-actions .btn-delete-product {
+  background: #fff7f4;
+  color: #a33d29;
+  border: 1px solid rgba(163,61,41,.38);
+  box-shadow: none;
+  min-height: 44px;
+  font-weight: 800;
+}
+.dashboard-item-actions .btn-delete-product:hover {
+  background: #fbe9e4;
+  border-color: #a33d29;
+}
+.dashboard-item-actions .btn-delete-product:focus-visible {
+  outline: 3px solid #d5a83c;
+  outline-offset: 3px;
+}
+.dashboard-item-actions .btn-delete-product:disabled { opacity: .6; cursor: wait; }
+@media(max-width:750px) {
+  .dashboard-item-actions .btn-delete-product { flex: 1 0 100%; }
+}
