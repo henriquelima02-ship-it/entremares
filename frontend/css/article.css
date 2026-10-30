@@ -519,3 +519,110 @@
   .page-saberes-story .story-media-split .story-photo-side{min-height:auto}
   .page-saberes-story .story-photo--landscape .story-photo-media{aspect-ratio:5/4}
 }
+
+
+/* Contraponto editorial ao relato da pesca do camarão em Amparo.
+   Preenche a segunda coluna com informações já documentadas na própria reportagem. */
+.page-saberes-gastro .saber-amparo-sidebar{
+  grid-column:span 1;
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  margin:0;
+  overflow:hidden;
+  border-radius:22px;
+  border:1px solid rgba(29,75,67,.19);
+  background:linear-gradient(147deg,#e3eee7 0%,#f7f5ea 64%,#f4e6cf 100%);
+  box-shadow:0 10px 28px rgba(29,75,67,.07)
+}
+.page-saberes-gastro .saber-amparo-sidebar-top{
+  padding:clamp(25px,3vw,36px) clamp(22px,3vw,32px) 18px;
+  background:radial-gradient(circle at 100% 0%,rgba(213,168,60,.24),transparent 65%)
+}
+.page-saberes-gastro .saber-amparo-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:15px;
+  color:#945438;
+  font-size:.74rem;
+  font-weight:900;
+  letter-spacing:.105em;
+  text-transform:uppercase
+}
+.page-saberes-gastro .saber-amparo-kicker .em-svg{width:19px;height:19px}
+.page-saberes-gastro .saber-amparo-sidebar h3{
+  margin:0 0 15px;
+  color:#1d4b43;
+  font:700 clamp(2rem,3.2vw,2.65rem)/1.08 Georgia,'Times New Roman',serif;
+  letter-spacing:-.035em
+}
+.page-saberes-gastro .saber-amparo-sidebar-top>p{
+  margin:0;
+  color:#3a5557;
+  font-size:1rem;
+  line-height:1.68
+}
+.page-saberes-gastro .saber-amparo-highlights{
+  display:grid;
+  gap:0;
+  margin:3px clamp(22px,3vw,32px) 15px
+}
+.page-saberes-gastro .saber-amparo-highlight{
+  display:grid;
+  grid-template-columns:43px minmax(0,1fr);
+  align-items:start;
+  gap:13px;
+  padding:18px 0;
+  border-bottom:1px solid rgba(29,75,67,.15)
+}
+.page-saberes-gastro .saber-amparo-highlight-icon{
+  display:grid;
+  place-items:center;
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:rgba(29,75,67,.11);
+  color:#1d4b43
+}
+.page-saberes-gastro .saber-amparo-highlight-icon .em-svg{width:23px;height:23px}
+.page-saberes-gastro .saber-amparo-highlight strong{
+  color:#204f44;
+  font-weight:900;
+  font-size:.99rem
+}
+.page-saberes-gastro .saber-amparo-highlight p{
+  margin:7px 0 0;
+  color:#496165;
+  font-size:.93rem;
+  line-height:1.58
+}
+.page-saberes-gastro .saber-amparo-highlight sup a{color:#336b76;text-decoration:none}
+.page-saberes-gastro .saber-amparo-link{
+  display:inline-flex;
+  align-items:center;
+  align-self:flex-start;
+  gap:8px;
+  margin:auto 22px 25px;
+  padding:12px 15px;
+  border-radius:999px;
+  background:#1d4b43;
+  color:white;
+  font-size:.89rem;
+  font-weight:850;
+  line-height:1.3;
+  text-decoration:none
+}
+.page-saberes-gastro .saber-amparo-link .em-svg{width:18px;height:18px}
+.page-saberes-gastro .saber-amparo-link:hover{background:#285e52}
+.page-saberes-gastro .saber-amparo-link:focus-visible{
+  outline:3px solid #d5a83c;
+  outline-offset:3px
+}
+@media(max-width:780px){
+  .page-saberes-gastro .saber-amparo-sidebar{grid-column:1/-1}
+  .page-saberes-gastro .saber-amparo-sidebar-top{padding:23px 20px 13px}
+  .page-saberes-gastro .saber-amparo-highlights{margin:0 20px 16px}
+  .page-saberes-gastro .saber-amparo-link{margin:0 20px 24px}
+}
