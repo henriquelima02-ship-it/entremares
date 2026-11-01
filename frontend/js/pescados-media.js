@@ -12,9 +12,32 @@
   }
   function forSpecies(species, category = '') {
     const name = normalize(species);
+    // Ilustrações de identificação taxonômica, não fotos de pescado local.
+    // Fontes em domínio público: NOAA e bibliografia científica histórica / Wikimedia Commons.
+    if (name.includes('prejereba') || name.includes('pregereia') || name.includes('pregereva')) {
+      return {
+        src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Lobotes_surinamensis.jpg?width=400',
+        alt: 'Ilustração científica histórica de prejereba (Lobotes surinamensis); não é foto de Piaçaguera',
+        source: 'https://commons.wikimedia.org/wiki/File:Lobotes_surinamensis.jpg',
+        credit: 'NOAA / Wikimedia Commons, domínio público',
+        generic: false,
+        illustrative: true
+      };
+    }
+    if (name.includes('miraguaia')) {
+      return {
+        src: 'https://commons.wikimedia.org/wiki/Special:FilePath/FMIB_33621_Pogonias_Cromis.jpeg?width=400',
+        alt: 'Desenho científico histórico de miraguaia (Pogonias cromis); não é foto da pesca local',
+        source: 'https://commons.wikimedia.org/wiki/File:FMIB_33621_Pogonias_Cromis.jpeg',
+        credit: 'William Welsh / Wikimedia Commons, domínio público',
+        generic: false,
+        illustrative: true
+      };
+    }
     if (name.includes('robalo')) return image('robalo', 'Ilustração digital de referência de robalo');
     if (name.includes('tainha')) return image('tainha', 'Ilustração digital de referência de tainha');
     if (name.includes('pescadinha')) return image('pescadinha', 'Ilustração digital de referência de pescadinha');
+    if (name.includes('camarao') && name.includes('vivo')) return null; // Não mostrar camarão já preparado como se estivesse vivo.
     if (name.includes('camarao')) return image('camarao', 'Ilustração digital de referência de camarões');
     if (/\bsiri\b/.test(name)) return image('siri', 'Ilustração digital de referência de siri');
     if (name.includes('ostra')) return image('ostra', 'Ilustração digital de referência de ostras');
