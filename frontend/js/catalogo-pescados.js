@@ -3,7 +3,7 @@
     { name: 'Robalo', category: 'peixe', priceMin: 35, priceMax: 35, saleUnit: 'kg' },
     { name: 'Calafate', category: 'peixe', priceMin: 35, priceMax: 35, saleUnit: 'kg' },
     { name: 'Pescadinha', category: 'peixe', priceMin: 12, priceMax: 20, saleUnit: 'kg', note: 'Faixa aproximada informada: R$ 12 a R$ 20 por kg.' },
-    { name: 'Guiri', category: 'peixe', priceMin: 12, priceMax: 15, saleUnit: 'kg' },
+    { name: 'Bagre-guiri', aliases: ['Guiri', 'Bagre-guri', 'Bagre guiri'], category: 'peixe', priceMin: 12, priceMax: 15, saleUnit: 'kg', note: 'Guiri é nome usado na pesca regional; a identificação exata da espécie deve ser confirmada com o pescador.' },
     { name: 'Miraguaia', category: 'peixe', priceMin: 8, priceMax: 8, saleUnit: 'kg' },
     { name: 'Tainha', category: 'peixe', priceMin: 10, priceMax: 10, saleUnit: 'kg' },
     { name: 'Sardinha', category: 'peixe', priceMin: null, priceMax: null, saleUnit: 'kg', note: 'Preço ainda não informado.' },
@@ -14,18 +14,19 @@
     { name: 'Bacucu', category: 'molusco', priceMin: 70, priceMax: 70, saleUnit: 'kg' },
     { name: 'Bagre', category: 'peixe', priceMin: 4, priceMax: 4, saleUnit: 'kg' },
     { name: 'Baiacu', category: 'peixe', priceMin: 20, priceMax: 20, saleUnit: 'kg' },
-    { name: 'Pregereia', category: 'peixe', priceMin: 50, priceMax: 50, saleUnit: 'kg', note: 'Nome local informado para peixe; manter a nomenclatura comunitária até confirmação taxonômica.' },
+    { name: 'Prejereba', aliases: ['Pregereia', 'Pregereva', 'Prejereba'], category: 'peixe', priceMin: 50, priceMax: 50, saleUnit: 'kg', note: 'Prejereba é a grafia documentada em estudos do litoral; Pregereia/Pregereva foram preservadas como formas locais para busca.' },
     { name: 'Cação', category: 'peixe', priceMin: 25, priceMax: 25, saleUnit: 'kg' },
     { name: 'Linguado', category: 'peixe', priceMin: 25, priceMax: 25, saleUnit: 'kg' },
     { name: 'Paru', category: 'peixe', priceMin: 15, priceMax: 15, saleUnit: 'kg' },
     { name: 'Misturinha', category: 'outro', priceMin: 12, priceMax: 12, saleUnit: 'kg', note: 'Denominação local informada; manter como categoria aberta.' },
     { name: 'Cavalinha', category: 'peixe', priceMin: 15, priceMax: 15, saleUnit: 'kg' },
-    { name: 'Saltero', category: 'peixe', priceMin: 45, priceMax: 60, saleUnit: 'kg', note: 'Faixa aproximada informada: R$ 45 a R$ 60 por kg.' },
+    { name: 'Salteira', aliases: ['Saltero', 'Salteiro', 'Guaivira'], category: 'peixe', priceMin: 45, priceMax: 60, saleUnit: 'kg', note: 'Também chamada saltero/salteiro em registros locais. Faixa aproximada informada: R$ 45 a R$ 60 por kg.' },
     { name: 'Peixe-galo', category: 'peixe', priceMin: 4.5, priceMax: 4.5, saleUnit: 'kg' },
     { name: 'Betara', category: 'peixe', priceMin: 5, priceMax: 5, saleUnit: 'kg' }
   ].map(item => ({
     ...item,
     approximate: true,
-    source: 'referencia_comunitaria'
+    source: 'referencia_comunitaria',
+    aliases: Array.isArray(item.aliases) ? [...new Set(item.aliases)] : []
   }));
 })();
