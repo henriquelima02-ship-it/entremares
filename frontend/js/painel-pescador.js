@@ -200,6 +200,7 @@
     if (index !== '') displayManualName(false);
     updateFishTiles();
     updatePriceButtons();
+    updateCutChoices();
     hideWizardError();
   }
 
@@ -252,6 +253,24 @@
       const card = input.closest('.wizard-cut-card');
       card?.classList.toggle('selected', input.checked);
     });
+  }
+
+  function updateCutChoices() {
+    const category = $('editCategory').value;
+    const byCategory = {
+      peixe: ['inteiro','limpo','eviscerado','file','posta','sem_cabeca'],
+      crustaceo: ['inteiro','limpo','descascado','sem_cabeca'],
+      molusco: ['inteiro','limpo'],
+      outro: ['inteiro','limpo','eviscerado','file','posta','descascado','sem_cabeca']
+    };
+    const allowed = byCategory[category] || byCategory.outro;
+    document.querySelectorAll('[data-edit-cut]').forEach(input => {
+      const existing = state.editing?.cuts?.some(cut => cut.id === input.dataset.editCut);
+      const visible = allowed.includes(input.dataset.editCut) || Boolean(existing);
+      input.closest('.wizard-cut-card').hidden = !visible;
+      if (!visible) input.checked = false;
+    });
+    updateCutStates();
   }
 
   function updateShippingStates() {
@@ -353,7 +372,7 @@
     wizardCategory='todos';
     updateFishTiles();
     updateQuickButtons();
-    updateCutStates();
+    updateCutChoices();
     updateShippingStates();
     $('wizardConfirmed').checked=false;
     $('wizardSubmit').textContent=state.editing?'Salvar alterações':'Publicar pescado';
@@ -380,6 +399,7 @@
       displayManualName(true);
       updateFishTiles();
       updatePriceButtons();
+      updateCutChoices();
       $('editSpecies').focus();
     });
     $('wizardNext').addEventListener('click',()=>{
@@ -404,6 +424,7 @@
     });
     $('productForm').addEventListener('input',()=>{updateReview();updateQuickButtons();updateShippingStates();});
     $('productForm').addEventListener('change',event=>{
+      if(event.target.id === 'editCategory') updateCutChoices();
       if(event.target.matches('[data-edit-cut]'))updateCutStates();
       if(event.target.matches('[id^="editShip"]'))updateShippingStates();
       updateReview();
