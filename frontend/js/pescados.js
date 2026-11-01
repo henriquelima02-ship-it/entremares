@@ -104,7 +104,8 @@
     grid.innerHTML = visible.map(product => {
       const whatsapp = whatsappUrl(product);
       const picture = media?.forSpecies(product.species, product.category);
-      const illustration = picture
+      const availablePicture = Boolean(picture?.src && !picture.generic);
+      const illustration = availablePicture
         ? `<img class="fish-media-img" src="${esc(picture.src)}" alt="${esc(picture.alt)}" loading="lazy" decoding="async">`
         : `<span class="fish-media-fallback" aria-hidden="true">${categoryIcon(product.category)}</span>`;
       return `
@@ -112,7 +113,7 @@
           <div class="product-art product-art-${esc(product.category)} market-product-art">
             ${illustration}
             <span class="fish-state-tag">${esc(product.state || 'fresco')}</span>
-            <small class="fish-media-caption">${picture?.generic ? 'Ilustração genérica de peixe' : picture ? 'Imagem ilustrativa, não do anúncio' : 'Categoria do pescado'}</small>
+            <small class="fish-media-caption">${picture?.external ? 'Referência externa: ' + esc(picture.credit) + ' • não é foto do anúncio' : availablePicture ? 'Imagem ilustrativa, não do anúncio' : 'Imagem específica pendente'}</small>
           </div>
 
           <div class="product-body">
@@ -146,6 +147,18 @@
         </article>`;
     }).join('');
     window.EntreMaresIcons?.decorate(grid);
+    grid.querySelectorAll('.fish-media-img').forEach(img => {
+      img.addEventListener('error', () => {
+        const art = img.closest('.product-art');
+        const caption = art?.querySelector('.fish-media-caption');
+        const icon = document.createElement('span');
+        icon.className = 'fish-media-fallback';
+        icon.setAttribute('aria-hidden', 'true');
+        icon.textContent = '—';
+        img.replaceWith(icon);
+        if (caption) caption.textContent = 'Imagem temporariamente indisponível';
+      }, { once: true });
+    });
 
     empty.classList.toggle('hidden', visible.length > 0);
     grid.querySelectorAll('[data-order]').forEach(button => {
