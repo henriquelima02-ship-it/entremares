@@ -7,6 +7,7 @@
   <meta name="description" content="Painel do pescador do EntreMarés para gerir anúncios de pescados e pedidos.">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/pescados-media.css">
+  <link rel="stylesheet" href="./css/pescador-wizard.css?v=1">
   <title>Painel do pescador | EntreMarés</title>
 </head>
 <body>
@@ -101,83 +102,189 @@
   </section>
 </main>
 
-<dialog id="productEditor" class="order-dialog product-editor">
+<dialog id="productEditor" class="order-dialog product-editor product-wizard" aria-labelledby="productEditorTitle">
   <form id="productForm">
-    <button class="dialog-close" type="button" data-close-product aria-label="Fechar">×</button>
-    <span class="eyebrow">Pescado</span>
+    <button class="dialog-close" type="button" data-close-product aria-label="Fechar cadastro">×</button>
+    <span class="eyebrow">Pescado • Cadastro fácil</span>
     <h2 id="productEditorTitle">Novo pescado</h2>
-    <p class="muted">Cadastre somente o estoque disponível agora. O anúncio vai diretamente para a vitrine e poderá ser pausado se vencer, acabar ou houver relatos confirmados de indisponibilidade. Confirme o preço do dia.</p>
+    <p class="wizard-intro">Escolha as opções tocando nos botões. Você só precisa informar a quantidade e confirmar o preço.</p>
     <input id="editProductId" type="hidden">
+    <nav class="wizard-progress" aria-label="Etapas do cadastro">
+      <span data-wizard-progress="0" class="is-current"><b>1</b><small>Escolher</small></span>
+      <span data-wizard-progress="1"><b>2</b><small>Quantidade</small></span>
+      <span data-wizard-progress="2"><b>3</b><small>Preparo</small></span>
+      <span data-wizard-progress="3"><b>4</b><small>Conferir</small></span>
+    </nav>
+    <div id="wizardStepStatus" class="wizard-step-status" role="status" aria-live="polite">Etapa 1 de 4 — Escolher o pescado</div>
+    <button id="wizardSpeak" class="wizard-speak" type="button" title="Ouvir instruções desta etapa">Ouvir instruções</button>
 
-    <div class="preset-picker">
-      <label class="field">
-        <span>Escolher pescado da lista</span>
-        <select id="fishPreset">
-          <option value="">Selecionar pescado...</option>
-        </select>
-        <small>Ao escolher, o sistema preenche nome, categoria, unidade de venda e, quando houver um único valor de referência, o preço aproximado.</small>
-      </label>
-      <div id="presetReference" class="preset-reference hidden"></div>
+    <section class="wizard-step" data-wizard-step="0" aria-label="Escolha do pescado">
+      <h3>Qual pescado você tem hoje?</h3>
+      <p class="wizard-hint">Toque na foto e no nome do pescado.</p>
+      <div class="wizard-filters" id="wizardFilters" role="group" aria-label="Filtrar tipo de pescado">
+        <button type="button" data-wizard-filter="todos" aria-pressed="true">Todos</button>
+        <button type="button" data-wizard-filter="peixe" aria-pressed="false">Peixes</button>
+        <button type="button" data-wizard-filter="crustaceo" aria-pressed="false">Camarão e siri</button>
+        <button type="button" data-wizard-filter="molusco" aria-pressed="false">Ostras</button>
+        <button type="button" data-wizard-filter="outro" aria-pressed="false">Outros</button>
+      </div>
+      <div id="wizardFishCards" class="wizard-fish-grid" role="group" aria-label="Pescados cadastrados"></div>
+      <button id="wizardManualChoice" type="button" class="wizard-other-choice">Não achei meu pescado. Quero escrever o nome.</button>
+      <div id="manualSpeciesFields" class="wizard-manual hidden">
+        <label class="field"><span>Nome do pescado *</span><input id="editSpecies" required autocomplete="off" placeholder="Nome do pescado"></label>
+        <label class="field"><span>Tipo</span><select id="editCategory"><option value="crustaceo">Crustáceo</option><option value="peixe">Peixe</option><option value="molusco">Molusco</option><option value="outro">Outro</option></select></label>
+      </div>
+      <details class="wizard-list-fallback">
+        <summary>Prefiro escolher em uma lista</summary>
+        <div class="preset-picker">
+          <label class="field"><span>Lista completa de pescados</span><select id="fishPreset"><option value="">Selecionar pescado...</option></select></label>
+          <div id="presetReference" class="preset-reference hidden"></div>
+        </div>
+      </details>
+      <p id="wizardSelectedFish" class="wizard-selected" aria-live="polite">Nenhum pescado escolhido ainda.</p>
+    </section>
+
+    <section class="wizard-step" data-wizard-step="1" aria-label="Quantidade e preço" hidden>
+      <h3>Quanto você tem para vender?</h3>
+      <p class="wizard-hint">Toque numa quantidade ou escreva outro valor.</p>
+      <div class="form-grid wizard-simple-fields">
+        <label class="field"><span>Unidade de venda</span><select id="editSaleUnit" required>
+          <option value="kg">Quilo (kg)</option><option value="duzia">Dúzia</option><option value="lote_20kg">Lote de 20 kg</option>
+        </select></label>
+        <label class="field"><span id="editQuantityLabel">Quantidade (kg) *</span><input id="editQuantity" type="number" min="0.1" step="0.1" inputmode="decimal" required placeholder="Ex.: 5"></label>
+      </div>
+      <div id="wizardQuantityChoices" class="wizard-choice-row" aria-label="Quantidades rápidas"></div>
+      <h3>Por quanto vai vender?</h3>
+      <p class="wizard-hint">O preço sugerido é apenas uma referência. Confira o preço de hoje.</p>
+      <label class="field wizard-price-field"><span id="editPriceLabel">Preço por kg (R$) *</span><input id="editPrice" type="number" min="0.01" step="0.01" inputmode="decimal" required placeholder="Ex.: 35"></label>
+      <div id="wizardPriceChoices" class="wizard-choice-row" aria-label="Sugestões de preço"></div>
+      <fieldset class="wizard-quick-group">
+        <legend>Como está o pescado?</legend>
+        <div class="wizard-choice-row">
+          <button type="button" data-wizard-select="editState" data-wizard-value="fresco">Fresco</button>
+          <button type="button" data-wizard-select="editState" data-wizard-value="resfriado">Resfriado</button>
+          <button type="button" data-wizard-select="editState" data-wizard-value="congelado">Congelado</button>
+        </div>
+        <select id="editState" aria-label="Estado do pescado" class="wizard-visually-hidden"><option value="fresco">Fresco</option><option value="resfriado">Resfriado</option><option value="congelado">Congelado</option></select>
+      </fieldset>
+      <fieldset class="wizard-quick-group">
+        <legend>Quanto tempo vai ficar à venda?</legend>
+        <div class="wizard-choice-row">
+          <button type="button" data-wizard-select="editAvailabilityHours" data-wizard-value="24">24 horas</button>
+          <button type="button" data-wizard-select="editAvailabilityHours" data-wizard-value="36">36 horas</button>
+          <button type="button" data-wizard-select="editAvailabilityHours" data-wizard-value="42">42 horas</button>
+        </div>
+        <select id="editAvailabilityHours" class="wizard-visually-hidden" aria-label="Duração do anúncio" required><option value="24">24 horas</option><option value="36" selected>36 horas</option><option value="42">42 horas</option></select>
+      </fieldset>
+      <details class="wizard-more">
+        <summary>Informar data da captura (opcional)</summary>
+        <button type="button" id="wizardToday" class="wizard-small-action">Foi hoje</button>
+        <label class="field"><span>Data da captura</span><input id="editCatchDate" type="date"></label>
+      </details>
+    </section>
+
+    <section class="wizard-step" data-wizard-step="2" aria-label="Cortes e entrega" hidden>
+      <h3>Como você pode preparar?</h3>
+      <p class="wizard-hint">Marque somente os preparos que você oferece. Preço sugerido de corte: R$ 10 por unidade vendida; você pode alterar.</p>
+      <fieldset class="option-panel wizard-cut-panel">
+        <legend>Cortes e preparo</legend>
+        <div class="wizard-cut-grid">            <div class="wizard-cut-card" data-cut-card="inteiro">
+              <label class="wizard-choice wizard-cut-toggle">
+                <input type="checkbox" data-edit-cut="inteiro">
+                <span class="wizard-cut-photo" data-cut-photo="inteiro" aria-hidden="true"></span>
+                <span><strong>Inteiro</strong><small>Sem acréscimo</small></span>
+              </label>
+              <label class="wizard-cut-price"><span>Adicional em R$ por unidade vendida</span><input data-edit-extra="inteiro" type="number" min="0" step="0.5" value="0" inputmode="decimal"></label>
+            </div>
+            <div class="wizard-cut-card" data-cut-card="limpo">
+              <label class="wizard-choice wizard-cut-toggle">
+                <input type="checkbox" data-edit-cut="limpo">
+                <span class="wizard-cut-photo" data-cut-photo="limpo" aria-hidden="true"></span>
+                <span><strong>Limpo</strong><small>Sugestão: + R$ 10 por unidade de venda</small></span>
+              </label>
+              <label class="wizard-cut-price"><span>Adicional em R$ por unidade vendida</span><input data-edit-extra="limpo" type="number" min="0" step="0.5" value="10" inputmode="decimal"></label>
+            </div>
+            <div class="wizard-cut-card" data-cut-card="eviscerado">
+              <label class="wizard-choice wizard-cut-toggle">
+                <input type="checkbox" data-edit-cut="eviscerado">
+                <span class="wizard-cut-photo" data-cut-photo="eviscerado" aria-hidden="true"></span>
+                <span><strong>Eviscerado</strong><small>Sugestão: + R$ 10 por unidade de venda</small></span>
+              </label>
+              <label class="wizard-cut-price"><span>Adicional em R$ por unidade vendida</span><input data-edit-extra="eviscerado" type="number" min="0" step="0.5" value="10" inputmode="decimal"></label>
+            </div>
+            <div class="wizard-cut-card" data-cut-card="file">
+              <label class="wizard-choice wizard-cut-toggle">
+                <input type="checkbox" data-edit-cut="file">
+                <span class="wizard-cut-photo" data-cut-photo="file" aria-hidden="true"></span>
+                <span><strong>Filé</strong><small>Sugestão: + R$ 10 por unidade de venda</small></span>
+              </label>
+              <label class="wizard-cut-price"><span>Adicional em R$ por unidade vendida</span><input data-edit-extra="file" type="number" min="0" step="0.5" value="10" inputmode="decimal"></label>
+            </div>
+            <div class="wizard-cut-card" data-cut-card="posta">
+              <label class="wizard-choice wizard-cut-toggle">
+                <input type="checkbox" data-edit-cut="posta">
+                <span class="wizard-cut-photo" data-cut-photo="posta" aria-hidden="true"></span>
+                <span><strong>Posta</strong><small>Sugestão: + R$ 10 por unidade de venda</small></span>
+              </label>
+              <label class="wizard-cut-price"><span>Adicional em R$ por unidade vendida</span><input data-edit-extra="posta" type="number" min="0" step="0.5" value="10" inputmode="decimal"></label>
+            </div>
+            <div class="wizard-cut-card" data-cut-card="descascado">
+              <label class="wizard-choice wizard-cut-toggle">
+                <input type="checkbox" data-edit-cut="descascado">
+                <span class="wizard-cut-photo" data-cut-photo="descascado" aria-hidden="true"></span>
+                <span><strong>Descascado</strong><small>Sugestão: + R$ 10 por unidade de venda</small></span>
+              </label>
+              <label class="wizard-cut-price"><span>Adicional em R$ por unidade vendida</span><input data-edit-extra="descascado" type="number" min="0" step="0.5" value="10" inputmode="decimal"></label>
+            </div>
+            <div class="wizard-cut-card" data-cut-card="sem_cabeca">
+              <label class="wizard-choice wizard-cut-toggle">
+                <input type="checkbox" data-edit-cut="sem_cabeca">
+                <span class="wizard-cut-photo" data-cut-photo="sem_cabeca" aria-hidden="true"></span>
+                <span><strong>Sem cabeça</strong><small>Sugestão: + R$ 10 por unidade de venda</small></span>
+              </label>
+              <label class="wizard-cut-price"><span>Adicional em R$ por unidade vendida</span><input data-edit-extra="sem_cabeca" type="number" min="0" step="0.5" value="10" inputmode="decimal"></label>
+            </div></div>
+      </fieldset>
+      <h3>Como o cliente pode receber?</h3>
+      <p class="wizard-hint">Marque uma ou mais opções. As taxas são sugestões editáveis, não cobranças obrigatórias.</p>
+      <fieldset class="option-panel wizard-shipping-panel">
+        <legend>Retirada e entrega</legend>
+        <div class="wizard-shipping-grid">
+          <label class="wizard-choice"><input id="editShipPickup" type="checkbox"><span><strong>Retirar com o pescador</strong><small>Sem frete</small></span></label>
+          <label class="wizard-choice"><input id="editShipDelivery" type="checkbox"><span><strong>Entrega comunitária</strong><small id="wizardDeliveryLabel">Ajuda de custo sugerida: R$ 15</small></span></label>
+          <label class="wizard-choice"><input id="editShipFreight" type="checkbox"><span><strong>Frete colaborativo</strong><small id="wizardFreightLabel">Base sugerida: R$ 30</small></span></label>
+        </div>
+        <details class="wizard-more">
+          <summary>Ajustar valores de entrega e frete</summary>
+          <div class="form-grid compact-fields">
+            <label class="field"><span>Ajuda de custo da entrega (R$)</span><input id="editDeliveryFee" type="number" min="0" step="0.5" inputmode="decimal"></label>
+            <label class="field"><span>Base do frete colaborativo (R$)</span><input id="editFreightFee" type="number" min="0" step="0.5" inputmode="decimal"></label>
+          </div>
+          <p class="wizard-hint">No frete colaborativo o sistema pode somar R$ 1,50 por kg acima do primeiro quilo. O valor final depende do pedido.</p>
+        </details>
+        <label class="field"><span>Observação sobre a entrega (opcional)</span><input id="editShippingNotes" placeholder="Ex.: combinar horário"></label>
+      </fieldset>
+      <details class="wizard-more">
+        <summary>Mais informações (opcional)</summary>
+        <label class="field"><span>Origem ou observação</span><input id="editOrigin"></label>
+        <label class="field"><span>Descrição do pescado</span><textarea id="editDescription" rows="2"></textarea></label>
+      </details>
+    </section>
+
+    <section class="wizard-step" data-wizard-step="3" aria-label="Conferir anúncio" hidden>
+      <h3>Está tudo certo?</h3>
+      <p class="wizard-hint">Confira os dados antes de colocar o pescado à venda.</p>
+      <div id="wizardReview" class="wizard-review" aria-live="polite"></div>
+      <label class="wizard-confirm"><input type="checkbox" id="wizardConfirmed" required><span>Conferi a quantidade e o preço de hoje.</span></label>
+      <p class="wizard-hint">Ao publicar, o anúncio ficará visível na vitrine pelo tempo escolhido. Você poderá corrigir o estoque ou pausar depois.</p>
+    </section>
+
+    <div class="wizard-actions">
+      <button id="wizardBack" class="btn btn-secondary" type="button" hidden>Voltar</button>
+      <button id="wizardNext" class="btn btn-primary" type="button">Continuar</button>
+      <button id="wizardSubmit" class="btn btn-primary" type="submit" hidden>Publicar pescado</button>
     </div>
-
-    <div class="form-grid">
-      <label class="field"><span>Pescado *</span><input id="editSpecies" required placeholder="Ex.: tainha"></label>
-      <label class="field"><span>Categoria</span><select id="editCategory"><option value="crustaceo">Crustáceo</option><option value="peixe">Peixe</option><option value="molusco">Molusco</option><option value="outro">Outro</option></select></label>
-      <label class="field"><span>Estado</span><select id="editState"><option value="fresco">Fresco</option><option value="resfriado">Resfriado</option><option value="congelado">Congelado</option></select></label>
-      <label class="field"><span>Data da captura</span><input id="editCatchDate" type="date"></label>
-      <label class="field">
-        <span>Unidade de venda *</span>
-        <select id="editSaleUnit" required>
-          <option value="kg">Quilo (kg)</option>
-          <option value="duzia">Dúzia</option>
-          <option value="lote_20kg">Lote de 20 kg</option>
-        </select>
-      </label>
-      <label class="field"><span id="editQuantityLabel">Quantidade (kg) *</span><input id="editQuantity" type="number" min="0" step="0.1" inputmode="decimal" required></label>
-      <label class="field"><span id="editPriceLabel">Preço por kg (R$) *</span><input id="editPrice" type="number" min="0.01" step="0.01" inputmode="decimal" required></label>
-      <label class="field span-2 availability-choice">
-        <span>Por quanto tempo este pescado fica disponível? *</span>
-        <select id="editAvailabilityHours" required>
-          <option value="24">24 horas</option>
-          <option value="36" selected>36 horas — recomendado</option>
-          <option value="42">42 horas</option>
-        </select>
-        <small>O prazo começa assim que você salva o anúncio. Quando vencer, ele some da vitrine até você renovar.</small>
-      </label>
-      <label class="field span-2"><span>Origem / observação <em>(opcional)</em></span><input id="editOrigin"></label>
-      <label class="field span-2"><span>Descrição <em>(opcional)</em></span><textarea id="editDescription" rows="3"></textarea></label>
-    </div>
-
-    <fieldset class="option-panel">
-      <legend>Cortes / preparo</legend>
-      <p class="cut-image-note">Os exemplos visuais de inteiro, limpo, eviscerado, filé e posta usam robalo. Marque apenas as opções que você oferece.</p>
-      <div class="cut-grid">
-        <label class="option-card"><input type="checkbox" data-edit-cut="inteiro"><span><strong>Inteiro</strong><small>+ R$ <input data-edit-extra="inteiro" class="inline-money" type="number" min="0" step="0.5" value="0"></small></span></label>
-        <label class="option-card"><input type="checkbox" data-edit-cut="limpo"><span><strong>Limpo</strong><small>+ R$ <input data-edit-extra="limpo" class="inline-money" type="number" min="0" step="0.5" value="0"></small></span></label>
-        <label class="option-card"><input type="checkbox" data-edit-cut="eviscerado"><span><strong>Eviscerado</strong><small>+ R$ <input data-edit-extra="eviscerado" class="inline-money" type="number" min="0" step="0.5" value="0"></small></span></label>
-        <label class="option-card"><input type="checkbox" data-edit-cut="file"><span><strong>Filé</strong><small>+ R$ <input data-edit-extra="file" class="inline-money" type="number" min="0" step="0.5" value="0"></small></span></label>
-        <label class="option-card"><input type="checkbox" data-edit-cut="posta"><span><strong>Posta</strong><small>+ R$ <input data-edit-extra="posta" class="inline-money" type="number" min="0" step="0.5" value="0"></small></span></label>
-        <label class="option-card"><input type="checkbox" data-edit-cut="descascado"><span><strong>Descascado</strong><small>+ R$ <input data-edit-extra="descascado" class="inline-money" type="number" min="0" step="0.5" value="0"></small></span></label>
-        <label class="option-card"><input type="checkbox" data-edit-cut="sem_cabeca"><span><strong>Sem cabeça</strong><small>+ R$ <input data-edit-extra="sem_cabeca" class="inline-money" type="number" min="0" step="0.5" value="0"></small></span></label>
-      </div>
-    </fieldset>
-
-    <fieldset class="option-panel">
-      <legend>Retirada e entrega</legend>
-      <div class="shipping-grid">
-        <label class="option-card"><input id="editShipPickup" type="checkbox"><span><strong>Retirada</strong></span></label>
-        <label class="option-card"><input id="editShipDelivery" type="checkbox"><span><strong>Entrega comunitária</strong></span></label>
-        <label class="option-card"><input id="editShipFreight" type="checkbox"><span><strong>Frete colaborativo</strong></span></label>
-      </div>
-      <div class="form-grid compact-fields">
-        <label class="field"><span>Taxa entrega</span><input id="editDeliveryFee" type="number" min="0" step="0.5" inputmode="decimal"></label>
-        <label class="field"><span>Taxa frete</span><input id="editFreightFee" type="number" min="0" step="0.5" inputmode="decimal"></label>
-        <label class="field span-2"><span>Observações</span><input id="editShippingNotes"></label>
-      </div>
-    </fieldset>
-
-    <button class="btn btn-primary btn-wide" type="submit">Salvar pescado</button>
-    <div id="productResult" class="result-card hidden"></div>
+    <div id="productResult" class="result-card hidden" role="status" aria-live="polite"></div>
   </form>
 </dialog>
 
@@ -189,6 +296,6 @@
 <script src="./js/api.js"></script>
 <script src="./js/catalogo-pescados.js"></script>
 <script src="./js/pescados-media.js"></script>
-<script src="./js/painel-pescador.js"></script>
+<script src="./js/painel-pescador.js?v=wizard1"></script>
 </body>
 </html>
