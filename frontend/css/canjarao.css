@@ -52,3 +52,25 @@
 @media(max-width:750px){.canjarao-section .canjarao-head{grid-template-columns:1fr}.canjarao-head__copy{padding:29px 23px}.canjarao-head__visual{min-height:250px}.canjarao-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.canjarao-details{grid-template-columns:1fr}.canjarao-credits ul{columns:1}}
 @media(max-width:430px){.canjarao-gallery{gap:10px}.canjarao-ingredient__content{padding:13px 11px}.canjarao-ingredient h4{font-size:1.04rem}.canjarao-ingredient strong{font-size:.8rem}.canjarao-ingredient p{font-size:.76rem}.canjarao-head__visual{min-height:220px}.canjarao-details>div{padding:19px 17px}}
 @media(prefers-reduced-motion:reduce){.canjarao-ingredient__photo img,.canjarao-cta{transition:none!important}}
+
+/* Correção de contraste: regras do caderno Saberes possuem seletor mais específico
+   que os estilos de títulos e parágrafos da seção do canjarão. */
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy h2,
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy h2 strong {
+  color:#fff7e7;
+}
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy p,
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy p:last-child,
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy p strong,
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy p em {
+  color:#f4f7ef;
+}
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy sup,
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy sup a {
+  color:#ffdc90;
+  opacity:1;
+}
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy .canjarao-cta,
+.page-saberes-story .timeline-section.canjarao-section .canjarao-head__copy .canjarao-cta:hover {
+  color:#163f37;
+}
