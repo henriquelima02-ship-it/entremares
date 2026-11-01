@@ -133,6 +133,336 @@
     box.classList.remove('hidden');
   }
 
+
+  // Cadastro por toques: campos enviados à API permanecem os mesmos do formulário anterior.
+  const wizardNames = ['Escolher o pescado', 'Quantidade e preço', 'Preparo e entrega', 'Conferir e publicar'];
+  let wizardStep = 0;
+  let wizardCategory = 'todos';
+  const recommendedFees = { cut: 10, communityDelivery: 15, collaborativeFreight: 30 };
+
+  function showWizardError(message) {
+    const result = $('productResult');
+    result.textContent = message;
+    result.classList.remove('hidden');
+    result.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  function hideWizardError() {
+    $('productResult').classList.add('hidden');
+    $('productResult').textContent = '';
+  }
+
+  function displayManualName(show) {
+    $('manualSpeciesFields').classList.toggle('hidden', !show);
+    if (show) $('editSpecies').removeAttribute('readonly');
+  }
+
+  function activePresetItem() {
+    const index = $('fishPreset').value;
+    if (index === '') return null;
+    return catalog[Number(index)] || null;
+  }
+
+  function updateSelectedFish() {
+    const name = $('editSpecies').value.trim();
+    const unit = saleUnitLabel($('editSaleUnit').value);
+    $('wizardSelectedFish').textContent = name
+      ? 'Escolhido: ' + name + ' • venda por ' + unit
+      : 'Nenhum pescado escolhido ainda.';
+  }
+
+  function updateFishTiles() {
+    const container = $('wizardFishCards');
+    const index = $('fishPreset').value;
+    const pictureApi = window.EntreMaresFishMedia;
+    const filtered = catalog.map((item,i) => ({item,i}))
+      .filter(({item}) => wizardCategory === 'todos' || item.category === wizardCategory);
+    container.innerHTML = filtered.map(({item,i}) => {
+      const image = pictureApi?.forSpecies(item.name, item.category);
+      const icon = item.category === 'crustaceo' ? '🦐' : item.category === 'molusco' ? '🦪' : '🐟';
+      const visual = image && !image.generic
+        ? '<img src="' + esc(image.src) + '" alt="" loading="lazy" decoding="async">'
+        : '<span class="wizard-fish-fallback" aria-hidden="true">' + icon + '</span>';
+      const price = item.priceMin == null ? 'Confirmar preço' : presetPriceText(item);
+      return '<button type="button" class="wizard-fish-tile" data-wizard-fish="' + i
+        + '" aria-pressed="' + String(index === String(i)) + '">' + visual
+        + '<span><strong>' + esc(item.name) + '</strong><small>' + esc(price)
+        + '</small></span></button>';
+    }).join('');
+    document.querySelectorAll('[data-wizard-filter]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.wizardFilter === wizardCategory));
+    });
+    updateSelectedFish();
+  }
+
+  function selectPresetForWizard(index) {
+    $('fishPreset').value = index;
+    applyPreset(index);
+    if (index === '') {
+      $('editSpecies').value = '';
+      $('editPrice').value = '';
+    }
+    displayManualName(false);
+    document.querySelectorAll('[data-wizard-fish]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.wizardFish === String(index)));
+    });
+    updateSelectedFish();
+    updatePriceButtons();
+    updateCutChoices();
+    hideWizardError();
+  }
+
+  function quickButton(container, value, label, selected) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.quickValue = String(value);
+    button.textContent = label;
+    button.setAttribute('aria-pressed', String(selected));
+    container.append(button);
+  }
+
+  function updateQuantityButtons() {
+    const target = $('wizardQuantityChoices');
+    if (!target) return;
+    const unit = $('editSaleUnit').value;
+    const amounts = unit === 'kg' ? [0.5,1,2,5,10,20] : unit === 'duzia' ? [1,2,5,10] : [1,2,3,5];
+    target.replaceChildren();
+    amounts.forEach(qty => quickButton(target,qty, String(qty).replace('.', ',') + (unit === 'kg' ? ' kg' : unit === 'duzia' ? ' dúz.' : ' lote(s)'),Number($('editQuantity').value) === qty));
+    updateSelectedFish();
+  }
+
+  function updatePriceButtons() {
+    const target = $('wizardPriceChoices');
+    if (!target) return;
+    target.replaceChildren();
+    const item = activePresetItem();
+    if (!item || item.priceMin == null) {
+      const hint=document.createElement('small');
+      hint.textContent='Sem preço de referência. Digite o valor combinado para hoje.';
+      target.append(hint);
+      return;
+    }
+    const min=Number(item.priceMin), max=Number(item.priceMax);
+    const choices = min === max ? [min] : [...new Set([min, (min+max)/2, max].map(v=>Math.round(v*100)/100))];
+    choices.forEach(value => quickButton(target,value,brl(value),Number($('editPrice').value) === value));
+  }
+
+  function updateQuickButtons() {
+    document.querySelectorAll('[data-wizard-select]').forEach(button => {
+      const input = $(button.dataset.wizardSelect);
+      button.setAttribute('aria-pressed', String(input?.value === button.dataset.wizardValue));
+    });
+    updateQuantityButtons();
+    updatePriceButtons();
+  }
+
+  function updateCutStates() {
+    document.querySelectorAll('[data-edit-cut]').forEach(input => {
+      const card = input.closest('.wizard-cut-card');
+      card?.classList.toggle('selected', input.checked);
+    });
+  }
+
+  function updateCutChoices() {
+    const category = $('editCategory').value;
+    const byCategory = {
+      peixe: ['inteiro','limpo','eviscerado','file','posta','sem_cabeca'],
+      crustaceo: ['inteiro','limpo','descascado','sem_cabeca'],
+      molusco: ['inteiro','limpo'],
+      outro: ['inteiro','limpo','eviscerado','file','posta','descascado','sem_cabeca']
+    };
+    const allowed = byCategory[category] || byCategory.outro;
+    document.querySelectorAll('[data-edit-cut]').forEach(input => {
+      const existing = state.editing?.cuts?.some(cut => cut.id === input.dataset.editCut);
+      const visible = allowed.includes(input.dataset.editCut) || Boolean(existing);
+      input.closest('.wizard-cut-card').hidden = !visible;
+      if (!visible) input.checked = false;
+    });
+    updateCutStates();
+  }
+
+  function updateShippingStates() {
+    ['Pickup','Delivery','Freight'].forEach(name => {
+      const input = $('editShip' + name);
+      input.closest('.wizard-choice')?.classList.toggle('selected', input.checked);
+    });
+    $('wizardDeliveryLabel').textContent = 'Valor atual: ' + brl($('editDeliveryFee').value) + ' • referência: R$ 15';
+    $('wizardFreightLabel').textContent = 'Base atual: ' + brl($('editFreightFee').value) + ' • referência: R$ 30';
+  }
+
+  function reviewRow(label, value) {
+    return '<div class="wizard-review-item"><span>' + esc(label) + '</span><strong>' + esc(value) + '</strong></div>';
+  }
+
+  function updateReview() {
+    const unit = saleUnitLabel($('editSaleUnit').value);
+    const cuts = selectedCuts();
+    const cutsLabel = cuts.length ? cuts.map(cut => cut.label + (cut.extraPerKg ? ' + ' + brl(cut.extraPerKg) + '/' + unit : '')).join(', ') : 'Nenhum preparo selecionado';
+    const methods = [];
+    if ($('editShipPickup').checked) methods.push('Retirada sem frete');
+    if ($('editShipDelivery').checked) methods.push('Entrega: ' + brl($('editDeliveryFee').value));
+    if ($('editShipFreight').checked) methods.push('Frete base: ' + brl($('editFreightFee').value) + ' (pode variar com a quantidade)');
+    $('wizardReview').innerHTML = [
+      reviewRow('Pescado',$('editSpecies').value.trim() || 'Não selecionado'),
+      reviewRow('Quantidade', String($('editQuantity').value || '—') + ' ' + saleUnitStockLabel($('editSaleUnit').value,$('editQuantity').value)),
+      reviewRow('Preço de venda',brl($('editPrice').value) + ' por ' + unit),
+      reviewRow('Estado',($('editState').selectedOptions[0]?.textContent || 'Fresco')),
+      reviewRow('Duração', $('editAvailabilityHours').value + ' horas'),
+      reviewRow('Preparo',cutsLabel),
+      reviewRow('Como receber', methods.join(' • ') || 'Nenhuma opção')
+    ].join('');
+  }
+
+  function setWizardStep(next) {
+    wizardStep = Math.max(0,Math.min(3,next));
+    document.querySelectorAll('[data-wizard-step]').forEach(section => {
+      section.hidden = Number(section.dataset.wizardStep) !== wizardStep;
+    });
+    document.querySelectorAll('[data-wizard-progress]').forEach(span => {
+      const index=Number(span.dataset.wizardProgress);
+      span.classList.toggle('is-current', index===wizardStep);
+      span.classList.toggle('is-done', index<wizardStep);
+      if(index===wizardStep) span.setAttribute('aria-current','step');
+      else span.removeAttribute('aria-current');
+    });
+    $('wizardStepStatus').textContent = 'Etapa ' + (wizardStep+1) + ' de 4 — ' + wizardNames[wizardStep];
+    $('wizardBack').hidden = wizardStep === 0;
+    $('wizardNext').hidden = wizardStep === 3;
+    $('wizardSubmit').hidden = wizardStep !== 3;
+    if(wizardStep===3) updateReview();
+    hideWizardError();
+    const dialog=$('productEditor');
+    dialog.scrollTop=0;
+  }
+
+  function validWizardStep(index) {
+    if(index===0) {
+      if(!$('editSpecies').value.trim()){
+        showWizardError('Escolha um pescado da galeria ou toque em “Não achei meu pescado”.');
+        return false;
+      }
+    }
+    if(index===1) {
+      for(const id of ['editSaleUnit','editQuantity','editPrice']) {
+        const input=$(id);
+        if(!input.checkValidity() || Number(id==='editSaleUnit'?1:input.value)<=0) {
+          if(id!=='editSaleUnit' && !input.value) input.setCustomValidity('Informe um valor maior que zero.');
+          input.reportValidity();
+          input.setCustomValidity('');
+          return false;
+        }
+      }
+    }
+    if(index===2){
+      if(!($('editShipPickup').checked||$('editShipDelivery').checked||$('editShipFreight').checked)){
+        showWizardError('Escolha pelo menos uma forma de retirada ou entrega.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function initializeNewFees(){
+    const shipping=state.dashboard?.fisherman?.shipping || {};
+    $('editDeliveryFee').value = shipping.communityDelivery
+      ? Number(shipping.deliveryFee ?? 0) : recommendedFees.communityDelivery;
+    $('editFreightFee').value = shipping.collaborativeFreight
+      ? Number(shipping.collaborativeFee ?? 0) : recommendedFees.collaborativeFreight;
+    document.querySelectorAll('[data-edit-extra]').forEach(input=>{
+      input.value=input.dataset.editExtra==='inteiro' ? 0 : recommendedFees.cut;
+    });
+  }
+
+  function showEditorWizard() {
+    const match=catalog.findIndex(item=>item.name.toLowerCase()===$('editSpecies').value.trim().toLowerCase());
+    $('fishPreset').value = match>=0 ? String(match) : '';
+    displayManualName(match<0 && Boolean($('editSpecies').value.trim()));
+    wizardCategory='todos';
+    updateFishTiles();
+    updateQuickButtons();
+    updateCutChoices();
+    updateShippingStates();
+    $('wizardConfirmed').checked=false;
+    $('wizardSubmit').textContent=state.editing?'Salvar alterações':'Publicar pescado';
+    setWizardStep(0);
+  }
+
+  function bindWizard() {
+    $('wizardFishCards').addEventListener('click',event=>{
+      const button=event.target.closest('[data-wizard-fish]');
+      if(button) selectPresetForWizard(button.dataset.wizardFish);
+    });
+    $('wizardFilters').addEventListener('click',event=>{
+      const button=event.target.closest('[data-wizard-filter]');
+      if(button){wizardCategory=button.dataset.wizardFilter;updateFishTiles();}
+    });
+    $('wizardManualChoice').addEventListener('click',()=>{
+      $('fishPreset').value='';
+      $('editSpecies').value='';
+      $('editCategory').value='outro';
+      $('editPrice').value='';
+      $('editSaleUnit').value='kg';
+      updateSaleUnitFields();
+      $('presetReference').classList.add('hidden');
+      displayManualName(true);
+      updateFishTiles();
+      updatePriceButtons();
+      updateCutChoices();
+      $('editSpecies').focus();
+    });
+    $('wizardNext').addEventListener('click',()=>{
+      if(validWizardStep(wizardStep))setWizardStep(wizardStep+1);
+    });
+    $('wizardBack').addEventListener('click',()=>setWizardStep(wizardStep-1));
+    $('wizardQuantityChoices').addEventListener('click',event=>{
+      const button=event.target.closest('[data-quick-value]');
+      if(button){$('editQuantity').value=button.dataset.quickValue;updateQuantityButtons();updateReview();}
+    });
+    $('wizardPriceChoices').addEventListener('click',event=>{
+      const button=event.target.closest('[data-quick-value]');
+      if(button){$('editPrice').value=button.dataset.quickValue;updatePriceButtons();updateReview();}
+    });
+    document.querySelectorAll('[data-wizard-select]').forEach(button=>button.addEventListener('click',()=>{
+      $(button.dataset.wizardSelect).value=button.dataset.wizardValue;
+      updateQuickButtons();updateReview();
+    }));
+    document.querySelectorAll('[data-wizard-fee]').forEach(button => button.addEventListener('click', () => {
+      if (button.dataset.wizardFee === 'delivery') {
+        $('editShipDelivery').checked = true;
+        $('editDeliveryFee').value = recommendedFees.communityDelivery;
+      } else {
+        $('editShipFreight').checked = true;
+        $('editFreightFee').value = recommendedFees.collaborativeFreight;
+      }
+      updateShippingStates();
+      updateReview();
+    }));
+    $('wizardToday').addEventListener('click',()=>{
+      const d=new Date(), pad=n=>String(n).padStart(2,'0');
+      $('editCatchDate').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+    });
+    $('productForm').addEventListener('input',()=>{updateReview();updateQuickButtons();updateSelectedFish();updateShippingStates();});
+    $('productForm').addEventListener('change',event=>{
+      if(event.target.id === 'editCategory') updateCutChoices();
+      if(event.target.matches('[data-edit-cut]'))updateCutStates();
+      if(event.target.matches('[id^="editShip"]'))updateShippingStates();
+      updateReview();
+    });
+    $('wizardSpeak').addEventListener('click',()=>{
+      if(!('speechSynthesis' in window)){showWizardError('O recurso de leitura não está disponível neste aparelho.');return;}
+      window.speechSynthesis.cancel();
+      const script=[
+        'Escolha o pescado. Toque na imagem ou no nome. Se não encontrar, escolha escrever o nome.',
+        'Escolha a quantidade e confirme o preço de hoje. Também pode escolher o estado do pescado e o prazo.',
+        'Toque nos cortes que você faz. Escolha como o cliente vai receber o pescado. Os valores são sugestões e podem ser alterados.',
+        'Confira a quantidade e o preço. Marque a confirmação e toque em publicar pescado.'
+      ][wizardStep];
+      const message=new SpeechSynthesisUtterance(script);
+      message.lang='pt-BR';message.rate=.9;
+      window.speechSynthesis.speak(message);
+    });
+  }
+
   function effectiveStatus(product) {
     if (product.status === 'published' && product.expired) return 'expired';
     return product.status || 'pending_review';
@@ -398,8 +728,7 @@
     $('editShipPickup').checked = Boolean(state.dashboard?.fisherman?.shipping?.pickup ?? true);
     $('editShipDelivery').checked = Boolean(state.dashboard?.fisherman?.shipping?.communityDelivery);
     $('editShipFreight').checked = Boolean(state.dashboard?.fisherman?.shipping?.collaborativeFreight);
-    $('editDeliveryFee').value = Number(state.dashboard?.fisherman?.shipping?.deliveryFee || 0);
-    $('editFreightFee').value = Number(state.dashboard?.fisherman?.shipping?.collaborativeFee || 0);
+    initializeNewFees();
     $('editShippingNotes').value = state.dashboard?.fisherman?.shipping?.notes || '';
     document.querySelector('[data-edit-cut="inteiro"]').checked = true;
     $('productResult').classList.add('hidden');
@@ -442,7 +771,7 @@
       document.querySelectorAll('[data-edit-cut]').forEach(input => {
         const found = product.cuts?.find(cut => cut.id === input.dataset.editCut);
         input.checked = Boolean(found);
-        document.querySelector(`[data-edit-extra="${input.dataset.editCut}"]`).value = Number(found?.extraPerKg || 0);
+        document.querySelector(`[data-edit-extra="${input.dataset.editCut}"]`).value = Number(found?.extraPerKg ?? (input.dataset.editCut === 'inteiro' ? 0 : recommendedFees.cut));
       });
 
       $('editShipPickup').checked = Boolean(product.shipping?.pickup);
@@ -454,6 +783,7 @@
     }
 
     openDialog(dialog);
+    showEditorWizard();
   }
 
   async function load() {
@@ -571,26 +901,31 @@
     }
   });
 
-  $('fishPreset').addEventListener('change', event => applyPreset(event.target.value));
-  $('editSaleUnit').addEventListener('change', updateSaleUnitFields);
+  $('fishPreset').addEventListener('change', event => selectPresetForWizard(event.target.value));
+  $('editSaleUnit').addEventListener('change', () => {
+    updateSaleUnitFields();
+    updateQuantityButtons();
+    updateReview();
+  });
 
   function decorateCutEditor() {
-    document.querySelectorAll('[data-edit-cut]').forEach(checkbox => {
-      const picture = window.EntreMaresFishMedia?.forCut(checkbox.dataset.editCut, 'peixe');
-      const card = checkbox.closest('.option-card');
-      if (!picture || !card || card.querySelector('.cut-editor-preview')) return;
+    document.querySelectorAll('[data-cut-photo]').forEach(slot => {
+      const picture = window.EntreMaresFishMedia?.forCut(slot.dataset.cutPhoto, 'peixe');
+      if (!picture) return;
       const img = document.createElement('img');
       img.src = picture.src;
-      img.alt = picture.alt;
-      img.className = 'cut-editor-preview';
+      img.alt = '';
       img.loading = 'lazy';
       img.decoding = 'async';
-      card.insertBefore(img, card.querySelector('span'));
+      slot.append(img);
     });
   }
   decorateCutEditor();
 
   populatePresetCatalog();
+  bindWizard();
+  updateFishTiles();
+  updateQuickButtons();
 
   $('newProductButton').addEventListener('click', () => openProductEditor());
   document.querySelector('[data-open-product]').addEventListener('click', () => openProductEditor());
