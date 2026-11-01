@@ -128,8 +128,14 @@
       : '<strong>Referência aproximada:</strong> confirme o preço de hoje antes de salvar.';
 
     const preview = window.EntreMaresFishMedia?.forSpecies(item.name, item.category);
-    const previewImage = preview ? `<img src="${esc(preview.src)}" alt="${esc(preview.alt)}" loading="lazy" decoding="async">` : '';
-    box.innerHTML = `<div class="preset-with-image">${previewImage}<div>${rangeHelp}<br>${esc(presetPriceText(item))}${item.note ? `<br><small>${esc(item.note)}</small>` : ''}<br><small>Imagem ilustrativa, não do anúncio.</small></div></div>`;
+    const hasImage = Boolean(preview?.src && !preview.generic);
+    const previewImage = hasImage ? `<img src="${esc(preview.src)}" alt="${esc(preview.alt)}" loading="lazy" decoding="async">` : '';
+    const photoText = hasImage
+      ? preview.source
+        ? `<a href="${esc(preview.source)}" target="_blank" rel="noopener noreferrer">Ilustração científica de referência · ${esc(preview.credit || 'Wikimedia Commons')}</a>`
+        : 'Imagem ilustrativa. Não é fotografia do anúncio.'
+      : 'Fotografia específica ainda não disponível.';
+    box.innerHTML = `<div class="preset-with-image">${previewImage}<div>${rangeHelp}<br>${esc(presetPriceText(item))}${item.note ? `<br><small>${esc(item.note)}</small>` : ''}<br><small>${photoText}</small></div></div>`;
     box.classList.remove('hidden');
   }
 
