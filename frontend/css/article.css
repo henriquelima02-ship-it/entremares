@@ -767,3 +767,27 @@
  .page-saberes-church .story-church-hero .story-photo-media{width:min(88%,380px)}
  .page-saberes-church .story-church-hero-copy{padding:24px 19px}
 }
+
+/* Fotografias comunitárias das igrejas de Piaçaguera e Amparo — 2026. */
+.page-saberes-church .story-church-hero .story-photo--community .story-photo-media{
+  width:min(100%,460px);aspect-ratio:3/4;border-radius:20px;overflow:hidden
+}
+.page-saberes-church .story-church-hero .story-photo--community .story-photo-media>img{
+  transform:none;object-fit:cover;object-position:center center
+}
+.page-saberes-church .story-amparo-bridge .story-photo--amparo-church .story-photo-media{aspect-ratio:4/3}
+.page-saberes-church .story-amparo-bridge .story-photo--amparo-church .story-photo-media>img{object-position:center center}
+.page-territory-story .story-amparo-church-detail{margin:27px 0 30px}
+.page-territory-story .story-amparo-church-detail .story-photo{min-width:0}
+.page-territory-story .story-amparo-church-detail .story-photo .story-photo-media{aspect-ratio:4/3}
+.page-territory-story .story-amparo-church-detail .story-photo .story-photo-media>img{object-fit:cover;object-position:center center}
+.page-territory-story .story-amparo-church-detail .story-photo-side{background:linear-gradient(135deg,#e4eee8,#f6eee0)}
+.page-territory-story .story-amparo-church-detail .story-photo-side h3{
+  font:700 clamp(1.8rem,3vw,2.2rem)/1.16 Georgia,'Times New Roman',serif;
+  color:#1d4b43;letter-spacing:-.025em
+}
+.page-territory-story .story-amparo-church-detail .story-photo-side p{color:#385456;line-height:1.74}
+@media(max-width:780px){
+  .page-saberes-church .story-church-hero .story-photo--community .story-photo-media{width:min(100%,430px)}
+  .page-territory-story .story-amparo-church-detail{margin:22px 0}
+}

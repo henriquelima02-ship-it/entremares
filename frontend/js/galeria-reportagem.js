@@ -43,7 +43,8 @@
       /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/,
       /^https:\/\/www\.parana\.pr\.gov\.br\/aen\/Noticia\//,
       /^https:\/\/mae\.ufpr\.br\/entreconchas(?:\/|$)/,
-      /^https:\/\/www\.portosdoparana\.pr\.gov\.br\/sites\/portos\/arquivos_restritos\/files\/documento\/.*\.pdf(?:#.*)?$/
+      /^https:\/\/www\.portosdoparana\.pr\.gov\.br\/sites\/portos\/arquivos_restritos\/files\/documento\/.*\.pdf(?:#.*)?$/,
+      /^\.\.\/assets\/patrimonio\/igreja-(?:piacaguera|amparo)-comunidade\.webp$/
     ];
     if (!allowedOrigins.some(pattern => pattern.test(origin))) return;
     const caption = frame.querySelector('figcaption .story-photo-caption');
@@ -55,9 +56,11 @@
     title.textContent = caption?.textContent?.trim() || image.alt;
     credit.textContent = attribution?.textContent?.trim() || 'Fonte: Wikimedia Commons';
     source.href = origin;
-    source.textContent = origin.includes('commons.wikimedia.org')
-      ? 'Ver arquivo e licença na origem'
-      : 'Consultar fotografia e créditos na fonte';
+    source.textContent = origin.startsWith('../assets/patrimonio/')
+      ? 'Abrir arquivo original enviado ao projeto'
+      : origin.includes('commons.wikimedia.org')
+        ? 'Ver arquivo e licença na origem'
+        : 'Consultar fotografia e créditos na fonte';
 
     if (typeof viewer.showModal === 'function') viewer.showModal();
     else viewer.setAttribute('open', '');
