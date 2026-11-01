@@ -1,0 +1,106 @@
+[
+  {
+    "id": "calafate",
+    "name": "Calafate",
+    "source": "Wikimedia Commons / Acquario di Genova",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Umbrina_cirrosa_Acquario_di_Genova.jpg",
+    "note": "Umbrina cirrosa, fotografia em aquário; imagem enviada e verificada pelo usuário"
+  },
+  {
+    "id": "bagre",
+    "name": "Bagre",
+    "source": "Miniatura Google (procedência original não identificada)",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgfAc50QMePXYzz3Sx2-Qd0aU8a9AaLh0UVItf7sFfrCLrhC1eFYmQF_NO&s=10"
+  },
+  {
+    "id": "miraguaia",
+    "name": "Miraguaia",
+    "source": "Museu da Língua Portuguesa",
+    "url": "https://museulinguaportuguesa.org.br/wp-content/uploads/2017/11/Miraguaia.jpg"
+  },
+  {
+    "id": "sardinha",
+    "name": "Sardinha",
+    "source": "Fishcode",
+    "url": "https://fishcode.com.br/cdn/shop/files/sardinhaverdadeira-sardinellabrasilienses.png?v=1707159939"
+  },
+  {
+    "id": "camarao-descascado",
+    "name": "Camarão descascado (não vivo)",
+    "source": "Swift",
+    "url": "https://swiftbr.vteximg.com.br/arquivos/ids/210829/615776-camarao-pre-cozido-descascado-sem-cabeca-60-80-71-90_inn.jpg?v=638938960897200000",
+    "note": "Produto pré-cozido: jamais usar para 'Camarão vivo'"
+  },
+  {
+    "id": "caranguejo",
+    "name": "Caranguejo",
+    "source": "Estadão",
+    "url": "https://www.estadao.com.br/resizer/v2/I2C3UMXZQRDBNIPNMZKP4UKSPQ.jpg?auth=58769600b3a7476bb52233cfa26975cd249d75ac7628626320c12c73eb7bf4d6"
+  },
+  {
+    "id": "bacucu",
+    "name": "Bacucu",
+    "source": "Ana Maria Brogui",
+    "url": "https://anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-2217-3a708c992d18d387d7103ab2224178d4.jpg"
+  },
+  {
+    "id": "baiacu",
+    "name": "Baiacu",
+    "source": "O Globo",
+    "url": "https://s2-oglobo.glbimg.com/pWyyF3Cno3HbWIjSGMreovUsgsM=/0x105:984x570/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_da025474c0c44edd99332dddb09cabe8/internal_photos/bs/2024/J/j/Dm5qcyTyaqphK9po4Bag/baiacu.jpg"
+  },
+  {
+    "id": "cacao",
+    "name": "Cação",
+    "source": "Formoso Carnes",
+    "url": "https://www.formosocarnes.com.br/uploads/produtos/cx-10-kg-posta-de-cacao1.jpg"
+  },
+  {
+    "id": "linguado",
+    "name": "Linguado",
+    "source": "InfoEscola",
+    "url": "https://www.infoescola.com/wp-content/uploads/2011/04/linguado_166190972.jpg"
+  },
+  {
+    "id": "paru",
+    "name": "Paru",
+    "source": "Fishcode",
+    "url": "https://fishcode.com.br/cdn/shop/products/Chaetodipterusfaber.png?v=1670677352"
+  },
+  {
+    "id": "misturinha",
+    "name": "Misturinha",
+    "source": "Facebook - foto indicada pelo usuário",
+    "url": "https://scontent.fcwb6-1.fna.fbcdn.net/v/t1.6435-9/56536140_2087456431352019_4440946358148399104_n.jpg?stp=dst-jpg_tt6&cstp=mx1080x1350&ctp=s1080x1350&_nc_cat=102&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=0b6b33&_nc_eui2=AeHojmDpxEjzpUCPyhymd9cbndqteZa9j86d2q15lr2PztXpttWNEUfPRx6fwYJydQLgJUDoiaThs9RBFilGdZWn&_nc_ohc=2oRUqHYzLQ4Q7kNvwHnN88s&_nc_oc=Ado3gI8Uav_xI5TU-80ehTYpQ04Zn2B2RH98y8Q7oZQXLV_cNDHCM22qXwuDMOI0wGftdwOVagQyRwGIXR-lAguE&_nc_zt=23&_nc_ht=scontent.fcwb6-1.fna&_nc_gid=6ah5FO69c-ksqIGb_MKS4w&_nc_ss=782a8&oh=00_AQSvrSUBn-36B8qQUJa03A0i_pXoUZXJHU251L2ysrKe9Q&oe=6B0F4CFB"
+  },
+  {
+    "id": "cavalinha",
+    "name": "Cavalinha",
+    "source": "Fishcode",
+    "url": "https://fishcode.com.br/cdn/shop/products/Scomberjaponicus.png?v=1670676641"
+  },
+  {
+    "id": "salteira",
+    "name": "Salteira",
+    "source": "Museu da Língua Portuguesa",
+    "url": "https://museulinguaportuguesa.org.br/wp-content/uploads/2017/11/Salteira.jpg"
+  },
+  {
+    "id": "peixe-galo",
+    "name": "Peixe-galo",
+    "source": "Seabev",
+    "url": "https://www.seabev.com.br/wp-content/uploads/2024/11/peixe-galo-6.jpg"
+  },
+  {
+    "id": "betara",
+    "name": "Betara",
+    "source": "Fishcode",
+    "url": "https://fishcode.com.br/cdn/shop/files/betara-peixepapaterra.png?v=1686834873"
+  },
+  {
+    "id": "prejereba",
+    "name": "Prejereba",
+    "source": "Fishcode",
+    "url": "https://fishcode.com.br/cdn/shop/products/prejereba.png?v=1670676772"
+  }
+]
