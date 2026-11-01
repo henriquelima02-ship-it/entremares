@@ -132,7 +132,7 @@
     const previewImage = hasImage ? `<img src="${esc(preview.src)}" alt="${esc(preview.alt)}" loading="lazy" decoding="async">` : '';
     const photoText = hasImage
       ? preview.source
-        ? `<a href="${esc(preview.source)}" target="_blank" rel="noopener noreferrer">Ilustração científica de referência · ${esc(preview.credit || 'Wikimedia Commons')}</a>`
+        ? `<a href="${esc(preview.source)}" target="_blank" rel="noopener noreferrer">${preview.external ? 'Imagem externa de referência' : 'Ilustração científica de referência'} · ${esc(preview.credit || 'Wikimedia Commons')}</a>`
         : 'Imagem ilustrativa. Não é fotografia do anúncio.'
       : 'Fotografia específica ainda não disponível.';
     box.innerHTML = `<div class="preset-with-image">${previewImage}<div>${rangeHelp}<br>${esc(presetPriceText(item))}${item.note ? `<br><small>${esc(item.note)}</small>` : ''}<br><small>${photoText}</small></div></div>`;
@@ -209,10 +209,11 @@
       const picture = pictureApi?.forSpecies(item.name, item.category);
       const available = Boolean(picture?.src && !picture.generic);
       const visual = available
-        ? '<img src="' + esc(picture.src) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">'
+        ? '<img src="' + esc(picture.src) + '" alt="" loading="lazy" decoding="async">'
         : '<span class="wizard-fish-fallback" aria-hidden="true">' + fishPlaceholder(item) + '</span>';
       const price = item.priceMin == null ? 'Confirmar preço' : presetPriceText(item);
-      const imageNote = !available ? 'Foto específica pendente'
+      const imageNote = !available ? 'Imagem específica pendente'
+        : picture.external ? 'Foto externa • referência'
         : picture.illustrative ? 'Desenho científico • referência'
         : 'Imagem ilustrativa • referência';
       return '<button type="button" class="wizard-fish-tile" data-wizard-fish="' + i
