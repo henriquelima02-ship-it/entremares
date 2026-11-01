@@ -1,0 +1,189 @@
+{
+  "generated_at": "2026-11-01T23:42:01.823564+00:00",
+  "items": [
+    {
+      "id": "calafate",
+      "name": "Calafate",
+      "credit": "Wikimedia Commons / Acquario di Genova",
+      "source_host": "upload.wikimedia.org",
+      "status": "failed",
+      "error": "HTTP Error 429: Too many requests. (9f61500)"
+    },
+    {
+      "id": "bagre",
+      "name": "Bagre",
+      "credit": "Miniatura Google (procedência original não identificada)",
+      "source_host": "encrypted-tbn0.gstatic.com",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/bagre.webp",
+      "width": 596,
+      "height": 335,
+      "size": 12728
+    },
+    {
+      "id": "miraguaia",
+      "name": "Miraguaia",
+      "credit": "Museu da Língua Portuguesa",
+      "source_host": "museulinguaportuguesa.org.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/miraguaia.webp",
+      "width": 960,
+      "height": 407,
+      "size": 56270
+    },
+    {
+      "id": "sardinha",
+      "name": "Sardinha",
+      "credit": "Fishcode",
+      "source_host": "fishcode.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/sardinha.webp",
+      "width": 960,
+      "height": 679,
+      "size": 17782
+    },
+    {
+      "id": "camarao-descascado",
+      "name": "Camarão descascado (não vivo)",
+      "credit": "Swift",
+      "source_host": "swiftbr.vteximg.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/camarao-descascado.webp",
+      "width": 850,
+      "height": 850,
+      "size": 74462
+    },
+    {
+      "id": "caranguejo",
+      "name": "Caranguejo",
+      "credit": "Estadão",
+      "source_host": "www.estadao.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/caranguejo.webp",
+      "width": 960,
+      "height": 640,
+      "size": 88458
+    },
+    {
+      "id": "bacucu",
+      "name": "Bacucu",
+      "credit": "Ana Maria Brogui",
+      "source_host": "anamariabrogui.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/bacucu.webp",
+      "width": 420,
+      "height": 280,
+      "size": 34714
+    },
+    {
+      "id": "baiacu",
+      "name": "Baiacu",
+      "credit": "O Globo",
+      "source_host": "s2-oglobo.glbimg.com",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/baiacu.webp",
+      "width": 888,
+      "height": 420,
+      "size": 23286
+    },
+    {
+      "id": "cacao",
+      "name": "Cação",
+      "credit": "Formoso Carnes",
+      "source_host": "www.formosocarnes.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/cacao.webp",
+      "width": 960,
+      "height": 826,
+      "size": 58774
+    },
+    {
+      "id": "linguado",
+      "name": "Linguado",
+      "credit": "InfoEscola",
+      "source_host": "www.infoescola.com",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/linguado.webp",
+      "width": 960,
+      "height": 640,
+      "size": 56534
+    },
+    {
+      "id": "paru",
+      "name": "Paru",
+      "credit": "Fishcode",
+      "source_host": "fishcode.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/paru.webp",
+      "width": 960,
+      "height": 679,
+      "size": 24504
+    },
+    {
+      "id": "misturinha",
+      "name": "Misturinha",
+      "credit": "Facebook - foto indicada pelo usuário",
+      "source_host": "scontent.fcwb6-1.fna.fbcdn.net",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/misturinha.webp",
+      "width": 680,
+      "height": 850,
+      "size": 76710
+    },
+    {
+      "id": "cavalinha",
+      "name": "Cavalinha",
+      "credit": "Fishcode",
+      "source_host": "fishcode.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/cavalinha.webp",
+      "width": 960,
+      "height": 679,
+      "size": 25174
+    },
+    {
+      "id": "salteira",
+      "name": "Salteira",
+      "credit": "Museu da Língua Portuguesa",
+      "source_host": "museulinguaportuguesa.org.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/salteira.webp",
+      "width": 500,
+      "height": 207,
+      "size": 9308
+    },
+    {
+      "id": "peixe-galo",
+      "name": "Peixe-galo",
+      "credit": "Seabev",
+      "source_host": "www.seabev.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/peixe-galo.webp",
+      "width": 821,
+      "height": 821,
+      "size": 19132
+    },
+    {
+      "id": "betara",
+      "name": "Betara",
+      "credit": "Fishcode",
+      "source_host": "fishcode.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/betara.webp",
+      "width": 960,
+      "height": 679,
+      "size": 14946
+    },
+    {
+      "id": "prejereba",
+      "name": "Prejereba",
+      "credit": "Fishcode",
+      "source_host": "fishcode.com.br",
+      "status": "ok",
+      "file": "frontend/assets/pescados/referencias/prejereba.webp",
+      "width": 960,
+      "height": 679,
+      "size": 43008
+    }
+  ]
+}
