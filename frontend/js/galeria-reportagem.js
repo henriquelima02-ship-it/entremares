@@ -37,7 +37,14 @@
     const image = frame.querySelector('img');
     if (!image || image.dataset.photoUnavailable === 'true') return;
     const origin = frame.dataset.photoSource;
-    if (!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(origin)) return;
+    // Aceita apenas fontes institucionais verificadas e arquivos Wikimedia.
+    // O link da fonte continua associado ao registro fotográfico exibido.
+    const allowedOrigins = [
+      /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/,
+      /^https:\/\/www\.parana\.pr\.gov\.br\/aen\/Noticia\//,
+      /^https:\/\/mae\.ufpr\.br\/entreconchas(?:\/|$)/
+    ];
+    if (!allowedOrigins.some(pattern => pattern.test(origin))) return;
     const caption = frame.querySelector('figcaption .story-photo-caption');
     const attribution = frame.querySelector('figcaption .story-photo-attribution');
     lastTrigger = trigger;
@@ -47,6 +54,9 @@
     title.textContent = caption?.textContent?.trim() || image.alt;
     credit.textContent = attribution?.textContent?.trim() || 'Fonte: Wikimedia Commons';
     source.href = origin;
+    source.textContent = origin.includes('commons.wikimedia.org')
+      ? 'Ver arquivo e licença na origem'
+      : 'Consultar fotografia e créditos na fonte';
 
     if (typeof viewer.showModal === 'function') viewer.showModal();
     else viewer.setAttribute('open', '');

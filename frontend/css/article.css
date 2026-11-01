@@ -663,3 +663,63 @@
  .page-saberes-gastro .saber-research-content{padding:5px 15px 18px}
  .page-saberes-gastro .saber-research-summary-icon{width:35px;height:35px}
 }
+
+/* Dossiê de patrimônio — igreja de Piaçaguera, sambaquis regionais e ponte com Amparo. */
+.page-saberes-church .story-church-hero{margin-top:25px}
+.page-saberes-church .story-church-hero .story-photo--wide .story-photo-media{aspect-ratio:16/9;max-height:660px}
+.page-saberes-church .story-church-hero .story-photo--wide .story-photo-media>img{object-position:center 47%}
+.page-saberes-church .story-church-source-card{
+  display:grid;grid-template-columns:42px minmax(0,1fr);gap:13px;
+  padding:19px 20px;margin:24px 0 2px;background:#e7eee9;
+  border:1px solid rgba(29,75,67,.13);border-radius:15px
+}
+.page-saberes-church .story-church-source-icon{
+  display:grid;place-items:center;width:42px;height:42px;border-radius:12px;
+  background:#d3e1d7;color:#1d4b43
+}
+.page-saberes-church .story-church-source-icon .em-svg{width:22px;height:22px}
+.page-saberes-church .story-church-source-card strong{color:#204e43;font-size:1rem}
+.page-saberes-church .story-church-source-card p{font-size:.92rem;line-height:1.65;margin:9px 0}
+.page-saberes-church .story-church-source-card a{color:#275e6d;font-size:.87rem;font-weight:850;text-underline-offset:3px}
+.page-saberes-church .story-regional-sambaqui{grid-column:1/-1}
+.page-saberes-church .story-regional-sambaqui .story-photo .story-photo-media{aspect-ratio:1/1}
+.page-saberes-church .story-regional-sambaqui .story-photo .story-photo-media>img{object-fit:cover;object-position:top center}
+.page-saberes-church .story-regional-sambaqui .story-photo-side p a{color:#245c69;font-weight:850}
+.page-saberes-church .story-archaeology-object{grid-column:1/-1}
+.page-saberes-church .story-archaeology-object .story-photo-media{aspect-ratio:1/1}
+.page-saberes-church .story-archaeology-object .story-photo-media>img{object-fit:contain;background:#003b3b}
+.page-saberes-church .story-archaeology-object .story-photo-side{background:linear-gradient(145deg,#f7f2e8,#e6eee7)}
+.page-saberes-church .story-heritage-amparo{
+  margin:54px 0 20px;padding:clamp(22px,3vw,38px);
+  border-radius:25px;background:#e5eee7;border:1px solid rgba(29,75,67,.13)
+}
+.page-saberes-church .story-heritage-amparo>h2{
+  margin:0 0 26px;color:#1d4b43;
+  font:700 clamp(1.9rem,3.6vw,2.6rem)/1.17 Georgia,'Times New Roman',serif;
+  letter-spacing:-.025em
+}
+.page-saberes-church .story-heritage-amparo .story-media-split{margin:0;max-width:none;align-items:stretch}
+.page-saberes-church .story-heritage-amparo .story-photo--landscape .story-photo-media{aspect-ratio:4/3}
+.page-saberes-church .story-amparo-copy{
+  display:flex;flex-direction:column;gap:14px;justify-content:center;
+  padding:clamp(8px,2vw,23px)
+}
+.page-saberes-church .story-amparo-copy p{font-size:1rem;line-height:1.77;color:#344f52;margin:0}
+.page-saberes-church .story-amparo-cta{
+  display:inline-flex;align-items:center;align-self:flex-start;gap:8px;
+  margin-top:14px;padding:12px 17px;border-radius:999px;
+  background:#1d4b43;color:#fff;text-decoration:none;font-size:.87rem;font-weight:900
+}
+.page-saberes-church .story-amparo-cta .em-svg{width:18px;height:18px}
+.page-saberes-church .story-amparo-cta:hover{background:#2a6453}
+.page-saberes-church .story-amparo-cta:focus-visible{outline:3px solid #d5a83c;outline-offset:3px}
+@media(max-width:780px){
+  .page-saberes-church .story-church-hero .story-photo--wide .story-photo-media{aspect-ratio:4/3}
+  .page-saberes-church .story-church-source-card{grid-template-columns:36px minmax(0,1fr);padding:17px 13px}
+  .page-saberes-church .story-church-source-icon{width:35px;height:35px}
+  .page-saberes-church .story-heritage-amparo{margin-top:34px;padding:20px 16px}
+  .page-saberes-church .story-heritage-amparo .story-media-split{grid-template-columns:1fr;gap:14px}
+  .page-saberes-church .story-amparo-copy{padding:9px 4px 4px}
+  .page-saberes-church .story-regional-sambaqui .story-photo .story-photo-media{aspect-ratio:5/4}
+  .page-saberes-church .story-archaeology-object .story-photo-media{aspect-ratio:5/4}
+}
