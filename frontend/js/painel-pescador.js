@@ -179,9 +179,10 @@
       .filter(({item}) => wizardCategory === 'todos' || item.category === wizardCategory);
     container.innerHTML = filtered.map(({item,i}) => {
       const image = pictureApi?.forSpecies(item.name, item.category);
-      const visual = image
+      const icon = item.category === 'crustaceo' ? '🦐' : item.category === 'molusco' ? '🦪' : '🐟';
+      const visual = image && !image.generic
         ? '<img src="' + esc(image.src) + '" alt="" loading="lazy" decoding="async">'
-        : '<span class="wizard-fish-fallback" aria-hidden="true">🐟</span>';
+        : '<span class="wizard-fish-fallback" aria-hidden="true">' + icon + '</span>';
       const price = item.priceMin == null ? 'Confirmar preço' : presetPriceText(item);
       return '<button type="button" class="wizard-fish-tile" data-wizard-fish="' + i
         + '" aria-pressed="' + String(index === String(i)) + '">' + visual
