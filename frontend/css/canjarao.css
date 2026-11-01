@@ -1,0 +1,54 @@
+/* EntreMarés — reportagem gastronômica: Canjarão da Adi */
+.page-saberes-gastro .canjarao-section{padding:0;overflow:hidden;background:#fffdf8;border:1px solid rgba(29,75,67,.14);box-shadow:0 16px 45px rgba(29,75,67,.09);scroll-margin-top:110px}
+.canjarao-section .canjarao-head{display:grid;grid-template-columns:minmax(0,1.13fr) minmax(245px,.87fr);background:linear-gradient(126deg,#143e36 0%,#1d4b43 75%,#315e59 100%);color:#f9f6ec}
+.canjarao-head__copy{padding:clamp(26px,4vw,43px);align-self:center}
+.canjarao-head__copy .canjarao-kicker{display:inline-flex;align-items:center;gap:9px;font-size:.73rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:#f8d89f;background:rgba(255,255,255,.09);border:1px solid rgba(250,235,198,.22);border-radius:100px;padding:9px 13px}
+.canjarao-kicker .em-svg,.canjarao-label .em-svg{width:18px;height:18px;flex:0 0 auto}
+.canjarao-head__copy h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.15rem,4.6vw,3.35rem);letter-spacing:-.045em;line-height:1.09;color:#fff7e7;margin:18px 0}
+.canjarao-head__copy p,.canjarao-head__copy p:last-child{color:#edf4ee;line-height:1.77;font-size:.97rem;margin:0 0 15px}
+.canjarao-head__copy .canjarao-head__lead{font-size:1.09rem}
+.canjarao-head__copy sup a{color:#ffe3a8}
+.canjarao-head__copy .canjarao-cta{display:inline-flex;align-items:center;gap:10px;margin-top:12px;padding:13px 18px;border-radius:16px;background:#e9d8b6;color:#1d4b43;font-weight:900;text-decoration:none;line-height:1.4;transition:transform .2s ease,background .2s ease}
+.canjarao-head__copy .canjarao-cta:hover{background:#fff1cf;transform:translateY(-2px)}
+.canjarao-cta .em-svg{width:19px;height:19px}
+.canjarao-head__visual{position:relative;min-height:430px;background:#b5b9ae;overflow:hidden}
+.canjarao-head__visual>img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;position:absolute;inset:0}
+.canjarao-head__visual:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(15,44,39,.52),transparent 38%)}
+.canjarao-head__visual-label{position:absolute;z-index:1;bottom:22px;left:23px;display:inline-flex;align-items:center;gap:9px;background:rgba(250,249,244,.94);color:#1d4b43;border-radius:999px;padding:10px 14px;font-size:.82rem;font-weight:900}
+.canjarao-head__visual-label .em-svg{width:18px;height:18px}
+.canjarao-intro{padding:34px clamp(20px,4vw,40px) 18px}
+.canjarao-section .canjarao-label{display:inline-flex;align-items:center;gap:9px;color:#a75b3a;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900}
+.canjarao-intro h3,.canjarao-details h3{font-family:Georgia,'Times New Roman',serif;color:#1d4b43;font-size:clamp(1.5rem,3vw,2.05rem);letter-spacing:-.025em;line-height:1.2;margin:12px 0 11px}
+.canjarao-intro p{max-width:750px;color:#405b5b;line-height:1.7}
+.canjarao-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;padding:0 clamp(20px,4vw,40px) 34px}
+.canjarao-ingredient{border:1px solid #e0e8e0;border-radius:19px;overflow:hidden;background:white;box-shadow:0 8px 22px rgba(29,75,67,.055);min-width:0}
+.canjarao-ingredient__photo{aspect-ratio:1.45/1;background:linear-gradient(135deg,#dbe6db,#ead8b3);overflow:hidden}
+.canjarao-ingredient__photo img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .3s ease}
+.canjarao-ingredient__content{padding:15px 15px 17px;position:relative}
+.canjarao-ingredient__icon{position:absolute;top:-24px;right:14px;background:#f7ead1;color:#1d4b43;border:3px solid #fff;border-radius:13px;width:40px;height:40px;display:grid;place-items:center}
+.canjarao-ingredient__icon .em-svg{width:21px;height:21px}
+.canjarao-ingredient h4{font-family:Georgia,'Times New Roman',serif;font-size:1.2rem;margin:0 0 5px;color:#194a41}
+.canjarao-ingredient strong{display:block;color:#ab573c;font-size:.92rem;line-height:1.4}
+.canjarao-ingredient p{font-size:.83rem;line-height:1.55;margin:7px 0 0;color:#526367}
+.canjarao-details{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:0 clamp(20px,4vw,40px) 29px}
+.canjarao-details>div{background:#f0f5ef;padding:22px 25px;border-radius:20px}
+.canjarao-details__steps{background:#f9efdf!important}
+.canjarao-details__ingredients ul{margin:14px 0 0;padding-left:21px}
+.canjarao-details__ingredients li{margin-bottom:10px;font-size:.92rem;line-height:1.62}
+.canjarao-details__steps ol{list-style:none;padding:0;margin:16px 0 0}
+.canjarao-details__steps li{display:grid;grid-template-columns:33px minmax(0,1fr);gap:10px;margin-bottom:13px;align-items:start}
+.canjarao-details__steps li span{display:grid;place-items:center;background:#1d4b43;color:#f2e6cf;border-radius:10px;aspect-ratio:1;font-size:.73rem;font-weight:900}
+.canjarao-details__steps li p{margin:0;font-size:.92rem;line-height:1.62}
+.canjarao-footer{display:flex;align-items:flex-start;gap:14px;margin:0 clamp(20px,4vw,40px) 22px;padding:21px 23px;border-left:4px solid #d5a83c;background:rgba(233,216,182,.26);border-radius:0 15px 15px 0}
+.canjarao-footer>.em-svg{width:28px;height:28px;color:#1d4b43;flex:0 0 auto}
+.canjarao-footer p{color:#32504d;font-size:.94rem;line-height:1.65;margin:0}
+.canjarao-credits{margin:0 clamp(20px,4vw,40px) 29px;border-top:1px solid #dce6df;padding-top:13px;color:#536568;font-size:.8rem}
+.canjarao-credits summary{cursor:pointer;font-weight:800;color:#2f5d55;padding:8px 0}
+.canjarao-credits p{font-size:.8rem;line-height:1.5}
+.canjarao-credits ul{padding-left:18px;columns:2}
+.canjarao-credits li{margin-bottom:7px;break-inside:avoid;font-size:.77rem}
+.canjarao-credits a{font-weight:700;color:#245e70}
+@media(hover:hover) and (pointer:fine){.canjarao-ingredient:hover .canjarao-ingredient__photo img{transform:scale(1.035)}}
+@media(max-width:750px){.canjarao-section .canjarao-head{grid-template-columns:1fr}.canjarao-head__copy{padding:29px 23px}.canjarao-head__visual{min-height:250px}.canjarao-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.canjarao-details{grid-template-columns:1fr}.canjarao-credits ul{columns:1}}
+@media(max-width:430px){.canjarao-gallery{gap:10px}.canjarao-ingredient__content{padding:13px 11px}.canjarao-ingredient h4{font-size:1.04rem}.canjarao-ingredient strong{font-size:.8rem}.canjarao-ingredient p{font-size:.76rem}.canjarao-head__visual{min-height:220px}.canjarao-details>div{padding:19px 17px}}
+@media(prefers-reduced-motion:reduce){.canjarao-ingredient__photo img,.canjarao-cta{transition:none!important}}
