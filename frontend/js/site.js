@@ -231,7 +231,7 @@
 
   decorateIcons();
 
-  const needsVisualMedia = /\/conteudos\/(fauna-flora-piacaguera|historia-piacaguera)\.html$/.test(window.location.pathname);
+  const needsVisualMedia = /\/conteudos\/historia-piacaguera\.html$/.test(window.location.pathname);
   if (needsVisualMedia) {
     const script = document.createElement('script');
     script.src = '../js/visual-media.js';
