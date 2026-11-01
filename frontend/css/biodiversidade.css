@@ -150,3 +150,12 @@
     aspect-ratio:4/3;
   }
 }
+
+/* Curadoria regional: toda fotografia animal deve mostrar o enquadramento integral. */
+.page-saberes-fauna .species-card .bio-animal-photo .story-photo-media > img {
+  object-fit: contain;
+  object-position: center;
+}
+.page-saberes-fauna .species-card .bio-animal-photo .story-photo-media {
+  background: #eaf1ed;
+}
