@@ -154,7 +154,7 @@
         const icon = document.createElement('span');
         icon.className = 'fish-media-fallback';
         icon.setAttribute('aria-hidden', 'true');
-        icon.textContent = '🐟';
+        icon.textContent = '—';
         img.replaceWith(icon);
         if (caption) caption.textContent = 'Imagem temporariamente indisponível';
       }, { once: true });
