@@ -79,14 +79,8 @@
     return fig;
   }
 
-  if (path.includes('fauna-flora-piacaguera.html')) {
-    document.querySelectorAll('.species-card').forEach(card => {
-      if (card.querySelector('[data-em-media]')) return;
-      const title = card.querySelector('h3')?.textContent.trim() || '';
-      const key = Object.keys(media).find(name => title.startsWith(name));
-      if (key) card.prepend(figure(media[key]));
-    });
-  }
+  // Fauna e Flora: as fotografias são curadas no próprio HTML.
+  // Não inserir mídia automaticamente para evitar duplicações ou imagens sem procedência.
 
   if (path.includes('historia-piacaguera.html')) {
     const article = document.querySelector('.article-page');
