@@ -7,7 +7,7 @@
   <meta name="description" content="Painel do pescador do EntreMarés para gerir anúncios de pescados e pedidos.">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/pescados-media.css">
-  <link rel="stylesheet" href="./css/pescador-wizard.css?v=1">
+  <link rel="stylesheet" href="./css/pescador-wizard.css?v=2">
   <title>Painel do pescador | EntreMarés</title>
 </head>
 <body>
@@ -120,12 +120,12 @@
 
     <section class="wizard-step" data-wizard-step="0" aria-label="Escolha do pescado">
       <h3>Qual pescado você tem hoje?</h3>
-      <p class="wizard-hint">Toque na foto e no nome do pescado.</p>
+      <p class="wizard-hint">Toque no desenho ou no nome. Fotos, quando disponíveis, são apenas referências.</p>
       <div class="wizard-filters" id="wizardFilters" role="group" aria-label="Filtrar tipo de pescado">
         <button type="button" data-wizard-filter="todos" aria-pressed="true">Todos</button>
         <button type="button" data-wizard-filter="peixe" aria-pressed="false">Peixes</button>
-        <button type="button" data-wizard-filter="crustaceo" aria-pressed="false">Camarão e siri</button>
-        <button type="button" data-wizard-filter="molusco" aria-pressed="false">Ostras</button>
+        <button type="button" data-wizard-filter="crustaceo" aria-pressed="false">Camarão, siri e caranguejo</button>
+        <button type="button" data-wizard-filter="molusco" aria-pressed="false">Ostras e mariscos</button>
         <button type="button" data-wizard-filter="outro" aria-pressed="false">Outros</button>
       </div>
       <div id="wizardFishCards" class="wizard-fish-grid" role="group" aria-label="Pescados cadastrados"></div>
@@ -298,8 +298,8 @@
 </footer>
 <script src="./js/site.js"></script>
 <script src="./js/api.js"></script>
-<script src="./js/catalogo-pescados.js"></script>
-<script src="./js/pescados-media.js"></script>
-<script src="./js/painel-pescador.js?v=wizard1"></script>
+<script src="./js/catalogo-pescados.js?v=2"></script>
+<script src="./js/pescados-media.js?v=2"></script>
+<script src="./js/painel-pescador.js?v=wizard2"></script>
 </body>
 </html>
