@@ -171,6 +171,28 @@
       : 'Nenhum pescado escolhido ainda.';
   }
 
+  function normalizedCatalogName(value) {
+    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase().replace(/[—–-]/g,' ').replace(/\s+/g,' ').trim();
+  }
+
+  function matchingCatalogIndex(value) {
+    const name=normalizedCatalogName(value);
+    return catalog.findIndex(item => [item.name,...(item.aliases||[])]
+      .some(alias => normalizedCatalogName(alias) === name));
+  }
+
+  function fishPlaceholder(item) {
+    if (item.category === 'crustaceo') {
+      return /siri|caranguejo/i.test(item.name) ? '🦀' : '🦐';
+    }
+    if (item.category === 'molusco') return '🦪';
+    return '<svg viewBox="0 0 64 48" width="45" height="38" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true">'
+      + '<path d="M12 24C20 10 39 10 49 24C39 38 20 38 12 24Z" fill="#dce9df"/>'
+      + '<path d="m13 24-9-10v20z" fill="#bed5c6"/><circle cx="40" cy="21" r="2" fill="currentColor" stroke="none"/>'
+      + '<path d="m25 14 7-9 3 9m-10 20 7 9 3-9"/></svg>';
+  }
+
   function updateFishTiles() {
     const container = $('wizardFishCards');
     const index = $('fishPreset').value;
@@ -178,16 +200,19 @@
     const filtered = catalog.map((item,i) => ({item,i}))
       .filter(({item}) => wizardCategory === 'todos' || item.category === wizardCategory);
     container.innerHTML = filtered.map(({item,i}) => {
-      const image = pictureApi?.forSpecies(item.name, item.category);
-      const icon = item.category === 'crustaceo' ? '🦐' : item.category === 'molusco' ? '🦪' : '🐟';
-      const visual = image && !image.generic
-        ? '<img src="' + esc(image.src) + '" alt="" loading="lazy" decoding="async">'
-        : '<span class="wizard-fish-fallback" aria-hidden="true">' + icon + '</span>';
+      const picture = pictureApi?.forSpecies(item.name, item.category);
+      const available = Boolean(picture?.src && !picture.generic);
+      const visual = available
+        ? '<img src="' + esc(picture.src) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">'
+        : '<span class="wizard-fish-fallback" aria-hidden="true">' + fishPlaceholder(item) + '</span>';
       const price = item.priceMin == null ? 'Confirmar preço' : presetPriceText(item);
+      const imageNote = !available ? 'Foto específica pendente'
+        : picture.illustrative ? 'Desenho científico • referência'
+        : 'Imagem ilustrativa • referência';
       return '<button type="button" class="wizard-fish-tile" data-wizard-fish="' + i
         + '" aria-pressed="' + String(index === String(i)) + '">' + visual
         + '<span><strong>' + esc(item.name) + '</strong><small>' + esc(price)
-        + '</small></span></button>';
+        + '</small><small class="wizard-photo-note">' + esc(imageNote) + '</small></span></button>';
     }).join('');
     document.querySelectorAll('[data-wizard-filter]').forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.wizardFilter === wizardCategory));
@@ -374,7 +399,7 @@
   }
 
   function showEditorWizard() {
-    const match=catalog.findIndex(item=>item.name.toLowerCase()===$('editSpecies').value.trim().toLowerCase());
+    const match=matchingCatalogIndex($('editSpecies').value.trim());
     $('fishPreset').value = match>=0 ? String(match) : '';
     displayManualName(match<0 && Boolean($('editSpecies').value.trim()));
     wizardCategory='todos';
@@ -392,6 +417,20 @@
       const button=event.target.closest('[data-wizard-fish]');
       if(button) selectPresetForWizard(button.dataset.wizardFish);
     });
+    $('wizardFishCards').addEventListener('error',event=>{
+      const img=event.target;
+      if (!img.matches?.('.wizard-fish-tile img')) return;
+      const tile=img.closest('[data-wizard-fish]');
+      const item=catalog[Number(tile?.dataset.wizardFish)];
+      if (!tile || !item) return;
+      const span=document.createElement('span');
+      span.className='wizard-fish-fallback';
+      span.setAttribute('aria-hidden','true');
+      span.innerHTML=fishPlaceholder(item);
+      img.replaceWith(span);
+      const note=tile.querySelector('.wizard-photo-note');
+      if(note)note.textContent='Foto indisponível';
+    },true);
     $('wizardFilters').addEventListener('click',event=>{
       const button=event.target.closest('[data-wizard-filter]');
       if(button){wizardCategory=button.dataset.wizardFilter;updateFishTiles();}
