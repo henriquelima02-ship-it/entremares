@@ -197,8 +197,15 @@
   function selectPresetForWizard(index) {
     $('fishPreset').value = index;
     applyPreset(index);
-    if (index !== '') displayManualName(false);
-    updateFishTiles();
+    if (index === '') {
+      $('editSpecies').value = '';
+      $('editPrice').value = '';
+    }
+    displayManualName(false);
+    document.querySelectorAll('[data-wizard-fish]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.wizardFish === String(index)));
+    });
+    updateSelectedFish();
     updatePriceButtons();
     updateCutChoices();
     hideWizardError();
@@ -422,7 +429,7 @@
       const d=new Date(), pad=n=>String(n).padStart(2,'0');
       $('editCatchDate').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
     });
-    $('productForm').addEventListener('input',()=>{updateReview();updateQuickButtons();updateShippingStates();});
+    $('productForm').addEventListener('input',()=>{updateReview();updateQuickButtons();updateSelectedFish();updateShippingStates();});
     $('productForm').addEventListener('change',event=>{
       if(event.target.id === 'editCategory') updateCutChoices();
       if(event.target.matches('[data-edit-cut]'))updateCutStates();
