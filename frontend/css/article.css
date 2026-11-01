@@ -723,3 +723,47 @@
   .page-saberes-church .story-regional-sambaqui .story-photo .story-photo-media{aspect-ratio:5/4}
   .page-saberes-church .story-archaeology-object .story-photo-media{aspect-ratio:5/4}
 }
+
+
+/* Foto documental da igreja de Piaçaguera sem pessoas: recorte circular da cartilha (2021). */
+.page-saberes-church .story-church-hero{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ align-items:stretch;gap:24px;margin:27px 0 36px
+}
+.page-saberes-church .story-church-hero .story-photo{
+ min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ padding:clamp(17px,3vw,30px) clamp(12px,2vw,24px);
+ background:linear-gradient(160deg,#e4eee8,#f8f3e9);
+ border-radius:25px
+}
+.page-saberes-church .story-church-hero .story-photo-media{
+ position:relative;width:min(100%,430px);aspect-ratio:1;border-radius:50%;
+ overflow:hidden;background:transparent;box-shadow:0 12px 34px rgba(23,61,53,.15)
+}
+.page-saberes-church .story-church-hero .story-photo-media>img{
+ width:100%;height:100%;object-fit:cover;transform:scale(1.035)
+}
+.page-saberes-church .story-church-hero .story-photo figcaption{width:100%;padding:20px 6px 2px}
+.page-saberes-church .story-church-hero .story-photo-caption{font-size:.95rem}
+.page-saberes-church .story-church-hero .story-photo-expand{bottom:19px;right:14px}
+.page-saberes-church .story-church-hero-copy{
+ min-width:0;display:flex;flex-direction:column;justify-content:center;gap:16px;
+ padding:clamp(23px,3.1vw,40px);background:#e7eee8;
+ border:1px solid rgba(29,75,67,.13);border-radius:24px
+}
+.page-saberes-church .story-church-hero-copy h2{
+ font:700 clamp(1.8rem,3vw,2.55rem)/1.13 Georgia,'Times New Roman',serif;
+ letter-spacing:-.025em;color:#1d4b43;margin:0
+}
+.page-saberes-church .story-church-hero-copy p{font-size:1.02rem;line-height:1.8;margin:0;color:#40585b}
+.page-saberes-church .story-church-hero-copy>a{
+ display:inline-flex;align-items:center;align-self:flex-start;gap:7px;
+ margin-top:12px;font-size:.89rem;font-weight:850;color:#245f64;text-underline-offset:3px
+}
+.page-saberes-church .story-church-hero-copy>a .em-svg{width:19px;height:19px}
+@media(max-width:780px){
+ .page-saberes-church .story-church-hero{grid-template-columns:1fr;gap:14px;margin:20px 0 30px}
+ .page-saberes-church .story-church-hero .story-photo{padding:18px 17px}
+ .page-saberes-church .story-church-hero .story-photo-media{width:min(88%,380px)}
+ .page-saberes-church .story-church-hero-copy{padding:24px 19px}
+}

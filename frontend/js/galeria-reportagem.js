@@ -42,7 +42,8 @@
     const allowedOrigins = [
       /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/,
       /^https:\/\/www\.parana\.pr\.gov\.br\/aen\/Noticia\//,
-      /^https:\/\/mae\.ufpr\.br\/entreconchas(?:\/|$)/
+      /^https:\/\/mae\.ufpr\.br\/entreconchas(?:\/|$)/,
+      /^https:\/\/www\.portosdoparana\.pr\.gov\.br\/sites\/portos\/arquivos_restritos\/files\/documento\/.*\.pdf(?:#.*)?$/
     ];
     if (!allowedOrigins.some(pattern => pattern.test(origin))) return;
     const caption = frame.querySelector('figcaption .story-photo-caption');
