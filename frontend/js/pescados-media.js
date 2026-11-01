@@ -143,6 +143,13 @@
     }
   };
 
+  // Referência compartilhada para bagre e guiri, conforme orientação da equipe.
+  // Não afirmar identificação taxonômica a partir dessa miniatura.
+  referenceImages['bagre-guiri'] = {
+    ...referenceImages.bagre,
+    alt: 'Imagem de referência compartilhada de bagre e bagre-guiri; fotografia não é do anúncio.'
+  };
+  referenceImages.guiri = referenceImages['bagre-guiri'];
 
   function forSpecies(species, category = '') {
     const name = normalize(species);
@@ -182,7 +189,14 @@
     if (name.includes('robalo')) return image('robalo', 'Ilustração digital de referência de robalo');
     if (name.includes('tainha')) return image('tainha', 'Ilustração digital de referência de tainha');
     if (name.includes('pescadinha')) return image('pescadinha', 'Ilustração digital de referência de pescadinha');
-    if (name.includes('camarao') && name.includes('vivo')) return null; // Não mostrar camarão já preparado como se estivesse vivo.
+    if (name.includes('camarao') && name.includes('vivo')) return {
+      ...image('camarao', 'Ilustração de camarão inteiro como referência visual, não é uma fotografia de camarão vivo.'),
+      credit: 'Ilustração do acervo EntreMarés',
+      source: '',
+      local: true,
+      external: false,
+      illustrative: true
+    };
     if (name.includes('camarao')) return image('camarao', 'Ilustração digital de referência de camarões');
     if (/\bsiri\b/.test(name)) return image('siri', 'Ilustração digital de referência de siri');
     if (name.includes('ostra')) return image('ostra', 'Ilustração digital de referência de ostras');
