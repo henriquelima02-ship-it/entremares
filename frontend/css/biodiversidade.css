@@ -126,13 +126,13 @@
 @media(max-width:720px){.page-saberes-fauna .species-card .bio-animal-photo .story-photo-media{aspect-ratio:16/10}.page-saberes-fauna .bio-animal-photo figcaption{padding:10px 12px 12px}.page-saberes-fauna .bio-photo-note{font-size:.9rem}}
 
 /* Revisão de curadoria visual: mostra animais inteiros, sem cortes acidentais. */
-.page-saberes-fauna .bio-animal-photo--contain .story-photo-media,
-.page-saberes-fauna .bio-bird-card .bio-animal-photo .story-photo-media{
+.page-saberes-fauna .species-card .bio-animal-photo.bio-animal-photo--contain .story-photo-media,
+.page-saberes-fauna .species-card.bio-bird-card .bio-animal-photo .story-photo-media{
   aspect-ratio:4/3;
   background:#e9f1e9;
 }
-.page-saberes-fauna .bio-animal-photo--contain .story-photo-media>img,
-.page-saberes-fauna .bio-bird-card .bio-animal-photo .story-photo-media>img{
+.page-saberes-fauna .species-card .bio-animal-photo.bio-animal-photo--contain .story-photo-media>img,
+.page-saberes-fauna .species-card.bio-bird-card .bio-animal-photo .story-photo-media>img{
   object-fit:contain;
   object-position:center;
 }
@@ -145,8 +145,8 @@
   min-width:0;
 }
 @media(max-width:720px){
-  .page-saberes-fauna .bio-animal-photo--contain .story-photo-media,
-  .page-saberes-fauna .bio-bird-card .bio-animal-photo .story-photo-media{
+  .page-saberes-fauna .species-card .bio-animal-photo.bio-animal-photo--contain .story-photo-media,
+  .page-saberes-fauna .species-card.bio-bird-card .bio-animal-photo .story-photo-media{
     aspect-ratio:4/3;
   }
 }
