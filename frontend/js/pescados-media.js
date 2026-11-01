@@ -10,87 +10,152 @@
   function image(file, description, generic = false) {
     return { src: prefix + files[file], alt: description, generic };
   }
-  // Referências externas enviadas pela equipe do projeto. Não são imagens da captura
-  // nem comprovam identificação taxonômica do pescado vendido. Direitos reservados
-  // às fontes indicadas; verificar autorização antes de copiar/hospedar localmente.
-  // Em caso de falha de rede o cadastro apresenta um ícone neutro.
-  const externalReferences = {
-      "miraguaia": {
-          "src": "https://museulinguaportuguesa.org.br/wp-content/uploads/2017/11/Miraguaia.jpg",
-          "credit": "Museu da Língua Portuguesa",
-          "alt": "Imagem de referência da miraguaia"
-      },
-      "sardinha": {
-          "src": "https://fishcode.com.br/cdn/shop/files/sardinhaverdadeira-sardinellabrasilienses.png?v=1707159939",
-          "credit": "Fishcode",
-          "alt": "Ilustração de sardinha-verdadeira; referência para o pescado sardinha"
-      },
-      "caranguejo": {
-          "src": "https://www.estadao.com.br/resizer/v2/I2C3UMXZQRDBNIPNMZKP4UKSPQ.jpg?auth=58769600b3a7476bb52233cfa26975cd249d75ac7628626320c12c73eb7bf4d6",
-          "credit": "Estadão",
-          "alt": "Imagem de referência de caranguejo; fotografia externa não vinculada ao lote anunciado"
-      },
-      "bacucu": {
-          "src": "https://anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-2217-3a708c992d18d387d7103ab2224178d4.jpg",
-          "credit": "Ana Maria Brogui",
-          "alt": "Imagem culinária de referência enviada para bacucu; não representa necessariamente o produto in natura"
-      },
-      "baiacu": {
-          "src": "https://s2-oglobo.glbimg.com/pWyyF3Cno3HbWIjSGMreovUsgsM=/0x105:984x570/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_da025474c0c44edd99332dddb09cabe8/internal_photos/bs/2024/J/j/Dm5qcyTyaqphK9po4Bag/baiacu.jpg",
-          "credit": "O Globo",
-          "alt": "Imagem de referência de baiacu; a espécie exata deve ser identificada antes da comercialização"
-      },
-      "cacao": {
-          "src": "https://www.formosocarnes.com.br/uploads/produtos/cx-10-kg-posta-de-cacao1.jpg",
-          "credit": "Formoso Carnes",
-          "alt": "Postas de cação de referência, não foto do pescado inteiro"
-      },
-      "linguado": {
-          "src": "https://www.infoescola.com/wp-content/uploads/2011/04/linguado_166190972.jpg",
-          "credit": "InfoEscola",
-          "alt": "Imagem de referência de linguado"
-      },
-      "paru": {
-          "src": "https://fishcode.com.br/cdn/shop/products/Chaetodipterusfaber.png?v=1670677352",
-          "credit": "Fishcode",
-          "alt": "Ilustração de paru (Chaetodipterus faber)"
-      },
-      "cavalinha": {
-          "src": "https://fishcode.com.br/cdn/shop/products/Scomberjaponicus.png?v=1670676641",
-          "credit": "Fishcode",
-          "alt": "Ilustração de cavalinha (Scomber japonicus)"
-      },
-      "salteira": {
-          "src": "https://museulinguaportuguesa.org.br/wp-content/uploads/2017/11/Salteira.jpg",
-          "credit": "Museu da Língua Portuguesa",
-          "alt": "Imagem de referência de salteira"
-      },
-      "peixe-galo": {
-          "src": "https://www.seabev.com.br/wp-content/uploads/2024/11/peixe-galo-6.jpg",
-          "credit": "Seabev",
-          "alt": "Fotografia de referência de peixe-galo"
-      },
-      "betara": {
-          "src": "https://fishcode.com.br/cdn/shop/files/betara-peixepapaterra.png?v=1686834873",
-          "credit": "Fishcode",
-          "alt": "Ilustração de betara, também chamada papa-terra"
-      },
-      "prejereba": {
-          "src": "https://fishcode.com.br/cdn/shop/products/prejereba.png?v=1670676772",
-          "credit": "Fishcode",
-          "alt": "Ilustração de prejereba"
-      }
+  // Acervo local produzido a partir dos links enviados pelo projeto.
+  // As imagens retratam referências de espécie/preparo, nunca o lote anunciado.
+  // Consulte docs/RELATORIO_IMPORTACAO_PESCADOS.json para origens e falhas.
+  // Fontes e direitos de terceiros continuam atribuídos aos respectivos titulares.
+  const referenceImages = {
+    "calafate": {
+      "file": null,
+      "credit": "Wikimedia Commons / Acquario di Genova",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Umbrina_cirrosa_Acquario_di_Genova.jpg",
+      "alt": "Umbrina cirrosa fotografada no Aquário de Gênova; associação ao nome local precisa ser confirmada.",
+      "local": false
+    },
+    "bagre": {
+      "file": "bagre.webp",
+      "credit": "Miniatura Google (procedência original não identificada)",
+      "source": null,
+      "alt": "Imagem de bagre indicada pela equipe; procedência original não identificada.",
+      "local": true
+    },
+    "miraguaia": {
+      "file": "miraguaia.webp",
+      "credit": "Museu da Língua Portuguesa",
+      "source": "https://museulinguaportuguesa.org.br/wp-content/uploads/2017/11/Miraguaia.jpg",
+      "alt": "Imagem de referência de miraguaia, não o lote oferecido.",
+      "local": true
+    },
+    "sardinha": {
+      "file": "sardinha.webp",
+      "credit": "Fishcode",
+      "source": "https://fishcode.com.br/cdn/shop/files/sardinhaverdadeira-sardinellabrasilienses.png?v=1707159939",
+      "alt": "Ilustração de sardinha-verdadeira como referência; o lote anunciado pode variar.",
+      "local": true
+    },
+    "camarao descascado": {
+      "file": "camarao-descascado.webp",
+      "credit": "Swift",
+      "source": null,
+      "alt": "Foto comercial de camarão pré-cozido e descascado; não é camarão vivo.",
+      "local": true
+    },
+    "caranguejo": {
+      "file": "caranguejo.webp",
+      "credit": "Estadão",
+      "source": "https://www.estadao.com.br/resizer/v2/I2C3UMXZQRDBNIPNMZKP4UKSPQ.jpg?auth=58769600b3a7476bb52233cfa26975cd249d75ac7628626320c12c73eb7bf4d6",
+      "alt": "Imagem de referência de caranguejo, não lote anunciado.",
+      "local": true
+    },
+    "bacucu": {
+      "file": "bacucu.webp",
+      "credit": "Ana Maria Brogui",
+      "source": "https://anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-2217-3a708c992d18d387d7103ab2224178d4.jpg",
+      "alt": "Foto de preparo culinário referenciada para bacucu, não necessariamente produto in natura.",
+      "local": true
+    },
+    "baiacu": {
+      "file": "baiacu.webp",
+      "credit": "O Globo",
+      "source": "https://s2-oglobo.glbimg.com/pWyyF3Cno3HbWIjSGMreovUsgsM=/0x105:984x570/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_da025474c0c44edd99332dddb09cabe8/internal_photos/bs/2024/J/j/Dm5qcyTyaqphK9po4Bag/baiacu.jpg",
+      "alt": "Imagem de baiacu; identificação exata necessária antes da venda.",
+      "local": true
+    },
+    "cacao": {
+      "file": "cacao.webp",
+      "credit": "Formoso Carnes",
+      "source": "https://www.formosocarnes.com.br/uploads/produtos/cx-10-kg-posta-de-cacao1.jpg",
+      "alt": "Postas de cação; não representa o animal inteiro.",
+      "local": true
+    },
+    "linguado": {
+      "file": "linguado.webp",
+      "credit": "InfoEscola",
+      "source": "https://www.infoescola.com/wp-content/uploads/2011/04/linguado_166190972.jpg",
+      "alt": "Imagem de referência de linguado.",
+      "local": true
+    },
+    "paru": {
+      "file": "paru.webp",
+      "credit": "Fishcode",
+      "source": "https://fishcode.com.br/cdn/shop/products/Chaetodipterusfaber.png?v=1670677352",
+      "alt": "Ilustração de paru; não registro da pesca local.",
+      "local": true
+    },
+    "misturinha": {
+      "file": "misturinha.webp",
+      "credit": "Facebook - foto indicada pelo usuário",
+      "source": null,
+      "alt": "Referência de peixes variados; misturinha não é espécie única.",
+      "local": true
+    },
+    "cavalinha": {
+      "file": "cavalinha.webp",
+      "credit": "Fishcode",
+      "source": "https://fishcode.com.br/cdn/shop/products/Scomberjaponicus.png?v=1670676641",
+      "alt": "Ilustração de cavalinha; não o lote anunciado.",
+      "local": true
+    },
+    "salteira": {
+      "file": "salteira.webp",
+      "credit": "Museu da Língua Portuguesa",
+      "source": "https://museulinguaportuguesa.org.br/wp-content/uploads/2017/11/Salteira.jpg",
+      "alt": "Imagem de salteira como referência.",
+      "local": true
+    },
+    "peixe-galo": {
+      "file": "peixe-galo.webp",
+      "credit": "Seabev",
+      "source": "https://www.seabev.com.br/wp-content/uploads/2024/11/peixe-galo-6.jpg",
+      "alt": "Fotografia de referência do peixe-galo.",
+      "local": true
+    },
+    "betara": {
+      "file": "betara.webp",
+      "credit": "Fishcode",
+      "source": "https://fishcode.com.br/cdn/shop/files/betara-peixepapaterra.png?v=1686834873",
+      "alt": "Ilustração de betara/papa-terra.",
+      "local": true
+    },
+    "prejereba": {
+      "file": "prejereba.webp",
+      "credit": "Fishcode",
+      "source": "https://fishcode.com.br/cdn/shop/products/prejereba.png?v=1670676772",
+      "alt": "Ilustração de prejereba.",
+      "local": true
+    },
+    "camarao pre-cozido e descascado": {
+      "file": "camarao-descascado.webp",
+      "credit": "Swift",
+      "source": null,
+      "alt": "Foto comercial de camarão pré-cozido e descascado; não é camarão vivo.",
+      "local": true
+    }
   };
+
 
   function forSpecies(species, category = '') {
     const name = normalize(species);
-    const selected = externalReferences[name];
+    const selected = referenceImages[name];
     if (selected) return {
-      ...selected,
-      source: selected.src,
+      src: selected.local ? prefix + 'referencias/' + selected.file : selected.source,
+      source: selected.source || '',
+      credit: selected.credit,
+      alt: selected.alt,
       generic: false,
       illustrative: true,
-      external: true
+      local: Boolean(selected.local),
+      external: !selected.local
     };
     // Ilustrações de identificação taxonômica, não fotos de pescado local.
     // Fontes em domínio público: NOAA e bibliografia científica histórica / Wikimedia Commons.
