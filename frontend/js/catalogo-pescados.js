@@ -14,13 +14,13 @@
     { name: 'Bacucu', category: 'molusco', priceMin: 70, priceMax: 70, saleUnit: 'kg' },
     { name: 'Bagre', category: 'peixe', priceMin: 4, priceMax: 4, saleUnit: 'kg' },
     { name: 'Baiacu', category: 'peixe', priceMin: 20, priceMax: 20, saleUnit: 'kg' },
-    { name: 'Prejereba', aliases: ['Pregereia', 'Pregereva', 'Prejereba'], category: 'peixe', priceMin: 50, priceMax: 50, saleUnit: 'kg', note: 'Prejereba é a grafia documentada em estudos do litoral; Pregereia/Pregereva foram preservadas como formas locais para busca.' },
+    { name: 'Prejereba', aliases: ['Pregereia', 'Pregereva', 'Prejereba'], category: 'peixe', priceMin: 50, priceMax: 50, saleUnit: 'kg', note: 'Prejereba é a grafia documentada para a espécie; as grafias do cadastro anterior foram mantidas para busca, sem confirmação de uso comunitário.' },
     { name: 'Cação', category: 'peixe', priceMin: 25, priceMax: 25, saleUnit: 'kg' },
     { name: 'Linguado', category: 'peixe', priceMin: 25, priceMax: 25, saleUnit: 'kg' },
     { name: 'Paru', category: 'peixe', priceMin: 15, priceMax: 15, saleUnit: 'kg' },
     { name: 'Misturinha', category: 'outro', priceMin: 12, priceMax: 12, saleUnit: 'kg', note: 'Denominação local informada; manter como categoria aberta.' },
     { name: 'Cavalinha', category: 'peixe', priceMin: 15, priceMax: 15, saleUnit: 'kg' },
-    { name: 'Salteira', aliases: ['Saltero', 'Salteiro', 'Guaivira'], category: 'peixe', priceMin: 45, priceMax: 60, saleUnit: 'kg', note: 'Também chamada saltero/salteiro em registros locais. Faixa aproximada informada: R$ 45 a R$ 60 por kg.' },
+    { name: 'Salteira', aliases: ['Saltero', 'Salteiro', 'Guaivira'], category: 'peixe', priceMin: 45, priceMax: 60, saleUnit: 'kg', note: 'Salteira é a grafia documentada; saltero foi preservado como termo do cadastro anterior. Faixa aproximada informada: R$ 45 a R$ 60 por kg.' },
     { name: 'Peixe-galo', category: 'peixe', priceMin: 4.5, priceMax: 4.5, saleUnit: 'kg' },
     { name: 'Betara', category: 'peixe', priceMin: 5, priceMax: 5, saleUnit: 'kg' }
   ].map(item => ({
