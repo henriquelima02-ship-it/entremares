@@ -113,7 +113,7 @@
           <div class="product-art product-art-${esc(product.category)} market-product-art">
             ${illustration}
             <span class="fish-state-tag">${esc(product.state || 'fresco')}</span>
-            <small class="fish-media-caption">${picture?.external ? 'Referência externa: ' + esc(picture.credit) + ' • não é foto do anúncio' : availablePicture ? 'Imagem ilustrativa, não do anúncio' : 'Imagem específica pendente'}</small>
+            <small class="fish-media-caption">${picture?.local ? 'Referência do acervo • fonte: ' + esc(picture.credit || 'arquivo local') + ' • não é o anúncio' : picture?.external ? 'Referência externa: ' + esc(picture.credit) + ' • não é foto do anúncio' : availablePicture ? 'Imagem ilustrativa, não do anúncio' : 'Imagem específica pendente'}</small>
           </div>
 
           <div class="product-body">
