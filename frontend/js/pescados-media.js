@@ -150,6 +150,10 @@
     alt: 'Imagem de referência compartilhada de bagre e bagre-guiri; fotografia não é do anúncio.'
   };
   referenceImages.guiri = referenceImages['bagre-guiri'];
+  // Variações de escrita: a identidade biológica não deve ser inferida pela foto.
+  for (const alias of ['bagre-goiri', 'bagre-guri', 'bagre guri', 'bagre goiri', 'bagre guiri', 'goiri']) {
+    referenceImages[alias] = referenceImages['bagre-guiri'];
+  }
 
   function forSpecies(species, category = '') {
     const name = normalize(species);
