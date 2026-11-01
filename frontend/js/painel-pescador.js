@@ -285,8 +285,8 @@
       const input = $('editShip' + name);
       input.closest('.wizard-choice')?.classList.toggle('selected', input.checked);
     });
-    $('wizardDeliveryLabel').textContent = 'Ajuda de custo: ' + brl($('editDeliveryFee').value);
-    $('wizardFreightLabel').textContent = 'Frete base: ' + brl($('editFreightFee').value);
+    $('wizardDeliveryLabel').textContent = 'Valor atual: ' + brl($('editDeliveryFee').value) + ' • referência: R$ 15';
+    $('wizardFreightLabel').textContent = 'Base atual: ' + brl($('editFreightFee').value) + ' • referência: R$ 30';
   }
 
   function reviewRow(label, value) {
@@ -424,6 +424,17 @@
     document.querySelectorAll('[data-wizard-select]').forEach(button=>button.addEventListener('click',()=>{
       $(button.dataset.wizardSelect).value=button.dataset.wizardValue;
       updateQuickButtons();updateReview();
+    }));
+    document.querySelectorAll('[data-wizard-fee]').forEach(button => button.addEventListener('click', () => {
+      if (button.dataset.wizardFee === 'delivery') {
+        $('editShipDelivery').checked = true;
+        $('editDeliveryFee').value = recommendedFees.communityDelivery;
+      } else {
+        $('editShipFreight').checked = true;
+        $('editFreightFee').value = recommendedFees.collaborativeFreight;
+      }
+      updateShippingStates();
+      updateReview();
     }));
     $('wizardToday').addEventListener('click',()=>{
       const d=new Date(), pad=n=>String(n).padStart(2,'0');
