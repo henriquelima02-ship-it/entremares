@@ -166,3 +166,20 @@
 .page-saberes-fauna .bio-invasiva-photo figcaption strong{font-weight:850}
 .page-saberes-fauna .bio-invasiva-photo figcaption em{font-size:.78rem}
 .page-saberes-fauna .bio-invasiva-photo figcaption small{display:block;font-size:.74rem;line-height:1.5;margin-top:5px}
+
+
+/* Galeria de nove espécies — leitura completa, sem imagens cortadas. */
+.page-saberes-fauna #invasoras .species-grid{align-items:stretch;gap:18px}
+.page-saberes-fauna #invasoras .species-card{min-width:0;display:flex;flex-direction:column}
+.page-saberes-fauna #invasoras .species-card h3{font-size:clamp(1.12rem,1.6vw,1.32rem);line-height:1.32;overflow-wrap:anywhere}
+.page-saberes-fauna #invasoras .species-card > p{line-height:1.7;margin-top:12px}
+.page-saberes-fauna #invasoras .bio-invasoras-note{padding:13px 16px;border-left:4px solid #D5A83C;background:#f5f1e7;border-radius:0 12px 12px 0;color:#36574b;line-height:1.65}
+.page-saberes-fauna #invasoras .bio-invasiva-photo--nine{display:block;width:100%;margin:14px 0 0;border:1px solid #d5e3db;overflow:hidden;border-radius:16px;background:#f4f7f3}
+.page-saberes-fauna #invasoras .bio-invasiva-image-link{display:grid;place-items:center;width:100%;min-width:0;min-height:220px;aspect-ratio:4/3;background:#eaf0ea;overflow:hidden}
+.page-saberes-fauna #invasoras .bio-invasiva-photo--nine img{display:block;width:100%;height:100%;max-height:275px;object-fit:contain;object-position:center;background:transparent;transition:transform .2s ease}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.page-saberes-fauna #invasoras .bio-invasiva-image-link:hover img{transform:scale(1.025)}}
+.page-saberes-fauna #invasoras .bio-invasiva-image-link:focus-visible{outline:3px solid #D5A83C;outline-offset:-3px}
+.page-saberes-fauna #invasoras .bio-invasiva-photo--nine figcaption{display:grid;gap:5px;padding:12px 14px;line-height:1.5;background:#f8faf6;color:#31554a;overflow-wrap:anywhere}
+.page-saberes-fauna #invasoras .bio-invasiva-photo--nine figcaption small{font-size:.76rem;line-height:1.55;color:#547066}
+.page-saberes-fauna #invasoras .bio-invasiva-photo--nine figcaption a{color:#1D5B67;text-decoration:underline;text-underline-offset:2px;font-weight:700}
+@media(max-width:720px){.page-saberes-fauna #invasoras .bio-invasiva-image-link{min-height:190px;aspect-ratio:16/11}.page-saberes-fauna #invasoras .bio-invasiva-photo--nine img{max-height:260px}}
