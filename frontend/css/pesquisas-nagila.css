@@ -59,3 +59,23 @@
 .page-research-nagila .nagila-bottom-nav a{display:inline-flex;align-items:center;border-radius:14px;background:#205a47;color:white;padding:14px 16px;font-weight:850;text-decoration:none;min-height:48px}
 .page-research-nagila .nagila-bottom-nav a:last-child{background:#e7f0ea;color:#205a47}
 @media(max-width:740px){.page-research-nagila .nagila-card-grid{grid-template-columns:1fr}.page-research-nagila .nagila-hero-ornament{display:none}.page-research-nagila .nagila-route{flex-direction:column;align-items:stretch}.page-research-nagila .nagila-route-arrow{transform:rotate(90deg);align-self:center}.page-research-nagila .nagila-hero{border-radius:22px}.page-research-nagila .nagila-hero-credit{line-height:1.6}}
+
+/* Fotos botânicas com créditos verificáveis; sem numeração das plantas. */
+.page-research-nagila .nagila-plant-figure{margin:0 0 16px;border:1px solid #d7e3d9;border-radius:16px;overflow:hidden;background:#eff5f0}
+.page-research-nagila .nagila-plant-media{height:clamp(210px,25vw,280px);display:grid;place-items:center;background:#edf3ee;overflow:hidden}
+.page-research-nagila .nagila-plant-media img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.page-research-nagila .nagila-plant-media .nagila-photo-fallback{display:grid;place-items:center;text-align:center;max-width:200px;padding:12px;font-weight:850;color:#346b57;line-height:1.5}
+.page-research-nagila .nagila-plant-figure figcaption{display:grid;gap:4px;background:#f5f7f2;color:#3f5850;padding:9px 12px;line-height:1.45;font-size:.73rem}
+.page-research-nagila .nagila-plant-figure figcaption small{font-size:.7rem}
+.page-research-nagila .nagila-plant-figure figcaption a{color:#245d6e;text-decoration:underline;text-underline-offset:2px}
+.page-research-nagila .nagila-bridge{border-radius:22px;padding:clamp(18px,3vw,32px);background:#eff5f1;border:1px solid #d3e4d9}
+.page-research-nagila .nagila-invasives-link{display:inline-flex;align-items:center;gap:9px;background:#1d604b;color:#fff;text-decoration:none;padding:15px 19px;border-radius:14px;font-weight:850;line-height:1.5}
+.page-research-nagila .nagila-student-credits{padding:19px 21px;margin:23px 0;background:#eff6ef;border-radius:19px;border:1px solid #d0e1d1}
+.page-research-nagila .nagila-student-credits h3{font:700 1.26rem Georgia,serif;color:#20543f;margin:0 0 8px}
+.page-research-nagila .nagila-student-credits p{font-size:.9rem;line-height:1.6;margin:0}
+.page-research-nagila .nagila-student-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin-top:18px}
+.page-research-nagila .nagila-class-group{padding:13px 15px;background:white;border-radius:13px}
+.page-research-nagila .nagila-class-group strong{color:#1e5142}
+.page-research-nagila .nagila-class-group ul{padding-left:19px;margin:7px 0 0}
+.page-research-nagila .nagila-class-group li{line-height:1.7;font-size:.91rem}
+@media(max-width:650px){.page-research-nagila .nagila-student-grid{grid-template-columns:1fr}.page-research-nagila .nagila-plant-media{height:260px}}
