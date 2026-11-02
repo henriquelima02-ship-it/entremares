@@ -1,0 +1,28 @@
+[
+  {
+    "slug": "gerival-guaraquecaba",
+    "filename": "Pesca de gerival.jpg",
+    "author": "Cesar Augusto Chirosa Horie",
+    "place": "APA de Guaraqueçaba, litoral paranaense",
+    "license": "CC BY-SA 4.0",
+    "description": "Pescadores utilizando gerival para pesca de camarão, diferente da puxada manual de rede",
+    "status": "ok",
+    "errors": [],
+    "width": 1280,
+    "height": 853,
+    "size": 125016
+  },
+  {
+    "slug": "trapiche-ilha-do-mel",
+    "filename": "Por do Sol - Trapiche de Brasília.JPG",
+    "author": "Alan W Pereira",
+    "place": "Trapiche de Brasília, Ilha do Mel, Paranaguá - Paraná",
+    "license": "CC BY-SA 3.0",
+    "description": "Trapiche da praia Brasília na Ilha do Mel",
+    "status": "ok",
+    "errors": [],
+    "width": 1280,
+    "height": 800,
+    "size": 134540
+  }
+]
