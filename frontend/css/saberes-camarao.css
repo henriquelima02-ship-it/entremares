@@ -73,3 +73,21 @@
 .page-saberes-camarao .cam-bottom a{display:inline-flex;border-radius:12px;padding:13px 18px;background:#e8f2eb;color:#1d5d47;text-decoration:none;font-weight:850}
 @media(max-width:850px){.page-saberes-camarao .cam-hero{grid-template-columns:1fr}.page-saberes-camarao .cam-hero-photo{width:min(100%,440px);justify-self:center}.page-saberes-camarao .cam-nutrient-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:580px){.page-saberes-camarao .cam-hero{width:calc(100% - 20px);border-radius:23px;padding:24px 18px}.page-saberes-camarao .cam-hero h1{font-size:2.8rem}.page-saberes-camarao .cam-taxonomy-layout,.page-saberes-camarao .cam-eco-grid,.page-saberes-camarao .cam-nutrient-grid{grid-template-columns:1fr}.page-saberes-camarao .cam-article{width:calc(100% - 23px)}.page-saberes-camarao .cam-section--environment{padding:17px}.page-saberes-camarao .cam-food-example{grid-template-columns:1fr}.page-saberes-camarao .cam-food-number{max-width:280px}.page-saberes-camarao .cam-navigation a{flex:1 0 45%}.page-saberes-camarao .cam-taxonomy>div{padding:9px}.page-saberes-camarao .cam-byline{font-size:.82rem}}
+
+/* Iconografia do cartaz escolar: 15 desenhos vetoriais próprios, armazenados localmente. */
+.page-saberes-camarao .cam-nav-icon{width:29px;height:29px;flex:0 0 29px;display:block}
+.page-saberes-camarao .cam-navigation a{gap:10px;align-items:center}
+.page-saberes-camarao .cam-title-with-icon{display:flex;align-items:center;gap:15px;margin:8px 0 18px}
+.page-saberes-camarao .cam-title-with-icon h2{margin:0}
+.page-saberes-camarao .cam-heading-icon{width:65px;height:65px;flex:0 0 65px;display:block;filter:drop-shadow(0 3px 6px rgba(22,64,56,.1))}
+.page-saberes-camarao .cam-eco-icon{display:block;width:60px;height:60px;min-width:60px;border:0;border-radius:0;background:transparent;margin-bottom:11px}
+.page-saberes-camarao .cam-eco-svg{width:100%;height:100%;display:block;filter:drop-shadow(0 2px 4px rgba(13,62,42,.14))}
+.page-saberes-camarao .cam-nutrient-symbol{display:block;flex:0 0 52px;width:52px;height:52px;border-radius:0;background:transparent;color:inherit}
+.page-saberes-camarao .cam-nutrient-svg{display:block;width:100%;height:100%}
+@media(max-width:580px){
+.page-saberes-camarao .cam-heading-icon{width:50px;height:50px;flex-basis:50px}
+.page-saberes-camarao .cam-title-with-icon{gap:10px}
+.page-saberes-camarao .cam-eco-icon{width:54px;height:54px;min-width:54px}
+.page-saberes-camarao .cam-nutrient-symbol{flex-basis:49px;width:49px;height:49px}
+.page-saberes-camarao .cam-nav-icon{width:25px;height:25px;flex-basis:25px}
+}
