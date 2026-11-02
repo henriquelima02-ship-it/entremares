@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "id": "camarao-branco-inteiro",
+      "file": "camarao-branco-inteiro.webp",
+      "url": "https://fishcode.com.br/cdn/shop/files/camarao-branco-Penaeusschmitti.png?v=1708365977&width=1946",
+      "source": "https://fishcode.com.br/products/camarao-branco",
+      "credit": "Fishcode",
+      "species": "Penaeus schmitti",
+      "context": "Exemplar inteiro, fotografia ilustrativa",
+      "status": "ok",
+      "width": 978,
+      "height": 692,
+      "size_bytes": 19706
+    },
+    {
+      "id": "camarao-branco-conjunto",
+      "file": "camarao-branco-conjunto.webp",
+      "url": "https://fishcode.com.br/cdn/shop/files/camaraobranco.png?v=1708365977&width=1445",
+      "source": "https://fishcode.com.br/products/camarao-branco",
+      "credit": "Fishcode",
+      "species": "Penaeus schmitti",
+      "context": "Camarões inteiros, fotografia ilustrativa",
+      "status": "ok",
+      "width": 978,
+      "height": 692,
+      "size_bytes": 110472
+    }
+  ]
+}
