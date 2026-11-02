@@ -161,3 +161,32 @@
   .page-diego .dg-stretch-body{width:65px;height:65px;flex:0 0 65px}
   .page-diego .dg-muscle-tag{min-height:61px}
 }
+
+/* Revisão da pesquisa Diego/Mayara: fotografias de gestos reais e recortes de anatomia PNG. */
+.page-diego .dg-motion-photo img{height:204px;object-fit:cover;object-position:center}
+.page-diego .dg-motion-card:nth-child(2) .dg-motion-photo img{object-fit:contain;background:#e5f0e9;object-position:center}
+.page-diego .dg-motion-card:nth-child(3) .dg-motion-photo img{object-fit:cover;object-position:center 48%}
+.page-diego .dg-motion-photo figcaption{min-height:140px}
+.page-diego .dg-motion-photo figcaption strong{font-size:.86rem}
+.page-diego .dg-motion-photo figcaption span{font-size:.75rem;line-height:1.5}
+.page-diego .dg-motion-ident{min-height:0;margin-bottom:12px;display:block}
+.page-diego .dg-motion-head h3{font-size:1.39rem;margin-top:7px}
+.page-diego .dg-muscle-tags{grid-template-columns:1fr;gap:7px}
+.page-diego .dg-muscle-tag:last-child:nth-child(odd){grid-column:auto}
+.page-diego .dg-muscle-tag{min-height:0;padding:7px 10px;gap:10px}
+.page-diego .dg-tag-icon{width:48px;height:48px;flex:0 0 48px;object-fit:contain;border-radius:10px}
+.page-diego .dg-muscle-tag>span{font-size:.86rem;line-height:1.35}
+.page-diego .dg-anatomy-item{min-height:112px;align-items:center}
+.page-diego .dg-anatomy-icon{width:83px;height:83px;flex:0 0 83px;object-fit:contain;padding:4px;background:#f3f8f2;border-radius:13px}
+.page-diego .dg-stretch-body{width:73px;height:73px;flex:0 0 73px;object-fit:contain;padding:3px}
+.page-diego .dg-risk-body{width:68px;height:68px;object-fit:contain;padding:3px}
+.page-diego .dg-risk-sun{display:grid;place-items:center;width:64px;height:64px;background:#fff0ce;color:#b77b17;border-radius:13px;font-size:2.4rem;font-weight:800}
+.page-diego .dg-source-credit{padding:14px 17px;background:#eff7f1;border-left:4px solid #69a18c;border-radius:0 12px 12px 0;color:#436255;font-size:.88rem;line-height:1.7;margin:24px 0}
+.page-diego .dg-source-credit a{color:#176884;text-decoration:underline}
+@media(max-width:850px){.page-diego .dg-motion-photo figcaption{min-height:0}.page-diego .dg-muscle-tags{grid-template-columns:1fr}}
+@media(max-width:600px){
+ .page-diego .dg-motion-photo img{height:auto;max-height:320px;aspect-ratio:16/10;object-fit:cover}
+ .page-diego .dg-motion-card:nth-child(2) .dg-motion-photo img{object-fit:contain;aspect-ratio:4/3}
+ .page-diego .dg-motion-photo figcaption{min-height:0}
+ .page-diego .dg-anatomy-icon{width:76px;height:76px;flex:0 0 76px}
+}
