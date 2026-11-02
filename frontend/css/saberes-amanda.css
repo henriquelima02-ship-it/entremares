@@ -1,0 +1,67 @@
+/* Vozes da maré — Amanda Souza Lopes / História e Identidade Cultural 1ª B */
+.page-amanda{--am-ink:#214c46;--am-sea:#125960;--am-sand:#efcf9f}
+.page-amanda .am-skip{position:absolute;top:-100px;left:12px;padding:10px 13px;background:#fff;z-index:1000}
+.page-amanda .am-skip:focus{top:9px}
+.page-amanda .am-hero{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(260px,.8fr);align-items:center;gap:30px;width:min(1190px,calc(100% - 30px));margin:24px auto 12px;padding:clamp(26px,4vw,48px);border-radius:27px;background:linear-gradient(120deg,#113d50,#185c60 52%,#275c50);color:white;position:relative;overflow:hidden}
+.page-amanda .am-hero:after{content:"";position:absolute;inset:auto 0 -75px;height:210px;opacity:.13;pointer-events:none;background:repeating-radial-gradient(ellipse at 70% 120%,transparent 0 27px,#c8f0e0 29px 31px,transparent 33px 60px)}
+.page-amanda .am-hero-text,.page-amanda .am-hero-image{position:relative;z-index:1}
+.page-amanda .am-kicker,.page-amanda .am-eyebrow{text-transform:uppercase;font-weight:900;letter-spacing:.1em;font-size:.78rem}
+.page-amanda .am-kicker{color:#f4d3a0}
+.page-amanda .am-hero h1{font:900 clamp(2.55rem,5.2vw,4.75rem)/1.06 Georgia,serif;color:white;letter-spacing:-.028em;margin:19px 0}
+.page-amanda .am-hero h1 em{display:block;margin-top:13px;font:italic 600 clamp(1.45rem,2.9vw,2.4rem)/1.18 Georgia,serif;color:#f4d5a2;letter-spacing:-.01em}
+.page-amanda .am-hero-text>p:not(.am-byline){font-size:1.1rem;line-height:1.73;color:#edf8f2}
+.page-amanda .am-byline{margin:26px 0 0;padding-top:15px;border-top:1px solid #ffffff5c;line-height:1.85;color:#f6f8f1;font-size:.91rem}
+.page-amanda .am-hero-image{margin:0;width:100%;max-width:430px;justify-self:center;border:1px solid #ffffff5a;border-radius:20px;background:#f5f6f2;padding:9px;box-shadow:0 17px 34px #052c303b}
+.page-amanda .am-hero-image img{display:block;width:100%;height:auto;aspect-ratio:978/692;object-fit:cover;border-radius:13px}
+.page-amanda .am-hero-image figcaption{padding:9px 4px 2px;font-size:.75rem;color:#4d625b;line-height:1.5;text-align:center}
+.page-amanda .am-hero-image figcaption a{color:#1b647a;text-decoration:underline}
+.page-amanda .am-article{width:min(1050px,calc(100% - 32px))}
+.page-amanda .am-opening{font-size:1.15rem;line-height:1.86;color:#36584d;margin:22px 0 20px}
+.page-amanda .am-students{display:flex;align-items:center;gap:17px;background:#edf5ed;border:1px solid #d5e4d9;padding:15px 18px;border-radius:16px;margin:18px 0 30px}
+.page-amanda .am-students-mark{display:grid;place-items:center;flex:0 0 65px;height:65px;border-radius:50%;background:#236c60;color:white;font:900 1.1rem Georgia,serif}
+.page-amanda .am-students strong{font-size:.89rem;color:#1f5b4d}
+.page-amanda .am-students p{margin:5px 0 0;color:#3e6457}
+.page-amanda .am-nav{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0 43px}
+.page-amanda .am-nav a{border:1px solid #d4e4d8;background:#f0f6ed;padding:10px 13px;border-radius:12px;font-size:.89rem;color:#245c4e;text-decoration:none;font-weight:850}
+.page-amanda .am-nav a:hover,.page-amanda .am-nav a:focus-visible{background:#dcefe1}
+.page-amanda .am-section{margin:36px 0 57px;scroll-margin-top:25px}
+.page-amanda .am-eyebrow{display:block;color:#9a6d37}
+.page-amanda .am-section h2{font:800 clamp(1.9rem,3.4vw,3rem)/1.18 Georgia,serif;color:#145748;letter-spacing:-.02em;margin:11px 0 18px}
+.page-amanda .am-section>p{font-size:1.045rem;color:#385c51;line-height:1.84}
+.page-amanda .am-terms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:24px 0}
+.page-amanda .am-terms>div{padding:20px;background:#f0f5ef;border:1px solid #d7e4d9;border-radius:15px}
+.page-amanda .am-terms span{font:800 1.2rem Georgia,serif;color:#1e654d}
+.page-amanda .am-terms p{font-size:.93rem;line-height:1.7;color:#476657;margin:9px 0 0}
+.page-amanda .am-section--interview{border-radius:22px;padding:clamp(18px,3vw,30px);background:#eff6f3;border:1px solid #d6e7e0}
+.page-amanda .am-note{padding:17px 20px;border-left:5px solid #3b8e7a;background:#fff;border-radius:0 13px 13px 0;margin:18px 0}
+.page-amanda .am-note strong{color:#1d6a55}
+.page-amanda .am-note p{font-size:.94rem;line-height:1.73;color:#45635b;margin:8px 0 0}
+.page-amanda .am-question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:19px}
+.page-amanda .am-question-grid>div{border:1px solid #cfe4dc;background:white;border-radius:12px;padding:15px;font:700 1rem/1.45 Georgia,serif;color:#2e6656}
+.page-amanda .am-section blockquote{margin:20px 0;background:#f7f0e3;border-left:4px solid #bda274;border-radius:0 14px 14px 0;padding:17px 21px;color:#6c5837;font:italic 1.18rem/1.64 Georgia,serif}
+.page-amanda .am-legend-line{text-align:center;color:#7b6d52;font-size:.8rem;letter-spacing:.03em;padding:12px 0}
+.page-amanda .am-legend-line span{color:#c49d5f;padding:0 8px}
+.page-amanda .am-section--family{background:#faf2e5;border:1px solid #ecddc2;padding:clamp(18px,3vw,30px);border-radius:22px}
+.page-amanda .am-quote{margin:23px 0;padding:20px 26px;border-radius:17px;background:#17594d;color:#fff}
+.page-amanda .am-quote-mark{font-size:4rem;font-family:Georgia,serif;line-height:.7;color:#f3cf97}
+.page-amanda .am-quote p{font:italic 1.4rem/1.5 Georgia,serif;color:white;margin:12px 0}
+.page-amanda .am-quote small{color:#e3f3e8}
+.page-amanda .am-contrast{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:24px 0}
+.page-amanda .am-contrast>div{border:1px solid #e4e2d4;border-top:5px solid #2e7b68;border-radius:15px;padding:17px;background:#f7f9f5}
+.page-amanda .am-contrast>div:nth-child(2){border-top-color:#c2a06e}
+.page-amanda .am-contrast strong{color:#205e4a;font-size:1.05rem}
+.page-amanda .am-contrast p{line-height:1.67;color:#476157;margin:8px 0 0}
+.page-amanda .am-caution{border-left:4px solid #9aab9c;background:#f3f5f0;border-radius:0 12px 12px 0;padding:13px 17px;color:#49645e!important;font-size:.89rem!important}
+.page-amanda .am-section--women{border:1px solid #e4d9d2;background:#fcf5f0;padding:clamp(20px,3.2vw,32px);border-radius:22px}
+.page-amanda .am-section--closing{background:linear-gradient(115deg,#175e51,#1d6072);border-radius:23px;padding:clamp(20px,3.5vw,35px);color:white}
+.page-amanda .am-section--closing h2,.page-amanda .am-section--closing>p{color:white}
+.page-amanda .am-section--closing .am-eyebrow{color:#f7d49c}
+.page-amanda .am-related{display:flex;flex-wrap:wrap;gap:10px;margin-top:23px}
+.page-amanda .am-related a{display:inline-flex;padding:12px 14px;background:#f6f8ed;border-radius:12px;color:#175b4b;font-size:.86rem;line-height:1.5;font-weight:850;text-decoration:none}
+.page-amanda .am-sources{padding:24px 0;border-top:1px solid #dce7dc;line-height:1.79;color:#456259}
+.page-amanda .am-sources h2{font:800 1.6rem Georgia,serif;color:#185649;margin:0 0 12px}
+.page-amanda .am-sources p{margin:8px 0}
+.page-amanda .am-bottom{padding:24px 0 40px}
+.page-amanda .am-bottom a{padding:12px 16px;background:#e5f2e9;color:#245f4c;border-radius:12px;font-weight:850;text-decoration:none}
+@media(max-width:820px){.page-amanda .am-hero{grid-template-columns:1fr}.page-amanda .am-hero-image{width:min(100%,510px)}}
+@media(max-width:570px){.page-amanda .am-hero{width:calc(100% - 18px);padding:25px 18px;border-radius:20px}.page-amanda .am-hero h1{font-size:2.7rem}.page-amanda .am-article{width:calc(100% - 23px)}.page-amanda .am-terms,.page-amanda .am-question-grid,.page-amanda .am-contrast{grid-template-columns:1fr}.page-amanda .am-students{align-items:flex-start}.page-amanda .am-students-mark{flex-basis:53px;height:53px}.page-amanda .am-section--interview,.page-amanda .am-section--family,.page-amanda .am-section--women,.page-amanda .am-section--closing{padding:18px}}
