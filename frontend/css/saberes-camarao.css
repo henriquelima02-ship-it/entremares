@@ -1,0 +1,75 @@
+/* Reportagem derivada do encarte escolar sobre o camarão — EntreMarés */
+.page-saberes-camarao{--cam-navy:#103d57;--cam-sea:#0d6c83;--cam-teal:#216a58;--cam-sand:#f4eedc;--cam-ink:#21463e}
+.page-saberes-camarao .cam-skip{position:absolute;top:-100px;left:12px;padding:10px;background:white;z-index:2000}
+.page-saberes-camarao .cam-skip:focus{top:8px}
+.page-saberes-camarao .cam-hero{width:min(1180px,calc(100% - 32px));margin:22px auto 20px;border-radius:29px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.75fr);align-items:center;gap:25px;padding:clamp(26px,4.5vw,55px);background:radial-gradient(circle at 88% 17%,#2b7a89 0,#0e536b 37%,#103b54 100%);color:#fff;overflow:hidden;position:relative}
+.page-saberes-camarao .cam-hero:before{content:"";position:absolute;inset:0;opacity:.14;pointer-events:none;background:repeating-radial-gradient(circle at 90% 112%,transparent 0 24px,#c7e1d2 25px 27px,transparent 29px 54px)}
+.page-saberes-camarao .cam-hero-main,.page-saberes-camarao .cam-hero-photo{position:relative;z-index:1}
+.page-saberes-camarao .cam-eyebrow,.page-saberes-camarao .cam-label{font-size:.78rem;letter-spacing:.085em;text-transform:uppercase;font-weight:900}
+.page-saberes-camarao .cam-eyebrow{color:#f8dfae}
+.page-saberes-camarao .cam-hero h1{font:900 clamp(2.65rem,5.4vw,5rem)/.98 Georgia,serif;letter-spacing:-.035em;color:#fff;margin:18px 0}
+.page-saberes-camarao .cam-hero h1 em{display:block;color:#f8e0ae;font:italic 600 clamp(1.45rem,3.2vw,2.45rem)/1.2 Georgia,serif;letter-spacing:-.02em;margin-top:14px}
+.page-saberes-camarao .cam-hero-lead{font-size:clamp(1rem,1.9vw,1.2rem);line-height:1.7;max-width:620px;color:#f0f9f6}
+.page-saberes-camarao .cam-byline{border-top:1px solid rgba(255,255,255,.33);margin:25px 0 0;padding-top:15px;font-size:.9rem;line-height:1.7;color:#e8f5ed}
+.page-saberes-camarao .cam-hero-photo{margin:0;align-self:center;border-radius:24px;background:rgba(255,255,255,.95);padding:20px 12px 12px;box-shadow:0 20px 40px rgba(5,34,39,.2);max-width:450px}
+.page-saberes-camarao .cam-hero-photo img{display:block;max-width:100%;width:100%;height:auto;max-height:340px;object-fit:contain}
+.page-saberes-camarao .cam-hero-photo figcaption{color:#4d6968;font-size:.72rem;text-align:center;margin-top:8px}
+.page-saberes-camarao .cam-article{width:min(1060px,calc(100% - 32px))}
+.page-saberes-camarao .cam-open{font-size:1.14rem;line-height:1.85;color:#33534c;max-width:920px;margin:20px 0 28px}
+.page-saberes-camarao .cam-navigation{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 42px}
+.page-saberes-camarao .cam-navigation a{display:inline-flex;align-items:center;gap:9px;border:1px solid #cdded7;background:#eff5ef;color:#1e5548;text-decoration:none;font-size:.9rem;font-weight:800;padding:10px 13px;border-radius:14px;min-height:49px}
+.page-saberes-camarao .cam-navigation a span{font-size:.71rem;color:#207a73}
+.page-saberes-camarao .cam-navigation a:hover,.page-saberes-camarao .cam-navigation a:focus-visible{background:#dcebe0}
+.page-saberes-camarao .cam-section{margin:35px 0 52px;scroll-margin-top:30px}
+.page-saberes-camarao .cam-section-heading{max-width:850px;margin-bottom:24px}
+.page-saberes-camarao .cam-label{color:#a06c26}
+.page-saberes-camarao .cam-section h2{font:800 clamp(1.9rem,3.6vw,3.05rem)/1.18 Georgia,serif;color:#114f46;letter-spacing:-.027em;margin:10px 0 14px}
+.page-saberes-camarao .cam-section-heading>p,.page-saberes-camarao .cam-section--territory>p{font-size:1.04rem;line-height:1.79;color:#3b5954}
+.page-saberes-camarao .cam-taxonomy-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:17px;align-items:stretch}
+.page-saberes-camarao .cam-taxonomy{padding:17px;border-radius:20px;border:1px solid #d6e4e0;background:linear-gradient(145deg,#eff7f5,#e6f1ec);display:grid;gap:8px}
+.page-saberes-camarao .cam-taxonomy>div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;background:white;border-radius:11px}
+.page-saberes-camarao .cam-taxonomy>div span{font-size:.87rem;color:#53726d;font-weight:700}
+.page-saberes-camarao .cam-taxonomy>div strong{font-size:1.02rem;color:#195749}
+.page-saberes-camarao .cam-compare{padding:24px;border-radius:20px;background:#f7efdf;border:1px solid #e8d8b7}
+.page-saberes-camarao .cam-compare-mark{display:grid;place-items:center;width:47px;height:47px;border-radius:13px;background:#f4dfbc;font-size:1.75rem;font-weight:900;color:#855a2c}
+.page-saberes-camarao .cam-compare h3{font:700 1.33rem Georgia,serif;color:#6d4e24;margin:15px 0 10px}
+.page-saberes-camarao .cam-compare p{font-size:.94rem;line-height:1.66;color:#5d523c}
+.page-saberes-camarao .cam-interest{background:#eaf2ed;border-left:5px solid #4c9478;border-radius:0 14px 14px 0;padding:18px 21px;margin-top:17px}
+.page-saberes-camarao .cam-interest strong{color:#1b6249}
+.page-saberes-camarao .cam-interest p{margin:7px 0 0;color:#405950;line-height:1.7}
+.page-saberes-camarao .cam-section--environment{background:#eff6f2;border:1px solid #d7e6db;border-radius:25px;padding:clamp(18px,3.5vw,32px)}
+.page-saberes-camarao .cam-eco-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.page-saberes-camarao .cam-eco-card{padding:20px;border-radius:18px;background:#fff;border:1px solid #d7e5de}
+.page-saberes-camarao .cam-eco-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#e0f0e3;color:#236a4c;font-size:1.65rem;font-weight:900;margin-bottom:14px}
+.page-saberes-camarao .cam-eco-card h3{font:800 1.13rem Georgia,serif;color:#205946;margin:0 0 10px}
+.page-saberes-camarao .cam-eco-card p{font-size:.96rem;line-height:1.75;color:#435b53;margin:0}
+.page-saberes-camarao .cam-context-line{margin:22px 0 0;border-left:3px solid #75a792;padding-left:14px;color:#2e6657;line-height:1.75;font-style:italic}
+.page-saberes-camarao .cam-nutrient-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.page-saberes-camarao .cam-nutrient{display:flex;align-items:flex-start;gap:11px;padding:17px;background:#f3f8f7;border:1px solid #d9e9e7;border-radius:17px}
+.page-saberes-camarao .cam-nutrient-symbol{display:grid;place-items:center;width:47px;height:47px;flex:0 0 47px;border-radius:50%;background:#145c83;color:#fff;font-size:1.05rem;font-weight:900}
+.page-saberes-camarao .cam-nutrient h3{font-size:.98rem;color:#1d526a;margin:3px 0 6px;font-weight:900}
+.page-saberes-camarao .cam-nutrient p{font-size:.88rem;line-height:1.65;color:#415b63;margin:0}
+.page-saberes-camarao .cam-food-example{display:grid;grid-template-columns:185px 1fr;gap:19px;align-items:center;background:#e7f2ef;border-radius:19px;padding:22px;margin-top:21px}
+.page-saberes-camarao .cam-food-number{display:grid;text-align:center;gap:5px;padding:18px;border-radius:15px;background:#165d6c;color:#fff}
+.page-saberes-camarao .cam-food-number strong{font:800 2.9rem Georgia,serif;line-height:1}
+.page-saberes-camarao .cam-food-number strong span{font-size:1.65rem}
+.page-saberes-camarao .cam-food-number small{font-size:.78rem;line-height:1.3}
+.page-saberes-camarao .cam-food-example h3{font:700 1.25rem Georgia,serif;color:#175145;margin:0 0 9px}
+.page-saberes-camarao .cam-food-example p,.page-saberes-camarao .cam-food-care{line-height:1.72;color:#3a5b54}
+.page-saberes-camarao .cam-food-example p{margin:0}
+.page-saberes-camarao .cam-food-care{margin-top:18px;padding:14px 17px;background:#fbf2e2;border-radius:14px;border-left:4px solid #c4a06c;font-size:.94rem}
+.page-saberes-camarao .cam-section--territory{padding:clamp(20px,3.5vw,36px);border-radius:25px;background:linear-gradient(125deg,#185d50,#17546a);color:#fff}
+.page-saberes-camarao .cam-section--territory .cam-label{color:#e6c990}
+.page-saberes-camarao .cam-section--territory h2,.page-saberes-camarao .cam-section--territory p{color:#fff}
+.page-saberes-camarao .cam-section--territory blockquote{margin:23px 0;background:rgba(255,255,255,.10);border-left:4px solid #f3d79c;border-radius:0 12px 12px 0;padding:16px 21px;color:#fff;font:italic 1.3rem Georgia,serif}
+.page-saberes-camarao .cam-related{display:flex;flex-wrap:wrap;gap:10px}
+.page-saberes-camarao .cam-related a{display:inline-flex;align-items:center;gap:8px;line-height:1.45;background:rgba(255,255,255,.94);padding:13px 15px;border-radius:13px;color:#174d47;font-size:.87rem;font-weight:900;text-decoration:none}
+.page-saberes-camarao .cam-sources{border-top:1px solid #d6e4de;padding:24px 0;color:#435a54;line-height:1.75}
+.page-saberes-camarao .cam-sources h2{font:700 1.7rem Georgia,serif;color:#195645;margin:0 0 10px}
+.page-saberes-camarao .cam-sources ul{padding-left:21px}
+.page-saberes-camarao .cam-sources li{margin:10px 0}
+.page-saberes-camarao .cam-sources a{color:#146682;text-underline-offset:3px}
+.page-saberes-camarao .cam-bottom{margin:25px 0 39px}
+.page-saberes-camarao .cam-bottom a{display:inline-flex;border-radius:12px;padding:13px 18px;background:#e8f2eb;color:#1d5d47;text-decoration:none;font-weight:850}
+@media(max-width:850px){.page-saberes-camarao .cam-hero{grid-template-columns:1fr}.page-saberes-camarao .cam-hero-photo{width:min(100%,440px);justify-self:center}.page-saberes-camarao .cam-nutrient-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.page-saberes-camarao .cam-hero{width:calc(100% - 20px);border-radius:23px;padding:24px 18px}.page-saberes-camarao .cam-hero h1{font-size:2.8rem}.page-saberes-camarao .cam-taxonomy-layout,.page-saberes-camarao .cam-eco-grid,.page-saberes-camarao .cam-nutrient-grid{grid-template-columns:1fr}.page-saberes-camarao .cam-article{width:calc(100% - 23px)}.page-saberes-camarao .cam-section--environment{padding:17px}.page-saberes-camarao .cam-food-example{grid-template-columns:1fr}.page-saberes-camarao .cam-food-number{max-width:280px}.page-saberes-camarao .cam-navigation a{flex:1 0 45%}.page-saberes-camarao .cam-taxonomy>div{padding:9px}.page-saberes-camarao .cam-byline{font-size:.82rem}}
