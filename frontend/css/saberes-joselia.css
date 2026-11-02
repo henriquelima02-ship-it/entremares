@@ -83,13 +83,11 @@
 
 /* Fotografias reais de Penaeus schmitti, em substituição ao SVG ilustrado da capa. */
 .page-joselia .jm-hero-photos{align-self:center}
-.page-joselia .jm-hero-photo-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.8fr);align-items:center;gap:10px}
+.page-joselia .jm-hero-photo-grid{display:block;width:100%}
 .page-joselia .jm-photo-pane{overflow:hidden;border-radius:18px;border:2px solid rgba(255,255,255,.55);background:#f6f6ee;box-shadow:0 16px 28px rgba(5,37,37,.26)}
-.page-joselia .jm-photo-pane--main{height:292px}
-.page-joselia .jm-photo-pane--detail{height:213px;transform:translateY(15px)}
+.page-joselia .jm-photo-pane--main{aspect-ratio:978/692;height:auto}
 .page-joselia .jm-photo-pane img{width:100%;height:100%;display:block}
 .page-joselia .jm-photo-pane--main img{object-fit:cover;object-position:50% 50%}
-.page-joselia .jm-photo-pane--detail img{object-fit:contain;object-position:center;background:#fff}
 .page-joselia .jm-hero-photos figcaption{margin-top:24px;padding:10px 4px 0;text-align:center;display:grid;gap:5px;color:#f3f5e8;line-height:1.45}
 .page-joselia .jm-hero-photos figcaption strong{font:700 1rem/1.45 Georgia,serif}
 .page-joselia .jm-hero-photos figcaption em{font-weight:400}
@@ -97,8 +95,5 @@
 .page-joselia .jm-hero-photos figcaption a{color:#f5d79e;text-decoration:underline;text-underline-offset:3px}
 .page-joselia .jm-hero-photos figcaption a:hover,.page-joselia .jm-hero-photos figcaption a:focus-visible{color:#fff}
 @media(max-width:590px){
- .page-joselia .jm-hero-photo-grid{grid-template-columns:minmax(0,1.25fr) minmax(0,.82fr);gap:9px}
- .page-joselia .jm-photo-pane--main{height:245px}
- .page-joselia .jm-photo-pane--detail{height:177px;transform:translateY(8px)}
  .page-joselia .jm-hero-photos figcaption{margin-top:15px}
 }
