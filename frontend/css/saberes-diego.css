@@ -88,3 +88,57 @@
 .page-diego .dg-bottom a{display:inline-block;padding:13px 17px;background:#e8f3eb;border-radius:12px;text-decoration:none;color:#1e604b;font-weight:900}
 @media(max-width:850px){.page-diego .dg-hero{grid-template-columns:1fr}.page-diego .dg-hero-image{width:min(100%,490px)}.page-diego .dg-motion-grid,.page-diego .dg-definition,.page-diego .dg-stretch-grid,.page-diego .dg-care-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.page-diego .dg-hero{width:calc(100% - 20px);padding:26px 18px;border-radius:21px}.page-diego .dg-hero h1{font-size:2.7rem}.page-diego .dg-article{width:calc(100% - 22px)}.page-diego .dg-motion-grid,.page-diego .dg-definition,.page-diego .dg-stretch-grid,.page-diego .dg-risk-grid,.page-diego .dg-care-list,.page-diego .dg-two-column{grid-template-columns:1fr}.page-diego .dg-section--movements,.page-diego .dg-section--stretch,.page-diego .dg-section--closing{padding:19px}.page-diego .dg-hero-image img{aspect-ratio:4/3}.page-diego .dg-motion-card{padding:18px}.page-diego .dg-stretch-card{padding:16px}.page-diego .dg-nav a{flex:1 1 auto}}
+
+/* Ilustração pedagógica: fotos contextuais de cada movimento + mapa anatômico autoral. */
+.page-diego .dg-hero-image figcaption small{display:block;margin-top:5px;font-size:.71rem;line-height:1.6}
+.page-diego .dg-motion-card{overflow:hidden}
+.page-diego .dg-motion-photo{margin:-20px -20px 17px;background:#ecf2ee;border-bottom:1px solid #d8e4db}
+.page-diego .dg-motion-photo img{display:block;width:100%;height:173px;object-fit:cover;object-position:center;background:#dce8e1}
+.page-diego .dg-motion-photo figcaption{display:grid;align-content:start;gap:4px;padding:12px 15px;min-height:102px;color:#45665b;font-size:.77rem;line-height:1.43}
+.page-diego .dg-motion-photo figcaption strong{font-size:.83rem;color:#235a4a;line-height:1.3}
+.page-diego .dg-motion-photo figcaption span{color:#5d695d;font-size:.72rem}
+.page-diego .dg-motion-photo figcaption small{font-size:.68rem;line-height:1.45}
+.page-diego .dg-motion-photo figcaption a{color:#155e7b;text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere}
+.page-diego .dg-motion-ident{display:flex;align-items:center;gap:10px;margin-bottom:11px;min-height:95px}
+.page-diego .dg-motion-body-icon{display:block;width:68px;height:89px;min-width:68px;padding:5px;border-radius:15px;background:#edf5f2;border:1px solid #d5e4dc}
+.page-diego .dg-motion-card:nth-child(2) .dg-motion-body-icon{background:#f4f2e9}
+.page-diego .dg-motion-card:nth-child(3) .dg-motion-body-icon{background:#eef3f7}
+.page-diego .dg-motion-head h3{font-size:1.26rem}
+.page-diego .dg-motion-card>p{font-size:.96rem}
+.page-diego .dg-muscle-tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 18px}
+.page-diego .dg-muscle-tag{display:flex;align-items:center;gap:5px;background:#f0f6f2;border:1px solid #dce9df;border-radius:11px;min-width:0;padding:5px 7px;min-height:57px}
+.page-diego .dg-muscle-tag:last-child:nth-child(odd){grid-column:1/-1}
+.page-diego .dg-tag-icon{display:block;width:32px;height:43px;flex:0 0 32px}
+.page-diego .dg-muscle-tag>span{color:#315b4f;font-weight:800;font-size:.79rem;line-height:1.29;overflow-wrap:break-word}
+.page-diego .dg-anatomy{border:1px solid #d3e5da;background:linear-gradient(140deg,#f1f8f3,#fff8ec);padding:clamp(19px,3vw,29px);border-radius:21px;margin-top:25px}
+.page-diego .dg-anatomy h3{font:800 clamp(1.3rem,2.8vw,1.7rem) Georgia,serif;margin:0 0 10px;color:#205c4c}
+.page-diego .dg-anatomy>p{font-size:.95rem;color:#4b665b;line-height:1.7;margin:0 0 16px}
+.page-diego .dg-anatomy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.page-diego .dg-anatomy-item{display:flex;gap:10px;align-items:center;min-width:0;background:#fff;border:1px solid #dce5db;border-radius:14px;padding:10px}
+.page-diego .dg-anatomy-icon{width:54px;height:76px;flex:0 0 54px;display:block}
+.page-diego .dg-anatomy-item strong{display:block;color:#205f4f;font-size:.95rem;line-height:1.3}
+.page-diego .dg-anatomy-item span{display:block;margin-top:5px;font-size:.81rem;color:#587065;line-height:1.45}
+.page-diego .dg-anatomy .dg-anatomy-note{font-size:.81rem;color:#637b6d;margin:16px 0 0}
+.page-diego .dg-stretch-body{display:block;width:61px;height:79px;flex:0 0 61px;padding:3px;background:#edf5ee;border-radius:12px;border:1px solid #d6e6d9}
+.page-diego .dg-stretch-card:nth-child(2) .dg-stretch-body{background:#eff5eb}
+.page-diego .dg-stretch-card:nth-child(3) .dg-stretch-body{background:#f6f0e4}
+.page-diego .dg-stretch-card h3{font-size:1.21rem}
+.page-diego .dg-risk-mark{display:flex;align-items:center;justify-content:flex-start;margin-bottom:9px}
+.page-diego .dg-risk-body{display:block;width:61px;height:74px;padding:3px;border:1px solid #d6e4d9;background:#e9f2ed;border-radius:11px}
+.page-diego .dg-risk-card:nth-child(3) .dg-risk-body{background:#fff2dc}
+.page-diego .dg-risk-card:nth-child(4) .dg-risk-body{background:#eef2f4}
+.page-diego .dg-risk-card h3{margin-top:6px}
+@media(max-width:850px){
+ .page-diego .dg-anatomy-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .page-diego .dg-motion-photo img{height:190px}
+}
+@media(max-width:600px){
+ .page-diego .dg-motion-photo{margin:-18px -18px 16px}
+ .page-diego .dg-motion-photo img{height:auto;max-height:255px;aspect-ratio:16/10;object-fit:cover}
+ .page-diego .dg-motion-photo figcaption{min-height:0}
+ .page-diego .dg-muscle-tags{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .page-diego .dg-motion-ident{min-height:82px}
+ .page-diego .dg-anatomy-grid{grid-template-columns:1fr}
+ .page-diego .dg-anatomy-item{padding:9px 12px}
+ .page-diego .dg-stretch-body{width:58px;height:75px;flex-basis:58px}
+}
