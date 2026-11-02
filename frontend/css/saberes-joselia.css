@@ -1,0 +1,82 @@
+/* Entre Marés — Josélia Meneguel: identidade, economia e pesca artesanal */
+.page-joselia{--jm-ink:#22493f;--jm-green:#1a5a50;--jm-navy:#164754;--jm-sand:#f8eedb;--jm-teal:#20747b}
+.page-joselia .jm-skip{position:absolute;top:-100px;left:12px;padding:11px;background:#fff;z-index:200}
+.page-joselia .jm-skip:focus{top:8px}
+.page-joselia .jm-hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(270px,.85fr);gap:25px;align-items:center;width:min(1180px,calc(100% - 32px));margin:22px auto 10px;padding:clamp(25px,4.5vw,54px);border-radius:30px;color:#fff;background:linear-gradient(125deg,#103b49,#16605c 56%,#326c65);overflow:hidden;position:relative}
+.page-joselia .jm-hero:after{content:"";position:absolute;inset:auto -10% -100px 0;height:220px;opacity:.15;pointer-events:none;background:repeating-radial-gradient(ellipse at 50% 100%,transparent 0 24px,#d3e9dc 25px 27px,transparent 28px 54px)}
+.page-joselia .jm-hero-copy,.page-joselia .jm-hero-art{z-index:1;position:relative}
+.page-joselia .jm-overline,.page-joselia .jm-section-eyebrow{display:block;font-size:.79rem;letter-spacing:.105em;text-transform:uppercase;font-weight:900}
+.page-joselia .jm-overline{color:#ffe0a6}
+.page-joselia .jm-hero h1{font:900 clamp(2.5rem,5vw,4.8rem)/1.04 Georgia,serif;letter-spacing:-.03em;color:#fff;margin:16px 0 21px}
+.page-joselia .jm-hero h1 em{display:block;font:italic 600 clamp(1.55rem,3vw,2.5rem)/1.22 Georgia,serif;letter-spacing:-.015em;color:#ffe0ae;margin-top:13px}
+.page-joselia .jm-hero-copy>p{line-height:1.78;font-size:1.12rem;color:#edf6ef;max-width:655px}
+.page-joselia .jm-byline{margin-top:23px;padding-top:16px;border-top:1px solid #ffffff5c;color:#f5f8ed;font-size:.9rem;line-height:1.9}
+.page-joselia .jm-hero-art{justify-self:center;width:min(100%,370px);text-align:center}
+.page-joselia .jm-hero-art svg{width:100%;height:auto;display:block;filter:drop-shadow(0 12px 13px #0e252e55)}
+.page-joselia .jm-hero-art>span{color:#e1e8dc;font:700 .88rem Georgia,serif;letter-spacing:.04em}
+.page-joselia .jm-hero-art b{color:#eaca94;padding:0 6px}
+.page-joselia .jm-article{width:min(1070px,calc(100% - 32px))}
+.page-joselia .jm-lead{max-width:950px;font-size:1.15rem;line-height:1.9;color:#38544c;margin:23px 0 25px}
+.page-joselia .jm-local-nav{display:flex;flex-wrap:wrap;gap:9px;padding-bottom:24px;border-bottom:1px solid #d5e4dc;margin:20px 0 36px}
+.page-joselia .jm-local-nav a{font-size:.9rem;color:#1d594d;background:#eff6f0;border:1px solid #d9e7dc;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:800}
+.page-joselia .jm-local-nav a:hover,.page-joselia .jm-local-nav a:focus-visible{background:#d5ead9}
+.page-joselia .jm-section{margin:28px 0 54px;scroll-margin-top:24px}
+.page-joselia .jm-section-eyebrow{color:#986627}
+.page-joselia .jm-section h2{font:800 clamp(1.95rem,3.5vw,3rem)/1.16 Georgia,serif;letter-spacing:-.02em;color:#1c5b4e;margin:11px 0 19px}
+.page-joselia .jm-section>p{line-height:1.82;color:#3c5950;font-size:1.04rem}
+.page-joselia .jm-concept{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#e8f1ec;border:1px solid #d5e6da;padding:18px 20px;border-radius:17px;margin:22px 0}
+.page-joselia .jm-concept span{color:#1c6352;font-weight:900;background:#fff;border-radius:9px;padding:8px 11px;white-space:nowrap;font-size:.88rem}
+.page-joselia .jm-concept b{color:#5e927a}
+.page-joselia .jm-aside{border-left:4px solid #d9ad68;background:#fcf5e7;padding:18px 21px;border-radius:0 15px 15px 0}
+.page-joselia .jm-aside strong{color:#80612b;font-size:1.04rem}
+.page-joselia .jm-aside p{line-height:1.74;color:#565347;margin:9px 0 0}
+.page-joselia .jm-section--economy{background:#f3f7f3;border:1px solid #dce8df;border-radius:23px;padding:clamp(19px,3.5vw,34px)}
+.page-joselia .jm-economy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:23px 0}
+.page-joselia .jm-economy-card{background:#fff;padding:19px;border:1px solid #d7e6de;border-radius:16px}
+.page-joselia .jm-economy-card>span{color:#8c6c40;font-weight:900;letter-spacing:.09em;font-size:.79rem}
+.page-joselia .jm-economy-card h3{font:800 1.18rem Georgia,serif;color:#236451;margin:8px 0}
+.page-joselia .jm-economy-card p{font-size:.92rem;line-height:1.7;color:#486159;margin:0}
+.page-joselia .jm-concept--pale{background:#e8eee2}
+.page-joselia .jm-chain{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:23px 0}
+.page-joselia .jm-chain li{background:#f7f1e4;border:1px solid #e8d9be;border-radius:15px;padding:20px 17px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.page-joselia .jm-chain li>span{font-size:.78rem;color:#96682d;font-weight:900}
+.page-joselia .jm-chain strong{color:#255d4f;font:800 1.15rem Georgia,serif}
+.page-joselia .jm-chain small{color:#5a6258;font-size:.88rem;line-height:1.6}
+.page-joselia .jm-chain-foot{border-left:4px solid #7bad8c;padding-left:14px;color:#3f6d57!important}
+.page-joselia .jm-section--questions{background:#143f4c;color:#fff;border-radius:25px;padding:clamp(20px,3.4vw,34px)}
+.page-joselia .jm-section--questions .jm-section-eyebrow{color:#f4d6a2}
+.page-joselia .jm-section--questions h2,.page-joselia .jm-section--questions>p{color:#f9fffc}
+.page-joselia .jm-question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:23px 0}
+.page-joselia .jm-question-grid p{font:700 1.09rem/1.5 Georgia,serif;margin:0;padding:18px;background:#ffffff1b;border:1px solid #ffffff26;border-radius:15px;color:#fff}
+.page-joselia .jm-territory-insight{background:#fff;padding:19px 21px;border-radius:16px;color:#255744}
+.page-joselia .jm-territory-insight p{line-height:1.74;margin:9px 0 0;color:#486052}
+.page-joselia .jm-mindmap{margin:22px 0 0;padding:clamp(16px,3vw,28px);background:#f0f5f0;border:1px solid #d8e5d8;border-radius:23px}
+.page-joselia .jm-mindmap-core{max-width:430px;text-align:center;margin:0 auto 19px;padding:20px;border-radius:18px;background:linear-gradient(110deg,#1e6569,#1d7857);box-shadow:0 11px 27px #1d6b5730;color:#fff;display:grid;gap:5px}
+.page-joselia .jm-mindmap-core span{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:#f3dcb0;font-weight:900}
+.page-joselia .jm-mindmap-core strong{font:800 1.35rem Georgia,serif}
+.page-joselia .jm-mindmap-core small{color:#e0f0e8}
+.page-joselia .jm-mindmap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.page-joselia .jm-mindmap-card{background:#fff;border:1px solid #d9e7dc;border-top:5px solid #3f8d6d;border-radius:14px;padding:18px}
+.page-joselia .jm-mindmap-card:nth-child(even){border-top-color:#c69752}
+.page-joselia .jm-mindmap-card>span{display:block;color:#8b6a32;font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.page-joselia .jm-mindmap-card strong{display:block;color:#21564b;font:800 1.06rem Georgia,serif;margin:8px 0}
+.page-joselia .jm-mindmap-card p{font-size:.9rem;line-height:1.67;color:#4b635b;margin:0}
+.page-joselia .jm-mindmap figcaption{margin-top:17px;color:#50665d;font-size:.81rem;line-height:1.7}
+.page-joselia .jm-section--closing{background:linear-gradient(120deg,#1a6954,#1b5869);padding:clamp(20px,4vw,38px);border-radius:24px;color:#fff}
+.page-joselia .jm-section--closing .jm-section-eyebrow{color:#f0d6ac}
+.page-joselia .jm-section--closing h2,.page-joselia .jm-section--closing>p{color:#fff}
+.page-joselia .jm-section--closing blockquote{margin:23px 0;border-left:4px solid #e8d094;background:#ffffff14;color:#fff;padding:16px 20px;font:italic 1.23rem/1.68 Georgia,serif;border-radius:0 13px 13px 0}
+.page-joselia .jm-related{display:flex;flex-wrap:wrap;gap:9px}
+.page-joselia .jm-related a{font-size:.89rem;font-weight:850;text-decoration:none;line-height:1.45;padding:12px 15px;color:#1f5849;background:#faf9f0;border-radius:12px}
+.page-joselia .jm-credits{border-top:1px solid #dce6dc;padding:26px 0;color:#465e53;line-height:1.76}
+.page-joselia .jm-credits h2{font:800 1.7rem Georgia,serif;color:#205b4c}
+.page-joselia .jm-students{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0}
+.page-joselia .jm-students>div{border:1px solid #d7e5dc;background:#f5f8f5;border-radius:15px;padding:17px 20px}
+.page-joselia .jm-students h3{font:800 1.23rem Georgia,serif;margin:0 0 7px;color:#245d4e}
+.page-joselia .jm-students p{font-size:.87rem;color:#557065;margin:0 0 9px}
+.page-joselia .jm-students ul{margin:0;padding-left:18px}
+.page-joselia .jm-class-count{background:#f5eddc;padding:13px 17px;border-radius:11px}
+.page-joselia .jm-bottom{margin:24px 0 42px}
+.page-joselia .jm-bottom a{background:#e9f2e9;padding:13px 17px;border-radius:11px;color:#1d5948;text-decoration:none;font-weight:900;display:inline-flex}
+@media(max-width:830px){.page-joselia .jm-hero{grid-template-columns:1fr}.page-joselia .jm-hero-art{max-width:330px}.page-joselia .jm-economy-grid,.page-joselia .jm-chain,.page-joselia .jm-mindmap-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:590px){.page-joselia .jm-hero{width:calc(100% - 20px);padding:26px 19px;border-radius:21px}.page-joselia .jm-article{width:calc(100% - 23px)}.page-joselia .jm-hero h1{font-size:2.8rem}.page-joselia .jm-question-grid,.page-joselia .jm-students,.page-joselia .jm-economy-grid,.page-joselia .jm-chain,.page-joselia .jm-mindmap-grid{grid-template-columns:1fr}.page-joselia .jm-concept{gap:6px;padding:13px}.page-joselia .jm-concept span{font-size:.82rem;white-space:normal}.page-joselia .jm-hero-art{max-width:275px}.page-joselia .jm-section--economy,.page-joselia .jm-section--questions,.page-joselia .jm-section--closing{padding:19px}}
