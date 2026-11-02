@@ -1,0 +1,55 @@
+/* Compostagem e sustentabilidade em Piaçaguera: reportagem do acervo Saberes. */
+.page-compostagem{--comp-green:#205b46;--comp-ink:#244b3f;--comp-earth:#a26b3b}
+.page-compostagem .comp-hero{width:min(1140px,calc(100% - 30px));margin:23px auto 0;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(245px,.65fr);gap:30px;align-items:center;padding:clamp(23px,4vw,54px);border-radius:28px;background:radial-gradient(circle at 85% 5%,#4e8d60,#24634d 45%,#16463d);color:#fff;overflow:hidden;position:relative}
+.page-compostagem .comp-hero:before{content:"";position:absolute;inset:0;opacity:.12;pointer-events:none;background:repeating-radial-gradient(circle at 90% 110%,transparent 0 21px,#e8e5be 22px 24px,transparent 25px 45px)}
+.page-compostagem .comp-hero-content,.page-compostagem .comp-hero-photo{position:relative;z-index:1}
+.page-compostagem .comp-eyebrow,.page-compostagem .comp-kicker{font-size:.74rem;text-transform:uppercase;letter-spacing:.11em;font-weight:900}
+.page-compostagem .comp-eyebrow{color:#f8dfb6}
+.page-compostagem .comp-hero h1{font:800 clamp(2.45rem,5.5vw,4.5rem)/1.06 Georgia,serif;color:#fff;margin:16px 0;letter-spacing:-.032em}
+.page-compostagem .comp-hero h1 em{display:block;font:italic 600 clamp(1.55rem,3vw,2.4rem)/1.2 Georgia,serif;color:#f9dfae;margin-top:14px}
+.page-compostagem .comp-hero-content>p:not(.comp-byline){max-width:630px;line-height:1.72;color:#f2f6ed;font-size:1.07rem}
+.page-compostagem .comp-byline{font-size:.89rem;line-height:1.75;color:#edf6e8;padding-top:16px;border-top:1px solid rgba(255,255,255,.28);margin-top:24px}
+.page-compostagem .comp-hero-photo{margin:0;justify-self:center;max-width:365px;padding:9px 9px 12px;border-radius:22px;background:#f5f1e9;box-shadow:0 15px 40px rgba(12,37,29,.2)}
+.page-compostagem .comp-hero-photo img{display:block;width:100%;height:auto;max-height:480px;object-fit:contain;border-radius:15px}
+.page-compostagem .comp-hero-photo figcaption{color:#34574b;font-size:.78rem;text-align:center;line-height:1.5;padding:10px 5px 2px}
+.page-compostagem .comp-article{width:min(1030px,calc(100% - 30px))}
+.page-compostagem .comp-opening{font-size:1.16rem;line-height:1.85;color:#36574a;max-width:950px;margin:18px 0 27px}
+.page-compostagem .comp-nav{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 40px}
+.page-compostagem .comp-nav a{background:#edf4ec;color:#1e5f4a;border:1px solid #d0e0d2;border-radius:13px;padding:12px 15px;min-height:45px;font-size:.92rem;font-weight:800;text-decoration:none}
+.page-compostagem .comp-nav a:hover{background:#d9eddb}
+.page-compostagem .comp-section{margin:36px 0 51px;scroll-margin-top:28px}
+.page-compostagem .comp-kicker{color:#9d6b31}
+.page-compostagem .comp-section h2{font:800 clamp(1.9rem,3.6vw,3rem)/1.18 Georgia,serif;color:#195341;margin:10px 0 18px;letter-spacing:-.02em}
+.page-compostagem .comp-section>p{font-size:1.04rem;line-height:1.82;color:#39564b}
+.page-compostagem .comp-material-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:23px}
+.page-compostagem .comp-material-card{background:#f0f5f3;border:1px solid #d6e4de;border-radius:20px;padding:22px}
+.page-compostagem .comp-material-card--organic{background:#f5f4e9;border-color:#e5ddc0}
+.page-compostagem .comp-card-icon{width:62px;height:62px;border-radius:50%;background:#246d69;color:#fff;display:grid;place-items:center;font-size:2.25rem;line-height:1}
+.page-compostagem .comp-material-card--organic .comp-card-icon{background:#58833c}
+.page-compostagem .comp-material-card h3{font:800 1.3rem Georgia,serif;color:#265441;margin:16px 0 9px}
+.page-compostagem .comp-material-card p{font-size:.98rem;line-height:1.73;color:#455d52;margin:0}
+.page-compostagem .comp-section--exchange{padding:clamp(18px,3vw,30px);background:#f5f0e3;border-radius:23px;border:1px solid #eadfc6}
+.page-compostagem .comp-flow{display:flex;align-items:stretch;gap:9px;margin:27px 0}
+.page-compostagem .comp-flow>div{flex:1;min-width:0;background:#fff;padding:17px 12px;border-radius:15px;text-align:center;border:1px solid #e3dcc8}
+.page-compostagem .comp-flow>div>span{display:block;font-weight:900;font-size:.75rem;color:#a67c3a;letter-spacing:.11em;margin-bottom:8px}
+.page-compostagem .comp-flow>div strong{display:block;color:#205b44;font-size:1rem}
+.page-compostagem .comp-flow>div small{display:block;font-size:.85rem;color:#50665c;line-height:1.55;margin-top:7px}
+.page-compostagem .comp-flow-arrow{align-self:center;color:#a78048;font-size:1.7rem}
+.page-compostagem .comp-steps{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;padding:0;margin:28px 0}
+.page-compostagem .comp-steps li{display:flex;gap:14px;align-items:start;padding:19px;border-radius:18px;border:1px solid #dce6d9;background:#f7faf5}
+.page-compostagem .comp-step-number{display:grid;place-items:center;flex:0 0 45px;width:45px;height:45px;background:#367a50;border-radius:50%;color:#fff;font:800 1.35rem Georgia,serif}
+.page-compostagem .comp-steps li h3{font:800 1.2rem Georgia,serif;color:#245941;margin:3px 0 8px}
+.page-compostagem .comp-steps li p{line-height:1.7;color:#486252;font-size:.95rem;margin:0}
+.page-compostagem .comp-care{padding:17px 20px;background:#f7f0dc;border-left:4px solid #be9e59;border-radius:0 15px 15px 0}
+.page-compostagem .comp-section--community{background:linear-gradient(115deg,#195a4b,#245f72);border-radius:25px;padding:clamp(20px,4vw,36px)}
+.page-compostagem .comp-section--community .comp-kicker{color:#f4d6a2}
+.page-compostagem .comp-section--community h2,.page-compostagem .comp-section--community>p{color:#fff}
+.page-compostagem .comp-section--community blockquote{margin:23px 0;background:rgba(255,255,255,.09);border-left:4px solid #f5db9b;padding:18px 20px;border-radius:0 13px 13px 0;color:#fff;font:italic 1.35rem Georgia,serif}
+.page-compostagem .comp-related{display:flex;flex-wrap:wrap;gap:9px}
+.page-compostagem .comp-related a{background:#f7f9f2;color:#225a43;font-weight:850;border-radius:12px;padding:13px 16px;text-decoration:none;line-height:1.5}
+.page-compostagem .comp-sources{border-top:1px solid #dce4d9;padding-top:27px;color:#496052;line-height:1.78}
+.page-compostagem .comp-sources h2{font:700 1.7rem Georgia,serif;color:#205443}
+.page-compostagem .comp-end-nav{margin:24px 0 40px}
+.page-compostagem .comp-end-nav a{display:inline-block;padding:13px 17px;border-radius:13px;background:#eaf3ea;color:#245940;text-decoration:none;font-weight:850}
+@media(max-width:780px){.page-compostagem .comp-hero{grid-template-columns:1fr}.page-compostagem .comp-hero-photo{width:min(100%,365px)}}
+@media(max-width:580px){.page-compostagem .comp-hero{width:calc(100% - 19px);padding:26px 18px;border-radius:22px}.page-compostagem .comp-hero h1{font-size:2.75rem}.page-compostagem .comp-article{width:calc(100% - 21px)}.page-compostagem .comp-material-grid,.page-compostagem .comp-steps{grid-template-columns:1fr}.page-compostagem .comp-flow{flex-direction:column;align-items:stretch}.page-compostagem .comp-flow-arrow{align-self:center;transform:rotate(90deg)}.page-compostagem .comp-section--exchange,.page-compostagem .comp-section--community{padding:19px}}
