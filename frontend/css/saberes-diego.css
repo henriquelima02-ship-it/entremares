@@ -142,3 +142,22 @@
  .page-diego .dg-anatomy-item{padding:9px 12px}
  .page-diego .dg-stretch-body{width:58px;height:75px;flex-basis:58px}
 }
+
+/* Desenhos isolados de cada região corporal, para leitura imediata sem o boneco inteiro. */
+.page-diego .dg-motion-body-icon{width:78px;height:78px;min-width:78px;padding:6px;border-radius:17px}
+.page-diego .dg-motion-ident{min-height:92px}
+.page-diego .dg-muscle-tag{gap:8px;min-height:65px;padding:6px 8px}
+.page-diego .dg-tag-icon{width:39px;height:39px;flex:0 0 39px}
+.page-diego .dg-anatomy-item{gap:13px;min-height:111px;padding:12px 13px}
+.page-diego .dg-anatomy-icon{width:79px;height:79px;flex:0 0 79px;background:#f3f8f2;border:1px solid #dfebe2;border-radius:13px;padding:7px}
+.page-diego .dg-anatomy-item strong{font-size:1rem}
+.page-diego .dg-anatomy-item span{font-size:.84rem}
+.page-diego .dg-stretch-body{width:71px;height:71px;flex:0 0 71px;padding:5px}
+.page-diego .dg-risk-body{width:68px;height:68px;padding:5px}
+@media(max-width:600px){
+  .page-diego .dg-motion-body-icon{width:71px;height:71px;min-width:71px}
+  .page-diego .dg-anatomy-icon{width:70px;height:70px;flex:0 0 70px;padding:6px}
+  .page-diego .dg-anatomy-item{min-height:93px;gap:13px}
+  .page-diego .dg-stretch-body{width:65px;height:65px;flex:0 0 65px}
+  .page-diego .dg-muscle-tag{min-height:61px}
+}
