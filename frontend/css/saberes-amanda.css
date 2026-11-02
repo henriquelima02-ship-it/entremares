@@ -65,3 +65,24 @@
 .page-amanda .am-bottom a{padding:12px 16px;background:#e5f2e9;color:#245f4c;border-radius:12px;font-weight:850;text-decoration:none}
 @media(max-width:820px){.page-amanda .am-hero{grid-template-columns:1fr}.page-amanda .am-hero-image{width:min(100%,510px)}}
 @media(max-width:570px){.page-amanda .am-hero{width:calc(100% - 18px);padding:25px 18px;border-radius:20px}.page-amanda .am-hero h1{font-size:2.7rem}.page-amanda .am-article{width:calc(100% - 23px)}.page-amanda .am-terms,.page-amanda .am-question-grid,.page-amanda .am-contrast{grid-template-columns:1fr}.page-amanda .am-students{align-items:flex-start}.page-amanda .am-students-mark{flex-basis:53px;height:53px}.page-amanda .am-section--interview,.page-amanda .am-section--family,.page-amanda .am-section--women,.page-amanda .am-section--closing{padding:18px}}
+
+/* Fotografias documentais do litoral paranaense, com fontes CC BY-SA 4.0. */
+.page-amanda .am-hero-image{max-width:450px}
+.page-amanda .am-hero-image img{aspect-ratio:4/3;object-fit:cover;object-position:50% 50%;background:#d6e6e1}
+.page-amanda .am-hero-image figcaption small{display:block;font-size:.7rem;line-height:1.5;margin-top:5px}
+.page-amanda .am-hero-image figcaption a{overflow-wrap:anywhere}
+.page-amanda .am-report-photo{margin:24px 0 26px;background:#f2f7f1;border:1px solid #d2e4d8;overflow:hidden;border-radius:19px}
+.page-amanda .am-report-photo img{display:block;width:100%;height:auto;max-height:430px;object-fit:cover;object-position:center;background:#dbe8df}
+.page-amanda .am-report-photo--mangue img{aspect-ratio:16/9}
+.page-amanda .am-report-photo--tarrafa img{aspect-ratio:16/9}
+.page-amanda .am-report-photo--barcos img{aspect-ratio:16/9}
+.page-amanda .am-report-photo figcaption{padding:14px 17px 16px;color:#3e6154;font-size:.94rem;line-height:1.65}
+.page-amanda .am-report-photo figcaption strong{color:#185b4d}
+.page-amanda .am-report-photo figcaption small{display:block;color:#577166;font-size:.78rem;line-height:1.55;margin-top:7px}
+.page-amanda .am-report-photo figcaption a{color:#146b82;text-underline-offset:2px;overflow-wrap:anywhere}
+@media(max-width:570px){
+  .page-amanda .am-report-photo{margin:19px 0 22px;border-radius:14px}
+  .page-amanda .am-report-photo img{max-height:260px}
+  .page-amanda .am-report-photo figcaption{padding:12px 13px;font-size:.88rem}
+  .page-amanda .am-report-photo figcaption small{font-size:.73rem}
+}
