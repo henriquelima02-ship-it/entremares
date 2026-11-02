@@ -1,0 +1,66 @@
+[
+  {
+    "id": "boldo",
+    "name": "Boldo",
+    "file": "Plectranthus barbatus.jpg",
+    "author": "mauroguanandi",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Plectranthus_barbatus.jpg"
+  },
+  {
+    "id": "hortela",
+    "name": "Hortelã",
+    "file": "Mentha spicata.jpg",
+    "author": "Schumi4ever",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mentha_spicata.jpg"
+  },
+  {
+    "id": "mastruz",
+    "name": "Mastruz",
+    "file": "Dysphania ambrosioides 001.JPG",
+    "author": "H. Zell",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dysphania_ambrosioides_001.JPG"
+  },
+  {
+    "id": "guaco",
+    "name": "Guaco",
+    "file": "Mikania glomerata.JPG",
+    "author": "Eugenio Hansen",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mikania_glomerata.JPG"
+  },
+  {
+    "id": "penicilina",
+    "name": "Penicilina vegetal",
+    "file": "Alternanthera brasiliana.jpg",
+    "author": "CostaPPPR",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Alternanthera_brasiliana.jpg"
+  },
+  {
+    "id": "tanchagem",
+    "name": "Tanchagem",
+    "file": "Plantago major.jpg",
+    "author": "Iorsh",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Plantago_major.jpg"
+  },
+  {
+    "id": "babosa",
+    "name": "Babosa",
+    "file": "Potted Aloe vera plant.jpg",
+    "author": "Arjun01",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Potted_Aloe_vera_plant.jpg"
+  },
+  {
+    "id": "goiabeira",
+    "name": "Goiabeira",
+    "file": "Psidium guajava lehed.JPG",
+    "author": "Vihelik",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Psidium_guajava_lehed.JPG"
+  }
+]
