@@ -79,3 +79,7 @@
 .page-research-nagila .nagila-class-group ul{padding-left:19px;margin:7px 0 0}
 .page-research-nagila .nagila-class-group li{line-height:1.7;font-size:.91rem}
 @media(max-width:650px){.page-research-nagila .nagila-student-grid{grid-template-columns:1fr}.page-research-nagila .nagila-plant-media{height:260px}}
+/* Pesquisa tradicional: o nome da planta e a narrativa popular têm prioridade sobre os cards de curiosidade. */
+.page-research-nagila .nagila-traditional-use{font-size:1rem;line-height:1.84;color:#29483d}
+.page-research-nagila .nagila-hero-credit{background:rgba(255,255,255,.09);border-radius:12px;padding:14px 16px}
+.page-research-nagila .nagila-question{background:#f0f5eb;border:0;border-radius:13px;padding:12px 14px}
