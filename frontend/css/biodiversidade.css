@@ -159,3 +159,10 @@
 .page-saberes-fauna .species-card .bio-animal-photo .story-photo-media {
   background: #eaf1ed;
 }
+/* Quatro espécies invasoras ilustradas com imagens do documento pedagógico: sem corte. */
+.page-saberes-fauna .bio-invasiva-photo{margin:13px 0 16px;border:1px solid #d9e4db;border-radius:15px;overflow:hidden;background:#edf4ed}
+.page-saberes-fauna .bio-invasiva-photo img{display:block;max-width:100%;width:100%;height:190px;object-fit:contain;background:#e8f0e9}
+.page-saberes-fauna .bio-invasiva-photo figcaption{display:block;background:#f6f8f4;padding:10px 12px;color:#345d4a;font-size:.82rem;line-height:1.5}
+.page-saberes-fauna .bio-invasiva-photo figcaption strong{font-weight:850}
+.page-saberes-fauna .bio-invasiva-photo figcaption em{font-size:.78rem}
+.page-saberes-fauna .bio-invasiva-photo figcaption small{display:block;font-size:.74rem;line-height:1.5;margin-top:5px}
