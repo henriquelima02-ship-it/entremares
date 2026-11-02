@@ -1,0 +1,90 @@
+/* Diego Munhos de Melo + Mayara, 2ª série B: Práticas Esportivas e Saúde e pesca artesanal */
+.page-diego{--dg-ink:#194f46;--dg-sea:#135d6c;--dg-sand:#dfb779;--dg-light:#edf5ef}
+.page-diego .dg-skip{position:absolute;top:-100px;left:12px;padding:11px 13px;z-index:1000;background:#fff}
+.page-diego .dg-skip:focus{top:9px}
+.page-diego .dg-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(270px,.92fr);align-items:center;gap:28px;width:min(1190px,calc(100% - 30px));margin:22px auto 12px;padding:clamp(24px,4vw,48px);border-radius:28px;color:#fff;background:linear-gradient(123deg,#123b52,#165d62 60%,#286a55);position:relative;overflow:hidden}
+.page-diego .dg-hero:before{content:"";position:absolute;inset:auto -5% -110px 0;height:220px;pointer-events:none;opacity:.12;background:repeating-radial-gradient(ellipse at 60% 110%,transparent 0 26px,#c9e7df 27px 29px,transparent 30px 59px)}
+.page-diego .dg-hero-content,.page-diego .dg-hero-image{position:relative;z-index:1}
+.page-diego .dg-kicker,.page-diego .dg-eyebrow{display:block;font-weight:900;text-transform:uppercase;letter-spacing:.085em;font-size:.78rem}
+.page-diego .dg-kicker{color:#ffdc9f}
+.page-diego .dg-hero h1{font:900 clamp(2.55rem,5.1vw,4.8rem)/1.03 Georgia,serif;color:#fff;letter-spacing:-.035em;margin:18px 0}
+.page-diego .dg-hero h1 em{display:block;color:#f9dfb1;font:italic 600 clamp(1.48rem,3vw,2.42rem)/1.22 Georgia,serif;margin-top:16px;letter-spacing:-.01em}
+.page-diego .dg-hero-content>p{font-size:1.1rem;line-height:1.78;color:#f0f8f5}
+.page-diego .dg-credits{padding-top:17px;margin-top:24px;border-top:1px solid #ffffff57;line-height:1.75;color:#f2f8ef;font-size:.91rem}
+.page-diego .dg-hero-image{max-width:440px;justify-self:center;background:#f4f5ed;border-radius:22px;border:1px solid #ffffff73;padding:9px;margin:0;box-shadow:0 18px 32px #062f304a}
+.page-diego .dg-hero-image img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:13px}
+.page-diego .dg-hero-image figcaption{font-size:.76rem;color:#43645b;line-height:1.58;padding:10px 5px 3px}
+.page-diego .dg-hero-image figcaption a,.page-diego .dg-context-photo a{color:#16637e;text-underline-offset:2px}
+.page-diego .dg-article{width:min(1070px,calc(100% - 32px))}
+.page-diego .dg-opening{font-size:1.16rem;line-height:1.86;max-width:990px;margin:21px 0 24px;color:#33584d}
+.page-diego .dg-nav{display:flex;gap:9px;flex-wrap:wrap;border-bottom:1px solid #d6e4dc;padding-bottom:23px;margin:19px 0 38px}
+.page-diego .dg-nav a{min-height:44px;display:inline-flex;align-items:center;padding:10px 13px;border:1px solid #d3e5db;background:#eff6f0;border-radius:12px;text-decoration:none;color:#215c4b;font-weight:850;font-size:.91rem}
+.page-diego .dg-nav a:hover,.page-diego .dg-nav a:focus-visible{background:#dbece0}
+.page-diego .dg-section{margin:31px 0 51px;scroll-margin-top:26px}
+.page-diego .dg-eyebrow{color:#996a2b}
+.page-diego .dg-section h2{font:800 clamp(1.9rem,3.6vw,3rem)/1.16 Georgia,serif;letter-spacing:-.02em;color:#15594b;margin:10px 0 17px}
+.page-diego .dg-section>p{font-size:1.04rem;color:#3b5a51;line-height:1.82}
+.page-diego .dg-definition{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:23px 0}
+.page-diego .dg-definition>div{background:#f0f5ed;border:1px solid #d8e6d9;padding:19px;border-radius:17px}
+.page-diego .dg-definition span{font-size:.81rem;letter-spacing:.07em;color:#a5793b;font-weight:900}
+.page-diego .dg-definition h3{font:800 1.19rem Georgia,serif;margin:8px 0;color:#235e4e}
+.page-diego .dg-definition p{color:#4b655a;font-size:.95rem;line-height:1.71;margin:0}
+.page-diego .dg-section--movements{background:#eff6f2;border:1px solid #d6e6db;padding:clamp(18px,3.5vw,34px);border-radius:25px}
+.page-diego .dg-motion-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:23px 0 16px}
+.page-diego .dg-motion-card{background:#fff;border:1px solid #d8e5db;border-radius:18px;padding:20px;min-width:0;display:flex;flex-direction:column}
+.page-diego .dg-motion-icon{display:grid;place-items:center;width:76px;height:76px;border-radius:19px;background:#155f68;color:#fff;margin-bottom:14px}
+.page-diego .dg-motion-card:nth-child(2) .dg-motion-icon{background:#337755}
+.page-diego .dg-motion-card:nth-child(3) .dg-motion-icon{background:#8b693f}
+.page-diego .dg-motion-icon svg{width:66px;height:66px}
+.page-diego .dg-motion-head span{display:block;text-transform:uppercase;letter-spacing:.09em;font-size:.72rem;font-weight:900;color:#9c7139}
+.page-diego .dg-motion-head h3{font:800 1.31rem Georgia,serif;line-height:1.26;color:#1c5849;margin:7px 0 10px}
+.page-diego .dg-motion-card>p{line-height:1.72;color:#456359;font-size:.94rem;margin:0 0 18px}
+.page-diego .dg-motion-card dl{margin:auto 0 0;display:grid;gap:10px}
+.page-diego .dg-motion-card dl div{padding-top:11px;border-top:1px solid #e3ede5}
+.page-diego .dg-motion-card dt{font-weight:900;color:#225e4a;font-size:.84rem}
+.page-diego .dg-motion-card dd{color:#496359;line-height:1.57;font-size:.9rem;margin:4px 0 0}
+.page-diego .dg-image-context{font-size:.83rem!important;font-style:italic;color:#668075!important;margin-top:9px}
+.page-diego .dg-two-column{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:20px 0 26px}
+.page-diego .dg-soft-panel{border-radius:18px;border:1px solid #d5e5d9;background:#eef6ee;padding:19px 22px}
+.page-diego .dg-soft-panel--earth{background:#f8f2e5;border-color:#eaddc1}
+.page-diego .dg-soft-panel h3{color:#215e50;font:800 1.23rem Georgia,serif;margin:0 0 12px}
+.page-diego .dg-soft-panel ul{margin:0;padding-left:20px}
+.page-diego .dg-soft-panel li{line-height:1.72;margin:9px 0;color:#416052;font-size:.95rem}
+.page-diego .dg-context-photo{margin:21px 0 0;border-radius:18px;overflow:hidden;border:1px solid #d6e4d8;background:#f3f7ef}
+.page-diego .dg-context-photo img{display:block;width:100%;height:auto;max-height:430px;object-fit:cover}
+.page-diego .dg-context-photo figcaption{font-size:.93rem;line-height:1.68;padding:15px 18px;color:#46675a}
+.page-diego .dg-context-photo figcaption small{display:block;margin-top:6px;font-size:.79rem}
+.page-diego .dg-section--stretch{background:#f7f1e6;border:1px solid #eadfc9;border-radius:24px;padding:clamp(19px,3vw,33px)}
+.page-diego .dg-stretch-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:22px 0}
+.page-diego .dg-stretch-card{display:flex;gap:12px;align-items:flex-start;padding:19px;background:#fffdf8;border:1px solid #eee2cc;border-radius:17px}
+.page-diego .dg-stretch-mark{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border-radius:50%;background:#246c69;color:#fff;font:800 1.5rem Georgia,serif}
+.page-diego .dg-stretch-card:nth-child(2) .dg-stretch-mark{background:#5a8a43}
+.page-diego .dg-stretch-card:nth-child(3) .dg-stretch-mark{background:#96703e}
+.page-diego .dg-stretch-card h3{font:800 1.15rem Georgia,serif;color:#285d4b;margin:4px 0 10px}
+.page-diego .dg-stretch-card p{font-size:.92rem;line-height:1.68;color:#52645a}
+.page-diego .dg-safety-tip{padding:16px 19px;background:#fffaf0;border-left:4px solid #c49a51;border-radius:0 13px 13px 0;font-size:.91rem!important}
+.page-diego .dg-risk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:23px 0}
+.page-diego .dg-risk-card{border:1px solid #dce6de;border-top:5px solid #2d796e;background:#f6faf7;border-radius:16px;padding:19px}
+.page-diego .dg-risk-card:nth-child(2),.page-diego .dg-risk-card:nth-child(4){border-top-color:#b38c52}
+.page-diego .dg-risk-number{font-size:.77rem;font-weight:900;color:#a17b3b;letter-spacing:.09em}
+.page-diego .dg-risk-card h3{font:800 1.19rem Georgia,serif;color:#205a49;margin:9px 0}
+.page-diego .dg-risk-card p{font-size:.95rem;line-height:1.73;color:#496457;margin:0 0 10px}
+.page-diego .dg-risk-card small{display:block;border-top:1px solid #dfe9df;padding-top:10px;color:#587165;line-height:1.6}
+.page-diego .dg-section--closing{background:linear-gradient(115deg,#165e55,#17586c);border-radius:25px;padding:clamp(20px,4vw,37px);color:#fff}
+.page-diego .dg-section--closing .dg-eyebrow{color:#ffdaa2}
+.page-diego .dg-section--closing h2,.page-diego .dg-section--closing>p{color:#fff}
+.page-diego .dg-care-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:23px 0}
+.page-diego .dg-care-list>div{background:#ffffff16;border:1px solid #ffffff30;border-radius:15px;padding:18px}
+.page-diego .dg-care-list span{display:grid;place-items:center;width:33px;height:33px;border-radius:50%;background:#ecdfb7;color:#1e6054;font-weight:900;margin-bottom:12px}
+.page-diego .dg-care-list strong{display:block;color:#fff;font:800 1.07rem Georgia,serif}
+.page-diego .dg-care-list p{font-size:.9rem;color:#eff9f3;line-height:1.68;margin:8px 0 0}
+.page-diego .dg-section--closing blockquote{font:italic 1.25rem/1.65 Georgia,serif;color:#fff;padding:17px 19px;background:#ffffff16;border-left:4px solid #e9ce94;margin:24px 0;border-radius:0 13px 13px 0}
+.page-diego .dg-related{display:flex;flex-wrap:wrap;gap:10px}
+.page-diego .dg-related a{display:inline-flex;background:#f7f8ed;color:#1b5f4f;border-radius:12px;padding:13px 16px;font-weight:850;text-decoration:none;font-size:.88rem;line-height:1.55}
+.page-diego .dg-sources{border-top:1px solid #dce8df;padding:26px 0;color:#476357;line-height:1.8}
+.page-diego .dg-sources h2{font:800 1.65rem Georgia,serif;color:#215c4d;margin:0 0 12px}
+.page-diego .dg-sources p{margin:10px 0}
+.page-diego .dg-bottom{margin:26px 0 43px}
+.page-diego .dg-bottom a{display:inline-block;padding:13px 17px;background:#e8f3eb;border-radius:12px;text-decoration:none;color:#1e604b;font-weight:900}
+@media(max-width:850px){.page-diego .dg-hero{grid-template-columns:1fr}.page-diego .dg-hero-image{width:min(100%,490px)}.page-diego .dg-motion-grid,.page-diego .dg-definition,.page-diego .dg-stretch-grid,.page-diego .dg-care-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.page-diego .dg-hero{width:calc(100% - 20px);padding:26px 18px;border-radius:21px}.page-diego .dg-hero h1{font-size:2.7rem}.page-diego .dg-article{width:calc(100% - 22px)}.page-diego .dg-motion-grid,.page-diego .dg-definition,.page-diego .dg-stretch-grid,.page-diego .dg-risk-grid,.page-diego .dg-care-list,.page-diego .dg-two-column{grid-template-columns:1fr}.page-diego .dg-section--movements,.page-diego .dg-section--stretch,.page-diego .dg-section--closing{padding:19px}.page-diego .dg-hero-image img{aspect-ratio:4/3}.page-diego .dg-motion-card{padding:18px}.page-diego .dg-stretch-card{padding:16px}.page-diego .dg-nav a{flex:1 1 auto}}
