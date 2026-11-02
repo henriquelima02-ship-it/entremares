@@ -1,0 +1,27 @@
+name: Importar fotografias do litoral paranaense para Amanda
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/importar-fotos-amanda-20261102.yml']
+permissions:
+  contents: write
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check 'Pillow>=10,<13'
+      - name: Importar fotos Commons para WebP com dados de crédito
+        run: python tools/importar-fotos-amanda-20261102.py
+      - name: Guardar imagens e relatório em branch para revisão
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b assets/amanda-fotos-geradas-20261102
+          git add frontend/assets/reportagens/amanda-litoral-parana/ docs/RELATORIO_FOTOS_AMANDA_PESCA_PARANA.json
+          git commit -m "Salva fotografias documentais do litoral paranaense em WebP"
+          git push origin HEAD:refs/heads/assets/amanda-fotos-geradas-20261102
