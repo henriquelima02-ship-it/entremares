@@ -1,0 +1,147 @@
+{
+  "anatomy": [
+    {
+      "name": "ombros",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/ombros.png",
+      "bytes": 45943,
+      "source": "1105 Anterior View of Muscles High-Res.png",
+      "source_url": "https://commons.wikimedia.org/wiki/File:1105_Anterior_View_of_Muscles_High-Res.png",
+      "license": "CC BY 4.0",
+      "author": "OpenStax",
+      "crop": [
+        0.23,
+        0.155,
+        0.77,
+        0.31
+      ]
+    },
+    {
+      "name": "bracos",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/bracos.png",
+      "bytes": 52391,
+      "source": "1105 Anterior View of Muscles High-Res.png",
+      "source_url": "https://commons.wikimedia.org/wiki/File:1105_Anterior_View_of_Muscles_High-Res.png",
+      "license": "CC BY 4.0",
+      "author": "OpenStax",
+      "crop": [
+        0.08,
+        0.23,
+        0.41,
+        0.44
+      ]
+    },
+    {
+      "name": "punhos",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/punhos.png",
+      "bytes": 28904,
+      "source": "1105 Anterior View of Muscles High-Res.png",
+      "source_url": "https://commons.wikimedia.org/wiki/File:1105_Anterior_View_of_Muscles_High-Res.png",
+      "license": "CC BY 4.0",
+      "author": "OpenStax",
+      "crop": [
+        0.02,
+        0.465,
+        0.25,
+        0.64
+      ]
+    },
+    {
+      "name": "tronco",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/tronco.png",
+      "bytes": 92035,
+      "source": "1105 Anterior View of Muscles High-Res.png",
+      "source_url": "https://commons.wikimedia.org/wiki/File:1105_Anterior_View_of_Muscles_High-Res.png",
+      "license": "CC BY 4.0",
+      "author": "OpenStax",
+      "crop": [
+        0.32,
+        0.3,
+        0.68,
+        0.52
+      ]
+    },
+    {
+      "name": "coxas",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/coxas.png",
+      "bytes": 62694,
+      "source": "1105 Anterior View of Muscles High-Res.png",
+      "source_url": "https://commons.wikimedia.org/wiki/File:1105_Anterior_View_of_Muscles_High-Res.png",
+      "license": "CC BY 4.0",
+      "author": "OpenStax",
+      "crop": [
+        0.33,
+        0.47,
+        0.7,
+        0.74
+      ]
+    },
+    {
+      "name": "tornozelos",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/tornozelos.png",
+      "bytes": 37053,
+      "source": "1105 Anterior View of Muscles High-Res.png",
+      "source_url": "https://commons.wikimedia.org/wiki/File:1105_Anterior_View_of_Muscles_High-Res.png",
+      "license": "CC BY 4.0",
+      "author": "OpenStax",
+      "crop": [
+        0.33,
+        0.8,
+        0.7,
+        0.985
+      ]
+    },
+    {
+      "name": "panturrilhas",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/panturrilhas.png",
+      "bytes": 48441,
+      "source": "1105 Anterior View of Muscles High-Res.png",
+      "source_url": "https://commons.wikimedia.org/wiki/File:1105_Anterior_View_of_Muscles_High-Res.png",
+      "license": "CC BY 4.0",
+      "author": "OpenStax",
+      "crop": [
+        0.34,
+        0.7,
+        0.7,
+        0.91
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "name": "arremesso-tarrafa",
+      "filename": "Pescador e a tarrafa.jpg",
+      "place": "Baía da Babitonga, Santa Catarina",
+      "author": "Chrisporto",
+      "license": "CC BY-SA 3.0",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/arremesso-tarrafa.webp",
+      "downloaded_from": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Pescador%20e%20a%20tarrafa.jpg?width=1200",
+      "width": 1200,
+      "height": 850,
+      "bytes": 90852
+    },
+    {
+      "name": "puxada-rede",
+      "filename": "Pesca Artesanal no Rio São Francisco.jpg",
+      "place": "Januária, Minas Gerais",
+      "author": "Luiz Claudio Rios Pecoraro",
+      "license": "CC BY-SA 4.0",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/puxada-rede.webp",
+      "downloaded_from": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Pesca%20Artesanal%20no%20Rio%20S%C3%A3o%20Francisco.jpg?width=1200",
+      "width": 637,
+      "height": 850,
+      "bytes": 76778
+    },
+    {
+      "name": "trapiche-passarela",
+      "filename": "RenatoSoares TrapicheDeBrasilia Paranagua PR (39239957870).jpg",
+      "place": "Ilha do Mel, Paranaguá, Paraná",
+      "author": "Renato Soares",
+      "license": "Confirmar metadados do Commons",
+      "file": "frontend/assets/reportagens/diego-fotos-precisas/trapiche-passarela.webp",
+      "downloaded_from": "https://commons.wikimedia.org/wiki/Special:Redirect/file/RenatoSoares%20TrapicheDeBrasilia%20Paranagua%20PR%20%2839239957870%29.jpg?width=1200",
+      "width": 1200,
+      "height": 801,
+      "bytes": 187262
+    }
+  ]
+}
