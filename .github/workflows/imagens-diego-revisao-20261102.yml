@@ -1,0 +1,24 @@
+name: Preparar imagens precisas e anatomia PNG da pesquisa Diego
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/imagens-diego-revisao-20261102.yml']
+permissions: {contents: write}
+jobs:
+  preparar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install --disable-pip-version-check 'Pillow>=10,<13'
+      - run: python tools/gerar-fotos-anatomia-diego.py
+      - name: Publicar arquivos em branch de revisão
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b assets/diego-fotos-precisas-20261102
+          git add frontend/assets/reportagens/diego-fotos-precisas docs/RELATORIO_IMAGENS_DIEGO_CORRIGIDAS.json
+          git commit -m "Importa fotos corretas de técnicas e anatomia PNG licenciada"
+          git push origin HEAD:refs/heads/assets/diego-fotos-precisas-20261102
