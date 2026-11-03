@@ -117,11 +117,8 @@
     $('editSaleUnit').value = item.saleUnit || 'kg';
     updateSaleUnitFields();
 
-    if (item.priceMin != null && Number(item.priceMin) === Number(item.priceMax)) {
-      $('editPrice').value = Number(item.priceMin);
-    } else {
-      $('editPrice').value = '';
-    }
+    // Valor inicial de referência; o pescador sempre pode ajustar.
+    $('editPrice').value = item.priceMin == null ? '' : Number(item.priceMin);
 
     const rangeHelp = item.priceMin != null && Number(item.priceMin) !== Number(item.priceMax)
       ? '<strong>Faixa de referência:</strong> escolha o preço de hoje dentro ou fora dessa faixa conforme a venda real.'
@@ -141,7 +138,7 @@
 
 
   // Cadastro por toques: campos enviados à API permanecem os mesmos do formulário anterior.
-  const wizardNames = ['Escolher o pescado', 'Quantidade e preço', 'Preparo e entrega', 'Conferir e publicar'];
+  const wizardNames = ['Escolher o pescado', 'Quantidade e preço', 'Cortes e preparo', 'Retirada e frete', 'Conferir e publicar'];
   let wizardStep = 0;
   let wizardCategory = 'todos';
   const recommendedFees = { cut: 10, communityDelivery: 15, collaborativeFreight: 30 };
@@ -228,7 +225,7 @@
     updateSelectedFish();
   }
 
-  function selectPresetForWizard(index) {
+  function selectPresetForWizard(index, advance = false) {
     $('fishPreset').value = index;
     applyPreset(index);
     if (index === '') {
@@ -239,45 +236,56 @@
     document.querySelectorAll('[data-wizard-fish]').forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.wizardFish === String(index)));
     });
+    if (!state.editing && !$('editQuantity').value) $('editQuantity').value = '1';
     updateSelectedFish();
+    updateQuantityButtons();
     updatePriceButtons();
+    updateBaseTotal();
     updateCutChoices();
     hideWizardError();
-  }
-
-  function quickButton(container, value, label, selected) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.dataset.quickValue = String(value);
-    button.textContent = label;
-    button.setAttribute('aria-pressed', String(selected));
-    container.append(button);
+    if (advance && index !== '') setWizardStep(1);
   }
 
   function updateQuantityButtons() {
-    const target = $('wizardQuantityChoices');
-    if (!target) return;
     const unit = $('editSaleUnit').value;
-    const amounts = unit === 'kg' ? [0.5,1,2,5,10,20] : unit === 'duzia' ? [1,2,5,10] : [1,2,3,5];
-    target.replaceChildren();
-    amounts.forEach(qty => quickButton(target,qty, String(qty).replace('.', ',') + (unit === 'kg' ? ' kg' : unit === 'duzia' ? ' dúz.' : ' lote(s)'),Number($('editQuantity').value) === qty));
+    const title = unit === 'duzia' ? 'dúzia' : unit === 'lote_20kg' ? 'lote de 20 kg' : 'kg';
+    $('wizardQuantityHint').textContent = unit === 'kg'
+      ? 'Sugestão inicial: 1 kg. Para 0,5 kg ou outra fração, digite no campo acima.'
+      : 'Sugestão inicial: 1 ' + title + '. Ajuste pelos botões ou digite a quantidade inteira.';
+    document.querySelectorAll('[data-wizard-adjust="editQuantity"]').forEach(button => {
+      const delta=Number(button.dataset.delta);
+      button.setAttribute('aria-label',(delta < 0 ? 'Diminuir ' : 'Aumentar ') + Math.abs(delta) +
+        (unit === 'kg' ? ' quilograma(s)' : unit === 'duzia' ? ' dúzia(s)' : ' lote(s)'));
+    });
     updateSelectedFish();
   }
 
   function updatePriceButtons() {
-    const target = $('wizardPriceChoices');
-    if (!target) return;
-    target.replaceChildren();
-    const item = activePresetItem();
-    if (!item || item.priceMin == null) {
-      const hint=document.createElement('small');
-      hint.textContent='Sem preço de referência. Digite o valor combinado para hoje.';
-      target.append(hint);
-      return;
+    const item=activePresetItem();
+    let message='Sem preço de referência para este pescado. Digite o valor de hoje.';
+    if (item?.priceMin != null) {
+      const min=Number(item.priceMin),max=Number(item.priceMax);
+      const unit=saleUnitLabel($('editSaleUnit').value);
+      message=min === max
+        ? 'Referência aproximada: '+brl(min)+' por '+unit+'. Ajuste para o preço de hoje.'
+        : 'Faixa aproximada: '+brl(min)+' a '+brl(max)+' por '+unit+'. O valor inicial é o menor da faixa; você pode alterar.';
     }
-    const min=Number(item.priceMin), max=Number(item.priceMax);
-    const choices = min === max ? [min] : [...new Set([min, (min+max)/2, max].map(v=>Math.round(v*100)/100))];
-    choices.forEach(value => quickButton(target,value,brl(value),Number($('editPrice').value) === value));
+    $('wizardPriceReference').textContent=message;
+  }
+
+  function updateBaseTotal() {
+    const quantity=Number($('editQuantity').value),price=Number($('editPrice').value);
+    $('wizardBaseTotal').textContent=quantity>0 && price>0
+      ? 'Total do pescado: '+brl(quantity*price)+' (sem preparo, entrega ou frete).'
+      : 'Informe quantidade e preço para calcular o total.';
+  }
+
+  function adjustWizardValue(inputId,delta) {
+    const input=$(inputId);
+    const minimum=inputId==='editQuantity' ? ($('editSaleUnit').value==='kg'?0.1:1) : 0.01;
+    const value=Math.max(minimum,Math.round((Number(input.value || 0)+delta)*100)/100);
+    input.value=String(Number(value.toFixed(2)));
+    input.dispatchEvent(new Event('input',{bubbles:true}));
   }
 
   function updateQuickButtons() {
@@ -287,6 +295,7 @@
     });
     updateQuantityButtons();
     updatePriceButtons();
+    updateBaseTotal();
   }
 
   function updateCutStates() {
@@ -347,7 +356,7 @@
   }
 
   function setWizardStep(next) {
-    wizardStep = Math.max(0,Math.min(3,next));
+    wizardStep = Math.max(0,Math.min(4,next));
     document.querySelectorAll('[data-wizard-step]').forEach(section => {
       section.hidden = Number(section.dataset.wizardStep) !== wizardStep;
     });
@@ -358,11 +367,11 @@
       if(index===wizardStep) span.setAttribute('aria-current','step');
       else span.removeAttribute('aria-current');
     });
-    $('wizardStepStatus').textContent = 'Etapa ' + (wizardStep+1) + ' de 4 — ' + wizardNames[wizardStep];
+    $('wizardStepStatus').textContent = 'Etapa ' + (wizardStep+1) + ' de 5 — ' + wizardNames[wizardStep];
     $('wizardBack').hidden = wizardStep === 0;
-    $('wizardNext').hidden = wizardStep === 3;
-    $('wizardSubmit').hidden = wizardStep !== 3;
-    if(wizardStep===3) updateReview();
+    $('wizardNext').hidden = wizardStep === 4;
+    $('wizardSubmit').hidden = wizardStep !== 4;
+    if(wizardStep===4) updateReview();
     hideWizardError();
     const dialog=$('productEditor');
     dialog.scrollTop=0;
@@ -386,7 +395,7 @@
         }
       }
     }
-    if(index===2){
+    if(index===3){
       if(!($('editShipPickup').checked||$('editShipDelivery').checked||$('editShipFreight').checked)){
         showWizardError('Escolha pelo menos uma forma de retirada ou entrega.');
         return false;
@@ -423,7 +432,7 @@
   function bindWizard() {
     $('wizardFishCards').addEventListener('click',event=>{
       const button=event.target.closest('[data-wizard-fish]');
-      if(button) selectPresetForWizard(button.dataset.wizardFish);
+      if(button) selectPresetForWizard(button.dataset.wizardFish,true);
     });
     $('wizardFishCards').addEventListener('error',event=>{
       const img=event.target;
@@ -461,13 +470,9 @@
       if(validWizardStep(wizardStep))setWizardStep(wizardStep+1);
     });
     $('wizardBack').addEventListener('click',()=>setWizardStep(wizardStep-1));
-    $('wizardQuantityChoices').addEventListener('click',event=>{
-      const button=event.target.closest('[data-quick-value]');
-      if(button){$('editQuantity').value=button.dataset.quickValue;updateQuantityButtons();updateReview();}
-    });
-    $('wizardPriceChoices').addEventListener('click',event=>{
-      const button=event.target.closest('[data-quick-value]');
-      if(button){$('editPrice').value=button.dataset.quickValue;updatePriceButtons();updateReview();}
+    $('productForm').addEventListener('click',event=>{
+      const button=event.target.closest('[data-wizard-adjust]');
+      if(button) adjustWizardValue(button.dataset.wizardAdjust,Number(button.dataset.delta));
     });
     document.querySelectorAll('[data-wizard-select]').forEach(button=>button.addEventListener('click',()=>{
       $(button.dataset.wizardSelect).value=button.dataset.wizardValue;
@@ -500,9 +505,10 @@
       window.speechSynthesis.cancel();
       const script=[
         'Escolha o pescado. Toque na imagem ou no nome. Se não encontrar, escolha escrever o nome.',
-        'Escolha a quantidade e confirme o preço de hoje. Também pode escolher o estado do pescado e o prazo.',
-        'Toque nos cortes que você faz. Escolha como o cliente vai receber o pescado. Os valores são sugestões e podem ser alterados.',
-        'Confira a quantidade e o preço. Marque a confirmação e toque em publicar pescado.'
+        'Confira a quantidade e o preço de hoje. Use os botões menos um, menos cinco, mais um e mais cinco. Você também pode digitar. Escolha o estado e o prazo.',
+        'Toque nos preparos oferecidos e ajuste os acréscimos, se necessário.',
+        'Escolha retirada, entrega ou frete colaborativo. As taxas são sugestões e podem ser alteradas.',
+        'Confira tudo, marque a confirmação e toque em publicar pescado.'
       ][wizardStep];
       const message=new SpeechSynthesisUtterance(script);
       message.lang='pt-BR';message.rate=.9;
@@ -779,6 +785,7 @@
     $('editShippingNotes').value = state.dashboard?.fisherman?.shipping?.notes || '';
     document.querySelector('[data-edit-cut="inteiro"]').checked = true;
     $('productResult').classList.add('hidden');
+    $('editQuantity').value = '1';
     state.editing = null;
   }
 
@@ -948,10 +955,12 @@
     }
   });
 
-  $('fishPreset').addEventListener('change', event => selectPresetForWizard(event.target.value));
+  $('fishPreset').addEventListener('change', event => selectPresetForWizard(event.target.value,Boolean(event.target.value)));
   $('editSaleUnit').addEventListener('change', () => {
     updateSaleUnitFields();
     updateQuantityButtons();
+    updatePriceButtons();
+    updateBaseTotal();
     updateReview();
   });
 

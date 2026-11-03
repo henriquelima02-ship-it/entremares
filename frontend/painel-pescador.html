@@ -7,7 +7,7 @@
   <meta name="description" content="Painel do pescador do EntreMarés para gerir anúncios de pescados e pedidos.">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/pescados-media.css">
-  <link rel="stylesheet" href="./css/pescador-wizard.css?v=2">
+  <link rel="stylesheet" href="./css/pescador-wizard.css?v=wizard5-adjust">
   <title>Painel do pescador | EntreMarés</title>
 </head>
 <body>
@@ -107,20 +107,21 @@
     <button class="dialog-close" type="button" data-close-product aria-label="Fechar cadastro">×</button>
     <span class="eyebrow">Pescado • Cadastro fácil</span>
     <h2 id="productEditorTitle">Novo pescado</h2>
-    <p class="wizard-intro">Escolha as opções tocando nos botões. Você só precisa informar a quantidade e confirmar o preço.</p>
+    <p class="wizard-intro">Toque no pescado para avançar. Ajuste o peso e o preço pelos botões e confira antes de publicar.</p>
     <input id="editProductId" type="hidden">
     <nav class="wizard-progress" aria-label="Etapas do cadastro">
-      <span data-wizard-progress="0" class="is-current"><b>1</b><small>Escolher</small></span>
-      <span data-wizard-progress="1"><b>2</b><small>Quantidade</small></span>
+      <span data-wizard-progress="0" class="is-current"><b>1</b><small>Pescado</small></span>
+      <span data-wizard-progress="1"><b>2</b><small>Peso e preço</small></span>
       <span data-wizard-progress="2"><b>3</b><small>Preparo</small></span>
-      <span data-wizard-progress="3"><b>4</b><small>Conferir</small></span>
+      <span data-wizard-progress="3"><b>4</b><small>Entrega</small></span>
+      <span data-wizard-progress="4"><b>5</b><small>Conferir</small></span>
     </nav>
-    <div id="wizardStepStatus" class="wizard-step-status" role="status" aria-live="polite">Etapa 1 de 4 — Escolher o pescado</div>
+    <div id="wizardStepStatus" class="wizard-step-status" role="status" aria-live="polite">Etapa 1 de 5 — Escolher o pescado</div>
     <button id="wizardSpeak" class="wizard-speak" type="button" title="Ouvir instruções desta etapa">Ouvir instruções</button>
 
     <section class="wizard-step" data-wizard-step="0" aria-label="Escolha do pescado">
       <h3>Qual pescado você tem hoje?</h3>
-      <p class="wizard-hint">Toque no desenho ou no nome. Fotos, quando disponíveis, são apenas referências.</p>
+      <p class="wizard-hint">Toque no pescado para ir direto ao peso e preço. Fotos são apenas referências.</p>
       <div class="wizard-filters" id="wizardFilters" role="group" aria-label="Filtrar tipo de pescado">
         <button type="button" data-wizard-filter="todos" aria-pressed="true">Todos</button>
         <button type="button" data-wizard-filter="peixe" aria-pressed="false">Peixes</button>
@@ -146,18 +147,31 @@
 
     <section class="wizard-step" data-wizard-step="1" aria-label="Quantidade e preço" hidden>
       <h3>Quanto você tem para vender?</h3>
-      <p class="wizard-hint">Toque numa quantidade ou escreva outro valor.</p>
+      <p class="wizard-hint">Começamos com 1 unidade. Ajuste pelos botões ou digite a quantidade exata.</p>
       <div class="form-grid wizard-simple-fields">
         <label class="field"><span>Unidade de venda</span><select id="editSaleUnit" required>
           <option value="kg">Quilo (kg)</option><option value="duzia">Dúzia</option><option value="lote_20kg">Lote de 20 kg</option>
         </select></label>
         <label class="field"><span id="editQuantityLabel">Quantidade (kg) *</span><input id="editQuantity" type="number" min="0.1" step="0.1" inputmode="decimal" required placeholder="Ex.: 5"></label>
       </div>
-      <div id="wizardQuantityChoices" class="wizard-choice-row" aria-label="Quantidades rápidas"></div>
+      <p id="wizardQuantityHint" class="wizard-adjust-help">Sugestão inicial: 1 kg. Para 0,5 kg, digite no campo.</p>
+      <div class="wizard-adjust-controls" role="group" aria-label="Ajustar quantidade">
+        <button type="button" data-wizard-adjust="editQuantity" data-delta="-5" aria-label="Diminuir quantidade em 5">−5</button>
+        <button type="button" data-wizard-adjust="editQuantity" data-delta="-1" aria-label="Diminuir quantidade em 1">−1</button>
+        <button type="button" data-wizard-adjust="editQuantity" data-delta="1" aria-label="Aumentar quantidade em 1">+1</button>
+        <button type="button" data-wizard-adjust="editQuantity" data-delta="5" aria-label="Aumentar quantidade em 5">+5</button>
+      </div>
       <h3>Por quanto vai vender?</h3>
       <p class="wizard-hint">O preço sugerido é apenas uma referência. Confira o preço de hoje.</p>
       <label class="field wizard-price-field"><span id="editPriceLabel">Preço por kg (R$) *</span><input id="editPrice" type="number" min="0.01" step="0.01" inputmode="decimal" required placeholder="Ex.: 35"></label>
-      <div id="wizardPriceChoices" class="wizard-choice-row" aria-label="Sugestões de preço"></div>
+      <p id="wizardPriceReference" class="wizard-adjust-help" aria-live="polite">Preço de referência: confirme o valor atual.</p>
+      <div class="wizard-adjust-controls" role="group" aria-label="Ajustar preço em reais">
+        <button type="button" data-wizard-adjust="editPrice" data-delta="-5" aria-label="Diminuir preço em 5 reais">− R$ 5</button>
+        <button type="button" data-wizard-adjust="editPrice" data-delta="-1" aria-label="Diminuir preço em 1 real">− R$ 1</button>
+        <button type="button" data-wizard-adjust="editPrice" data-delta="1" aria-label="Aumentar preço em 1 real">+ R$ 1</button>
+        <button type="button" data-wizard-adjust="editPrice" data-delta="5" aria-label="Aumentar preço em 5 reais">+ R$ 5</button>
+      </div>
+      <output id="wizardBaseTotal" class="wizard-total-preview" aria-live="polite">Informe peso e preço para ver o total.</output>
       <fieldset class="wizard-quick-group">
         <legend>Como está o pescado?</legend>
         <div class="wizard-choice-row">
@@ -183,7 +197,7 @@
       </details>
     </section>
 
-    <section class="wizard-step" data-wizard-step="2" aria-label="Cortes e entrega" hidden>
+    <section class="wizard-step" data-wizard-step="2" aria-label="Cortes e preparo" hidden>
       <h3>Como você pode preparar?</h3>
       <p class="wizard-hint">Marque somente os preparos que você oferece. Preço sugerido de corte: R$ 10 por unidade vendida; você pode alterar.</p>
       <fieldset class="option-panel wizard-cut-panel">
@@ -245,6 +259,8 @@
               <label class="wizard-cut-price"><span>Adicional em R$ por unidade vendida</span><input data-edit-extra="sem_cabeca" type="number" min="0" step="0.5" value="10" inputmode="decimal"></label>
             </div></div>
       </fieldset>
+    </section>
+    <section class="wizard-step" data-wizard-step="3" aria-label="Retirada e frete" hidden>
       <h3>Como o cliente pode receber?</h3>
       <p class="wizard-hint">Marque uma ou mais opções. As taxas são sugestões editáveis, não cobranças obrigatórias.</p>
       <fieldset class="option-panel wizard-shipping-panel">
@@ -275,7 +291,7 @@
       </details>
     </section>
 
-    <section class="wizard-step" data-wizard-step="3" aria-label="Conferir anúncio" hidden>
+    <section class="wizard-step" data-wizard-step="4" aria-label="Conferir anúncio" hidden>
       <h3>Está tudo certo?</h3>
       <p class="wizard-hint">Confira os dados antes de colocar o pescado à venda.</p>
       <div id="wizardReview" class="wizard-review" aria-live="polite"></div>
@@ -300,6 +316,6 @@
 <script src="./js/api.js"></script>
 <script src="./js/catalogo-pescados.js?v=3"></script>
 <script src="./js/pescados-media.js?v=5"></script>
-<script src="./js/painel-pescador.js?v=wizard4"></script>
+<script src="./js/painel-pescador.js?v=wizard5-adjust"></script>
 </body>
 </html>

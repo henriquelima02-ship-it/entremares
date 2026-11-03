@@ -4,7 +4,7 @@
 .product-wizard h2{margin:3px 35px 0;font-size:clamp(1.7rem,4vw,2.3rem);font-family:Georgia,serif;color:#16483d}
 .product-wizard .wizard-intro{line-height:1.55;margin:0;color:#48605e;font-size:1rem}
 .product-wizard .dialog-close{width:45px;height:45px;top:13px;right:13px;z-index:3}
-.product-wizard .wizard-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:5px}
+.product-wizard .wizard-progress{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:5px}
 .product-wizard .wizard-progress>span{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:5px;padding:7px 3px;border-radius:13px;background:#edf1ed;color:#52645f;font-size:.82rem;min-width:0}
 .product-wizard .wizard-progress>span b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#d7e2d9;color:#234b40;font-size:.85rem}
 .product-wizard .wizard-progress>span.is-current{background:#175646;color:#fff;font-weight:800}
@@ -76,3 +76,17 @@
 .product-wizard .wizard-fish-tile small.wizard-photo-note{font-size:.71rem;font-weight:650;margin-top:3px;line-height:1.3;color:#6c6252}
 .product-wizard .wizard-fish-tile strong{hyphens:auto;overflow-wrap:break-word}
 .product-wizard .wizard-filters button{line-height:1.2;white-space:normal}
+
+/* Cadastro em cinco telas: ajuste acessível, sem navegação por listas extensas. */
+.product-wizard .wizard-adjust-help{margin:0;padding:10px 13px;border-radius:12px;background:#eef5ec;color:#275647;font-size:.9rem;line-height:1.5}
+.product-wizard .wizard-adjust-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;max-width:650px}
+.product-wizard .wizard-adjust-controls button{border:2px solid #bfd7c8;background:#fff;color:#174d42;font-size:1.07rem;font-weight:900;min-height:54px;border-radius:14px;cursor:pointer}
+.product-wizard .wizard-adjust-controls button:active{background:#dcece2;transform:translateY(1px)}
+.product-wizard .wizard-total-preview{display:block;width:fit-content;padding:12px 15px;border-radius:14px;background:#175646;color:#fff;font-size:1rem;font-weight:900}
+@media(max-width:520px){
+  .product-wizard .wizard-progress>span{padding:6px 1px;gap:2px;font-size:.68rem;min-height:58px;text-align:center}
+  .product-wizard .wizard-progress>span small{font-size:.62rem;line-height:1.12;overflow-wrap:anywhere}
+  .product-wizard .wizard-progress>span b{width:24px;height:24px}
+  .product-wizard .wizard-adjust-controls{gap:6px}
+  .product-wizard .wizard-adjust-controls button{min-height:56px;font-size:.91rem;padding:5px}
+}
