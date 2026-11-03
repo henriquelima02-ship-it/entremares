@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1D4B43">
+  <meta name="description" content="Apresentação interativa sobre o IFA e o portal EntreMarés: escola, cultura caiçara, comunidades de Piaçaguera e Amparo, pesquisas e saberes do litoral.">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/apresentacao-ifa.css?v=1">
+  <title>Apresentação IFA e EntreMarés | EntreMarés</title>
+</head>
+<body class="page-ifa">
+  <a class="ifa-skip" href="#apresentacao">Ir para a apresentação</a>
+  <header class="topbar">
+    <a class="brand" href="./index.html"><span class="brand-symbol">◉</span><span><strong>EntreMarés</strong><small>Saberes, Povoados e Produtos Caiçaras</small></span></a>
+    <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>☰</button>
+    <nav class="main-nav" aria-label="Navegação principal" data-main-nav>
+      <a href="./index.html">Início</a><a href="./pescados.html">Pescados</a><a href="./guia.html">Povoados</a><a href="./saberes.html">Saberes</a>
+    </nav>
+  </header>
+  <main id="conteudo">
+    <section class="ifa-intro" aria-labelledby="ifa-title">
+      <div><span class="ifa-kicker">Apresentação especial · Educação e comunidade</span>
+      <h1 id="ifa-title">IFA e o site <em>EntreMarés</em></h1>
+      <p>Uma apresentação sobre o Itinerário Formativo de Aprofundamento e sobre como as pesquisas escolares se transformam em saberes compartilhados com Piaçaguera, Amparo e outras comunidades da Baía de Paranaguá.</p></div>
+      <a class="ifa-website-link" href="./index.html" aria-label="Conhecer a página inicial do EntreMarés">Conhecer o site <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="ifa-layout" id="apresentacao" aria-label="Apresentação de sete slides">
+      <div class="ifa-player" id="ifa-player">
+        <div class="ifa-screen" aria-live="off">
+          <section class="ifa-slide" id="slide-1" data-slide aria-label="Slide 1 de 7: Abertura">
+            <img src="./assets/apresentacao-ifa/01-abertura.webp" alt="IFA e o site EntreMarés: o que é o IFA e como o site fortalece a aprendizagem e o território. A paisagem ilustrada inclui pescador, tarrafa, comunidade e QR Code para o site." width="1600" height="900" loading="eager" fetchpriority="high" decoding="async">
+          </section>
+          <section class="ifa-slide" id="slide-2" data-slide aria-label="Slide 2 de 7: O que é o IFA" hidden>
+            <img src="./assets/apresentacao-ifa/02-o-que-e-ifa.webp" alt="O que é o IFA? Itinerário Formativo de Aprofundamento: estudo e investigação, integração de teoria e prática, protagonismo dos estudantes e relação entre escola e território." width="1600" height="900" loading="lazy" decoding="async">
+          </section>
+          <section class="ifa-slide" id="slide-3" data-slide aria-label="Slide 3 de 7: O IFA no projeto" hidden>
+            <img src="./assets/apresentacao-ifa/03-ifa-projeto.webp" alt="O IFA no projeto valoriza a cultura caiçara, investiga o território, realiza entrevistas e pesquisas de campo e transforma aprendizagens em materiais digitais para a comunidade." width="1600" height="900" loading="lazy" decoding="async">
+          </section>
+          <section class="ifa-slide" id="slide-4" data-slide aria-label="Slide 4 de 7: O que é o EntreMarés" hidden>
+            <img src="./assets/apresentacao-ifa/04-site-entremares.webp" alt="O EntreMarés é um acervo digital do projeto: reúne saberes, povoados e produtos caiçaras, divulga pesquisas e aproxima estudantes e moradores." width="1600" height="900" loading="lazy" decoding="async">
+          </section>
+          <section class="ifa-slide" id="slide-5" data-slide aria-label="Slide 5 de 7: Conteúdos do site" hidden>
+            <img src="./assets/apresentacao-ifa/05-conteudos-site.webp" alt="O que encontramos no site: Saberes, com entrevistas e memória; Povoados, com Piaçaguera e Amparo; Biodiversidade, com fauna e flora; Pescados e cultura alimentar." width="1600" height="900" loading="lazy" decoding="async">
+          </section>
+          <section class="ifa-slide" id="slide-6" data-slide aria-label="Slide 6 de 7: Como utilizar o site" hidden>
+            <img src="./assets/apresentacao-ifa/06-usos-site.webp" alt="Como o site pode ser usado: em aulas, pesquisas, conversas com moradores, divulgação de trabalhos dos estudantes e valorização dos saberes locais, pelo celular ou computador." width="1600" height="900" loading="lazy" decoding="async">
+          </section>
+          <section class="ifa-slide" id="slide-7" data-slide aria-label="Slide 7 de 7: Convite para acessar" hidden>
+            <img src="./assets/apresentacao-ifa/07-convite.webp" alt="Acesse o EntreMarés. Use o QR Code ou o endereço henriquelima02-ship-it.github.io/entremares. Explore o site, compartilhe com a comunidade e valorize os saberes caiçaras." width="1600" height="900" loading="lazy" decoding="async">
+          </section>
+        </div>
+        <div class="ifa-player-controls">
+          <div class="ifa-nav-group">
+            <button id="ifa-prev" class="ifa-control" type="button" aria-label="Ir para o slide anterior" disabled><span aria-hidden="true">←</span> Anterior</button>
+            <span id="ifa-count" class="ifa-counter" role="status" aria-live="polite">1 / 7</span>
+            <button id="ifa-next" class="ifa-control ifa-control--primary" type="button" aria-label="Ir para o próximo slide">Próximo <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="ifa-nav-group">
+            <a id="ifa-expand" class="ifa-control ifa-control--quiet" href="./assets/apresentacao-ifa/01-abertura.webp" target="_blank" rel="noopener noreferrer">Ampliar slide</a>
+            <button id="ifa-fullscreen" class="ifa-control ifa-control--quiet" type="button" aria-label="Ativar tela cheia" aria-pressed="false">⛶ Tela cheia</button>
+          </div>
+        </div>
+        <div class="ifa-progress" aria-hidden="true"><div id="ifa-progress-bar"></div></div>
+      </div>
+      <div class="ifa-thumbnails" role="group" aria-label="Selecionar slide">
+        <button type="button" data-go-slide="1" aria-label="Slide 1: Apresentação" aria-current="true">01 <span>Apresentação</span></button>
+        <button type="button" data-go-slide="2" aria-label="Slide 2: O que é o IFA">02 <span>O que é o IFA</span></button>
+        <button type="button" data-go-slide="3" aria-label="Slide 3: O IFA no projeto">03 <span>IFA no projeto</span></button>
+        <button type="button" data-go-slide="4" aria-label="Slide 4: O EntreMarés">04 <span>O EntreMarés</span></button>
+        <button type="button" data-go-slide="5" aria-label="Slide 5: Áreas do site">05 <span>Áreas do site</span></button>
+        <button type="button" data-go-slide="6" aria-label="Slide 6: Como usar">06 <span>Como usar</span></button>
+        <button type="button" data-go-slide="7" aria-label="Slide 7: Convite à comunidade">07 <span>Convite</span></button>
+      </div>
+      <p class="ifa-hint">Use as setas do teclado ou os botões para avançar. No celular, deslize a apresentação para os lados. A opção “Tela cheia” é indicada para projetores e reuniões.</p>
+      <div class="ifa-current" aria-live="polite" aria-atomic="true"><strong id="ifa-current-title">O IFA e o EntreMarés</strong><p id="ifa-current-description">O projeto conecta pesquisa escolar, saberes tradicionais, pesca artesanal, tecnologia e participação da comunidade.</p></div>
+    </section>
+
+    <section class="ifa-explore" aria-labelledby="ifa-links-title">
+      <span class="ifa-kicker">Demonstração ao vivo</span>
+      <h2 id="ifa-links-title">Depois dos slides, explore as páginas reais do EntreMarés.</h2>
+      <p>Os slides usam ilustrações didáticas; os links abaixo abrem conteúdos reais do portal, para mostrar durante a apresentação.</p>
+      <div class="ifa-links-grid">
+        <a href="./saberes.html"><strong>Saberes e pesquisas</strong><span>Reportagens, entrevistas e estudos dos estudantes</span><b aria-hidden="true">↗</b></a>
+        <a href="./guia.html"><strong>Conheça os povoados</strong><span>Piaçaguera, Amparo, território e memória</span><b aria-hidden="true">↗</b></a>
+        <a href="./conteudos/fauna-flora-piacaguera.html"><strong>Fauna e flora</strong><span>Manguezais, aves e espécies de interesse ambiental</span><b aria-hidden="true">↗</b></a>
+        <a href="./pescados.html"><strong>Pescados</strong><span>Conheça a área dedicada à pesca artesanal</span><b aria-hidden="true">↗</b></a>
+      </div>
+    </section>
+
+    <section class="ifa-community" aria-labelledby="ifa-community-title">
+      <div>
+        <span class="ifa-kicker">Material para a comunidade</span>
+        <h2 id="ifa-community-title">Convide os moradores a conhecer o site.</h2>
+        <p>O cartaz foi preparado com QR Code verificado para compartilhar o endereço do portal em escolas, reuniões e espaços comunitários.</p>
+        <a class="ifa-download" href="./assets/apresentacao-ifa/cartaz-entremares.webp" download="cartaz-entremares.webp">Abrir ou salvar o cartaz com QR Code <span aria-hidden="true">↗</span></a>
+      </div>
+      <a class="ifa-poster-preview" href="./assets/apresentacao-ifa/cartaz-entremares.webp" target="_blank" rel="noopener noreferrer" aria-label="Ampliar cartaz com QR Code do EntreMarés"><img src="./assets/apresentacao-ifa/cartaz-entremares.webp" alt="Cartaz vertical Conheça o EntreMarés, com QR Code para a página inicial" width="1055" height="1491" loading="lazy" decoding="async"></a>
+    </section>
+  </main>
+  <footer class="site-footer"><div><strong>EntreMarés</strong><span>Saberes, Povoados e Produtos Caiçaras • escola, território e comunidade.</span></div><a href="./index.html">Voltar ao site</a></footer>
+  <script src="./js/site.js"></script>
+  <script src="./js/apresentacao-ifa.js?v=1"></script>
+</body>
+</html>

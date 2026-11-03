@@ -1,0 +1,56 @@
+/* Apresentação do IFA e EntreMarés: galeria 16:9, navegação acessível e cartões de leitura. */
+.page-ifa{background:#f7f8f4;color:#243f3c;min-width:300px}
+.page-ifa .ifa-skip{position:absolute;top:-70px;left:12px;z-index:200;padding:10px 16px;background:#fff;color:#154c45}
+.page-ifa .ifa-skip:focus{top:12px}
+.page-ifa .ifa-intro,.page-ifa .ifa-layout,.page-ifa .ifa-explore,.page-ifa .ifa-community{width:min(1380px,calc(100% - 32px));margin-left:auto;margin-right:auto}
+.page-ifa .ifa-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;padding:clamp(23px,4vw,48px) 0 24px}
+.page-ifa .ifa-kicker{display:block;font-weight:800;letter-spacing:.09em;text-transform:uppercase;font-size:.76rem;color:#9b6341}
+.page-ifa .ifa-intro h1{font:900 clamp(2.2rem,5vw,4.4rem)/1.05 Georgia,serif;letter-spacing:-.025em;margin:11px 0 14px;color:#194f44}
+.page-ifa .ifa-intro h1 em{color:#196c75}
+.page-ifa .ifa-intro p{max-width:870px;font-size:clamp(.98rem,1.8vw,1.15rem);line-height:1.75;color:#465e5c;margin:0}
+.page-ifa .ifa-website-link,.page-ifa .ifa-download{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:12px;background:#1d4b43;color:white;font-weight:800;text-decoration:none;white-space:nowrap}
+.page-ifa .ifa-website-link:hover,.page-ifa .ifa-download:hover{background:#236957}
+.page-ifa .ifa-player{overflow:hidden;border-radius:19px;background:#071d1a;box-shadow:0 22px 55px #0b2a2540;border:1px solid #c4d3cd}
+.page-ifa .ifa-screen{position:relative;width:100%;aspect-ratio:1600/900;background:#f5ede0;overflow:hidden}
+.page-ifa .ifa-slide{position:absolute;inset:0;width:100%;height:100%;background:#f6f1e8}
+.page-ifa .ifa-slide[hidden]{display:none!important}
+.page-ifa .ifa-slide img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.page-ifa .ifa-player-controls{padding:12px clamp(12px,2.2vw,24px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;color:#edf9f0}
+.page-ifa .ifa-nav-group{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.page-ifa .ifa-control{border:1px solid #cde7dc42;border-radius:11px;background:#20443e;color:#eff8ef;padding:10px 15px;line-height:1.25;cursor:pointer;text-decoration:none;font-size:.92rem;font-weight:750;display:inline-flex;align-items:center;gap:9px}
+.page-ifa .ifa-control:hover:not(:disabled){background:#315f55;color:#fff}
+.page-ifa .ifa-control:focus-visible,.page-ifa .ifa-thumbnails button:focus-visible{outline:3px solid #f6ca79;outline-offset:3px}
+.page-ifa .ifa-control:disabled{opacity:.4;cursor:not-allowed}
+.page-ifa .ifa-control--primary{background:#e3a95a;color:#17372e;border-color:#e3a95a}
+.page-ifa .ifa-control--primary:hover:not(:disabled){background:#f2c27d;color:#17372e}
+.page-ifa .ifa-control--quiet{background:transparent}
+.page-ifa .ifa-counter{font-variant-numeric:tabular-nums;font-weight:850;min-width:55px;text-align:center}
+.page-ifa .ifa-progress{height:5px;background:#0b2d26}
+.page-ifa .ifa-progress>div{height:100%;width:14.2857%;background:#e6ad67;transition:width .25s ease}
+.page-ifa .ifa-thumbnails{display:flex;gap:9px;overflow-x:auto;scrollbar-width:thin;padding:17px 1px 8px}
+.page-ifa .ifa-thumbnails button{border:1px solid #d0ddd6;border-radius:12px;background:#fff;color:#2a554b;display:flex;align-items:center;gap:10px;padding:12px 14px;flex:0 0 auto;font-weight:900;cursor:pointer;box-shadow:0 2px 10px #17392d0d}
+.page-ifa .ifa-thumbnails button span{font-size:.85rem;font-weight:650}
+.page-ifa .ifa-thumbnails button[aria-current="true"]{background:#1d4b43;color:#fff;border-color:#1d4b43}
+.page-ifa .ifa-hint{margin:9px 0 14px;color:#61736a;font-size:.89rem}
+.page-ifa .ifa-current{padding:17px 20px;background:#fff;border-left:5px solid #d9a54b;border-radius:0 13px 13px 0;box-shadow:0 2px 13px #17392d0d}
+.page-ifa .ifa-current strong{display:block;font-size:1.09rem;color:#1d4b43}
+.page-ifa .ifa-current p{margin:4px 0 0;color:#4c625c;line-height:1.65}
+.page-ifa .ifa-explore{margin-top:48px}
+.page-ifa .ifa-explore h2,.page-ifa .ifa-community h2{font:750 clamp(1.65rem,3vw,2.55rem)/1.19 Georgia,serif;margin:10px 0 13px;color:#194f44}
+.page-ifa .ifa-explore>p,.page-ifa .ifa-community p{max-width:790px;color:#4f6760;line-height:1.75}
+.page-ifa .ifa-links-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:21px 0}
+.page-ifa .ifa-links-grid a{position:relative;display:flex;flex-direction:column;gap:7px;min-height:167px;padding:19px;border-radius:16px;background:#fff;border:1px solid #d3e0d8;text-decoration:none;box-shadow:0 5px 22px #17392d10}
+.page-ifa .ifa-links-grid a strong{font-size:1.09rem;color:#19594d}
+.page-ifa .ifa-links-grid a span{line-height:1.55;color:#536b63;padding-right:8px}
+.page-ifa .ifa-links-grid a b{position:absolute;bottom:12px;right:16px;color:#b36a43;font-size:1.1rem}
+.page-ifa .ifa-links-grid a:hover{border-color:#2c7764;transform:translateY(-2px)}
+.page-ifa .ifa-community{display:grid;grid-template-columns:minmax(0,1fr) minmax(160px,260px);align-items:center;gap:25px;border-radius:24px;padding:clamp(24px,3vw,43px);margin-top:55px;margin-bottom:60px;background:linear-gradient(115deg,#e9f3ec,#fff9ed);border:1px solid #d5e3d5}
+.page-ifa .ifa-poster-preview{display:block;justify-self:end;width:min(100%,215px);border:5px solid #fff;border-radius:13px;box-shadow:0 9px 29px #17392d2e;overflow:hidden}
+.page-ifa .ifa-poster-preview img{display:block;width:100%;height:auto}
+.page-ifa .ifa-player:fullscreen{width:100vw;height:100vh;border-radius:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center;background:#061b18;border:0}
+.page-ifa .ifa-player:fullscreen .ifa-screen{width:100%;max-height:calc(100vh - 86px);aspect-ratio:1600/900;height:auto;flex:0 1 auto}
+.page-ifa .ifa-player:fullscreen .ifa-player-controls{width:100%;min-height:67px}
+.page-ifa .ifa-player:-webkit-full-screen{width:100vw;height:100vh}
+@media(max-width:900px){.page-ifa .ifa-links-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.page-ifa .ifa-intro{align-items:flex-start;flex-direction:column}.page-ifa .ifa-player-controls{gap:10px}.page-ifa .ifa-nav-group{gap:7px}}
+@media(max-width:600px){.page-ifa .ifa-layout,.page-ifa .ifa-intro,.page-ifa .ifa-explore,.page-ifa .ifa-community{width:min(100% - 20px,1380px)}.page-ifa .ifa-player{border-radius:10px}.page-ifa .ifa-control{font-size:.84rem;padding:9px 11px}.page-ifa .ifa-player-controls{justify-content:center}.page-ifa .ifa-nav-group{justify-content:center}.page-ifa .ifa-thumbnails button{padding:10px}.page-ifa .ifa-current{padding:13px}.page-ifa .ifa-links-grid{grid-template-columns:1fr}.page-ifa .ifa-links-grid a{min-height:105px}.page-ifa .ifa-community{grid-template-columns:1fr}.page-ifa .ifa-poster-preview{justify-self:center;width:min(100%,230px)}}
+@media(prefers-reduced-motion:reduce){.page-ifa .ifa-progress>div{transition:none}.page-ifa .ifa-links-grid a:hover{transform:none}}
